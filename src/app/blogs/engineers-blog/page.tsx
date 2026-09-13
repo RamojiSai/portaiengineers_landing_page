@@ -110,7 +110,7 @@ const HELPS = [
   {
     title: "Scale Your Design Capacity",
     desc:  "Whether you need one drafter or a full CAD team, Port AI provides flexible resourcing that scales with your project demands.",
-    bullets: ["On-demand CAD resourcing", "No long-term hiring overheads", "Expertise across all major platforms"],
+    bullets: ["On-demand CAD resourcing", "No long-term hiring overheads", "Expertise across industry-standard CAD platforms"],
     iconPath: "M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75",
     iconStroke: "#F4A946",
   },
@@ -152,7 +152,7 @@ const TABLE_ROWS = [
 const COMMITS = [
   "Accurate, validated CAD outputs",
   "ISO 9001:2015 quality-backed process",
-  "All major platforms — AutoCAD, SolidWorks, Revit, CATIA",
+  "Industry-standard platforms — AutoCAD, Plant 3D, AVEVA E3D, SolidWorks",
   "Rapid turnaround with flexible resourcing",
   "Transparent communication & single POC",
   "Continuous improvement on every project",
@@ -304,7 +304,7 @@ export default function CADServicesPage() {
             <div className="cad-pills">
               <span className="cad-pill cad-pill--gold">ISO 9001:2015 Certified</span>
               <span className="cad-pill cad-pill--teal">✓ Fabrication Ready</span>
-              <span className="cad-pill">AutoCAD · Revit · SolidWorks</span>
+              <span className="cad-pill">AutoCAD · Plant 3D · SolidWorks</span>
               <span className="cad-pill cad-pill--navy">Global Standards</span>
             </div>
           </div>
@@ -322,20 +322,20 @@ export default function CADServicesPage() {
           <div className="cad-img-card__text">
             <div className="cad-img-card__label">Our CAD Environment</div>
             <h2 className="cad-img-card__title">
-              Multi-Platform <span>CAD Expertise</span>
+              Plant &amp; CAD <span>Platform Fluency</span>
             </h2>
             <p className="cad-img-card__desc">
-              Our designers work across all major CAD and BIM platforms — AutoCAD, SolidWorks,
-              CATIA, Revit, and more. Whether you need a parametric 3D assembly or a
-              detailed 2D shop drawing, our team has the platform fluency and domain
+              Our engineering designers work across industry-standard CAD and plant platforms — AutoCAD, AutoCAD Plant 3D,
+              AVEVA E3D, AVEVA Diagrams / P&amp;ID, and SolidWorks. Whether you need an equipment layout, intelligent P&amp;ID, or a
+              detailed 2D fabrication drawing, our team has the platform fluency and domain
               knowledge to deliver exactly what your project demands.
             </p>
             <div className="cad-pills">
               <span className="cad-pill">AutoCAD</span>
+              <span className="cad-pill">AutoCAD Plant 3D</span>
+              <span className="cad-pill">AVEVA E3D</span>
               <span className="cad-pill">SolidWorks</span>
-              <span className="cad-pill">Revit / BIM</span>
-              <span className="cad-pill">CATIA</span>
-              <span className="cad-pill cad-pill--teal">✓ Multi-Platform</span>
+              <span className="cad-pill cad-pill--teal">✓ Plant &amp; CAD Fluency</span>
             </div>
           </div>
         </div>

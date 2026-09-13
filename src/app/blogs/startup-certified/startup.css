@@ -138,6 +138,7 @@ html.dark .startup-page {
 .cert-card-inner { display: flex; gap: 20px; padding: 20px; align-items: center; }
 .cert-left { flex: 0 0 360px; display: flex; justify-content: center; }
 .cert-right { flex: 1 1 340px; color: var(--text); }
+.cert-right h2,
 .cert-right h3 { font-family: "Playfair Display", serif; font-size: 1.25rem; margin-bottom: 10px; color: var(--text-bright); }
 .cert-details { display: grid; gap: 8px; font-size: 14px; color: var(--muted); }
 .cert-details strong { color: var(--text-bright); }

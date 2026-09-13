@@ -35,6 +35,7 @@ const ENGINEERING_IMAGE_DIMENSIONS: Record<string, { width: number; height: numb
   "/3DPIPE-DESIGN.jpg": { width: 1080, height: 608 },
   "/images/services/piping-engineering.webp": { width: 1536, height: 1024 },
   "/Instrumentation-Control-Engineering.jpg": { width: 1915, height: 1091 },
+  "/Instrumentation-Control-Engineering.webp": { width: 1915, height: 1091 },
   "/images/services/piping-stress-analysis.webp": { width: 1536, height: 1024 },
   "/images/services/greenfield-project.webp": { width: 1536, height: 1024 },
   "/images/services/brownfield.webp": { width: 1536, height: 1024 },
@@ -171,7 +172,7 @@ const serviceDetails: ServiceDetail[] = [
     metaDescription:
       "Port AI Engineers delivers instrumentation engineering services, including control logic references, field device layouts, and integration-ready documentation.",
     h1: "Instrumentation Engineering Services",
-    image: "/Instrumentation-Control-Engineering.jpg",
+    image: "/Instrumentation-Control-Engineering.webp",
     imageAlt: "Industrial instrumentation and control engineering",
     description: [
       "Port AI Engineers delivers specialized instrumentation engineering services, preparing control philosophy documentation, instrument layouts, and field automation architectures for industrial facilities.",

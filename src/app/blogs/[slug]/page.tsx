@@ -111,6 +111,13 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
 
   const canonicalUrl = `https://portaiengineers.com/blogs/${post.slug}/`;
 
+  const schemaAuthor =
+    post.author === "Port AI Planning" ||
+    post.author === "Port AI Safety" ||
+    post.author === "Port AI Engineering"
+      ? "Port AI Engineers"
+      : post.author;
+
   const blogPostingSchema = createBlogPostingSchema({
     id: `${canonicalUrl}#article`,
     url: canonicalUrl,
@@ -118,7 +125,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
     description: post.excerpt,
     image: post.image,
     datePublished: post.date,
-    authorName: post.author,
+    authorName: schemaAuthor,
   });
 
   const breadcrumbSchema = createBreadcrumbSchema([

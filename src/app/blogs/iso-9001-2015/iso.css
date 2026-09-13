@@ -45,6 +45,7 @@ html.dark .iso-banner {
   border-color: var(--color-border);
 }
 
+html.dark .iso-banner-right h2,
 html.dark .iso-banner-right h3,
 html.dark h2.block-title,
 html.dark .lead strong,
@@ -174,6 +175,7 @@ html.dark .iso-nav-card__btn {
 .iso-banner-left img { width: 220px; height: auto; border-radius: 12px; box-shadow: 0 8px 24px rgba(11,31,58,0.15); display:block; transition: transform 0.35s ease; }
 .iso-banner-left img:hover { transform: translateY(-4px) scale(1.02); }
 .iso-banner-right { flex: 1 1 1px; color: var(--text); }
+.iso-banner-right h2,
 .iso-banner-right h3 { font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
 .iso-banner-right p { color: var(--muted); margin-bottom: 12px; font-size: 0.95rem; }
 .iso-info-pills { display: flex; flex-wrap: wrap; gap: 8px; }
