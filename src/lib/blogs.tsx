@@ -225,7 +225,7 @@ export const blogPosts: BlogDetail[] = [
         </ul>
         <h2 className="mt-10 text-2xl font-semibold text-[var(--color-text)]">A Practical Approach</h2>
         <p className="mt-4 text-base leading-relaxed text-[var(--color-muted)]">
-          Our engineers use industry-standard analysis tools to model every line segment, calculate reaction forces, and verify compliance with ASME B31.3, B31.1, and other applicable codes.
+          Our engineers use industry-standard analysis tools to model every line segment, calculate reaction forces, and verify compliance with ASME B31.3, B31.1, and other applicable codes, coordinating directly with our <Link href="/services/engineering/piping-engineering/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">piping engineering</Link> and <Link href="/services/engineering/piping-stress-analysis/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">piping stress analysis</Link> workflows.
         </p>
         <div className="mt-8 rounded-3xl bg-[color-mix(in_srgb,var(--color-surface)_70%,transparent)] p-6 text-sm leading-relaxed text-[var(--color-text)] shadow-[0_10px_30px_rgba(0,0,0,0.12)]">
           <p className="font-semibold">Key outcomes delivered:</p>
@@ -321,6 +321,9 @@ export const blogPosts: BlogDetail[] = [
             <li className="list-disc">Actionable guidance for drill and incident review</li>
           </ul>
         </div>
+        <p className="mt-6 text-base leading-relaxed text-[var(--color-muted)]">
+          To translate site-wide emergency procedures into compliant architectural diagrams, refer to our comprehensive guide on <Link href="/blogs/fire-evacuation-drawing-standards/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">Industrial Fire Evacuation Drawing Standards</Link> for egress mapping and ISO/NFPA symbology.
+        </p>
       </>
     ),
   },
@@ -1542,7 +1545,7 @@ export const blogPosts: BlogDetail[] = [
             The GA plan is an orthographic top-down projection of an operating level. It defines equipment arrangement in the horizontal (X and Y) plane, locating centerlines of vessels, pump skids, and columns relative to structural grids or coordinates.
           </p>
           <p className="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">
-            In multi-level facilities, separate GA plan sheets are prepared for each operating floor, mezzanine, and roof level, illustrating horizontal spacing, access aisles, forklift roadways, egress paths, and battery limits.
+            In multi-level facilities, separate GA plan sheets are prepared for each operating floor, mezzanine, and roof level, illustrating horizontal spacing, access aisles, forklift roadways, egress paths, and battery limits. At the macro site level, these unit plots coordinate with overall site spacing and zoning (detailed in our guide on <Link href="/blogs/industrial-plot-plan-site-zoning/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">Industrial Plot Plan Development &amp; Site Zoning Principles</Link>).
           </p>
         </div>
 

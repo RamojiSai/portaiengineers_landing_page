@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
@@ -35,13 +36,30 @@ const slides = [
 
 export default function HeroSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [previousIndex, setPreviousIndex] = useState<number | null>(null);
   const [parallaxOffset, setParallaxOffset] = useState(0);
 
   const activeSlide = useMemo(() => slides[activeIndex], [activeIndex]);
 
+  const changeSlide = (nextIndex: number) => {
+    setActiveIndex((current) => {
+      if (nextIndex === current) return current;
+      setPreviousIndex(current);
+      return nextIndex;
+    });
+  };
+
+  useEffect(() => {
+    if (previousIndex === null) return;
+    const timeoutId = window.setTimeout(() => {
+      setPreviousIndex(null);
+    }, 1000);
+    return () => window.clearTimeout(timeoutId);
+  }, [previousIndex]);
+
   useEffect(() => {
     const intervalId = window.setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % slides.length);
+      changeSlide((activeIndex + 1) % slides.length);
     }, SLIDE_INTERVAL_MS);
 
     return () => window.clearInterval(intervalId);
@@ -73,7 +91,7 @@ export default function HeroSection() {
   }, []);
 
   const goToSlide = (index: number) => {
-    setActiveIndex((index + slides.length) % slides.length);
+    changeSlide((index + slides.length) % slides.length);
   };
 
   return (
@@ -81,38 +99,55 @@ export default function HeroSection() {
       <div className="absolute inset-0">
         {slides.map((slide, index) => {
           const isActive = index === activeIndex;
+          const isPrevious = index === previousIndex;
+
+          if (!isActive && !isPrevious) {
+            return null;
+          }
+
           return (
             <div
               key={slide.heading}
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                isActive ? "opacity-100" : "opacity-0"
+                isActive ? "opacity-100" : "opacity-0 pointer-events-none"
               }`}
               style={{
-                backgroundImage: `url('${slide.image}')`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
                 transform: `translateY(${parallaxOffset}px) scale(${isActive ? 1.05 : 1})`,
                 transitionProperty: "opacity, transform",
               }}
-            />
+            >
+              <Image
+                src={slide.image}
+                alt={slide.heading}
+                fill
+                priority={index === 0}
+                fetchPriority={index === 0 ? "high" : "auto"}
+                loading={index === 0 ? "eager" : "eager"}
+                sizes="100vw"
+                className="object-cover object-center"
+              />
+            </div>
           );
         })}
       </div>
 
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.16),rgba(255,255,255,0.02))]" />
+      <div className="absolute inset-0 bg-[var(--color-hero-overlay)]" />
 
       <div className="relative z-10 mx-auto flex w-full max-w-6xl items-center px-6 py-24 sm:px-10">
-        <div
-          key={activeSlide.heading}
-          className="fade-in-up -mt-20 flex w-full max-w-2xl flex-col items-center gap-6 text-center sm:items-start sm:text-left sm:pl-0 lg:pl-2"
-        >
-          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--color-primary)]">
+        <div className="-mt-20 flex w-full max-w-2xl flex-col items-center gap-6 text-center sm:items-start sm:text-left sm:pl-0 lg:pl-2">
+          <span
+            key={`heading-${activeSlide.heading}`}
+            className="fade-in-up text-xs font-semibold uppercase tracking-[0.3em] text-[var(--color-primary)]"
+          >
             {activeSlide.heading}
           </span>
           <h1 className="hero-gradient-text text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
             P&ID, Piping & Industrial Engineering Services
           </h1>
-          <p className="hero-subtext text-base sm:text-lg">
+          <p
+            key={`subtext-${activeSlide.heading}`}
+            className="fade-in-up hero-subtext text-base sm:text-lg"
+          >
             {activeSlide.subtext}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
@@ -120,9 +155,9 @@ export default function HeroSection() {
               href="https://calendar.app.google/4EDU6NFyWQLtrG91A"
               target="_blank"
               rel="noopener noreferrer"
-              className="hero-cta-gradient rounded-full border border-[#241E92] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+              className="hero-cta-gradient rounded-full border border-transparent px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
             >
-              Get a Demo
+              Schedule a Call
             </a>
             <Link
               href="#contact"
@@ -151,19 +186,23 @@ export default function HeroSection() {
         <span className="text-lg">&#8250;</span>
       </button>
 
-      <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3">
+      <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2">
         {slides.map((slide, index) => (
           <button
             key={slide.heading}
             type="button"
             aria-label={`Go to slide ${index + 1}`}
             onClick={() => goToSlide(index)}
-            className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
-              index === activeIndex
-                ? "bg-[var(--color-primary)] shadow-[0_0_12px_var(--color-primary-glow)]"
-                : "bg-[color-mix(in_srgb,var(--color-on-hero)_50%,transparent)] hover:bg-[var(--color-on-hero)]"
-            }`}
-          />
+            className="flex h-7 w-7 items-center justify-center rounded-full p-1"
+          >
+            <span
+              className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
+                index === activeIndex
+                  ? "bg-[var(--color-primary)] shadow-[0_0_12px_var(--color-primary-glow)]"
+                  : "bg-[color-mix(in_srgb,var(--color-on-hero)_50%,transparent)] hover:bg-[var(--color-on-hero)]"
+              }`}
+            />
+          </button>
         ))}
       </div>
     </section>

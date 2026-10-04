@@ -75,7 +75,7 @@ const startupHtml = `
         </div>
       </div>
       <div class="cert-right">
-        <h3>Certificate of Recognition</h3>
+        <h2>Certificate of Recognition</h2>
         <div class="cert-details">
           <div><strong>Certificate No.</strong> DIPP265006</div>
           <div><strong>Date of Issue</strong> 01-06-2026</div>

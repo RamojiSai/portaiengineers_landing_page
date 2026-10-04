@@ -77,7 +77,7 @@ const isoHtml = `
       <img src="/ISOimage.webp" alt="ISO 9001:2015 badge" />
     </div>
     <div class="iso-banner-right">
-      <h3>ISO 9001:2015 · Quality Management System</h3>
+      <h2>ISO 9001:2015 · Quality Management System</h2>
       <p>Port AI Engineers' Quality Management System is certified to ISO 9001:2015, demonstrating our commitment to consistent quality, process control, and customer satisfaction.</p>
       <div class="iso-info-pills">
         <span class="pill">Certified QMS</span>
