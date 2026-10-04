@@ -272,7 +272,7 @@ export default function FooterSection() {
             </p>
             <Link
               href="/blogs/iso-9001-2015/"
-              className="flex items-center text-xs font-semibold text-[var(--color-primary)]"
+              className="flex items-center text-xs font-semibold text-[#38BDF8]"
             >
               <div className="relative flex items-center gap-3 rounded-2xl border border-[color-mix(in_srgb,var(--color-primary)_45%,transparent)] bg-[color-mix(in_srgb,var(--color-primary)_20%,transparent)] px-3 py-2 shadow-[0_18px_40px_var(--color-card-shadow)]">
                 <Image
@@ -282,7 +282,7 @@ export default function FooterSection() {
                   height={40}
                   className="h-10 w-10 object-contain"
                 />
-                <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">
+                <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#38BDF8]">
                   ISO Certified
                 </div>
               </div>

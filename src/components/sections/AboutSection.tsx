@@ -61,7 +61,7 @@ export default function AboutSection() {
                 href="/services/"
                 className="inline-flex items-center justify-center rounded-full border border-[var(--color-primary)] px-6 py-2 text-sm font-semibold text-[var(--color-primary)] transition-colors duration-300 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]"
               >
-                Learn More
+                Learn More About Our Services
               </Link>
             </div>
           </div>

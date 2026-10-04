@@ -79,7 +79,9 @@ export default function RootLayout({
         <JsonLd schema={globalOrganizationSchema()} />
         <JsonLd schema={globalWebSiteSchema()} />
         <Header />
-        {children}
+        <main id="main-content" className="flex-1">
+          {children}
+        </main>
         <GlobalGetInTouch />
         <FooterSection />
       </body>
