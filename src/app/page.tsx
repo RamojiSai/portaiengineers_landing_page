@@ -169,7 +169,10 @@ export default function Home() {
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
       <JsonLd schema={webPageSchema} />
       <HeroSection />
-      <section className="bg-[var(--color-bg)] px-6 pt-1 pb-6 sm:px-10 sm:pt-2 sm:pb-8 mt-1">
+      <section
+        id="industries"
+        className="scroll-mt-20 bg-[var(--color-bg)] px-6 pt-1 pb-6 sm:px-10 sm:pt-2 sm:pb-8 mt-1"
+      >
         <div className="mx-auto w-full max-w-6xl">
           <h2 className="text-center text-xl font-semibold tracking-tight text-[var(--color-text)] sm:text-2xl">
             Industries We Serve

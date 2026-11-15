@@ -18,9 +18,11 @@ const footerColumns: FooterColumn[] = [
     links: [
       { label: "P&ID Design & Drafting", href: "/services/cad/pid/" },
       { label: "PFD Design & Drafting", href: "/services/cad/pfd/" },
+      { label: "Process Engineering", href: "/services/engineering/process/" },
       { label: "Plant Layout", href: "/services/engineering/plant-layout/" },
       { label: "General Arrangement Drawings", href: "/services/cad/general-arrangement/" },
       { label: "Fire Evacuation Drawings", href: "/services/cad/fire-evacuation/" },
+      { label: "CAD Conversion", href: "/services/cad/conversion/" },
       { label: "Piping Engineering", href: "/services/engineering/piping-engineering/" },
       { label: "3D Piping Design", href: "/services/engineering/piping-3d/" },
     ],

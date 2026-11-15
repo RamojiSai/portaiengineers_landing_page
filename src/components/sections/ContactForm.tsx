@@ -122,6 +122,19 @@ export default function ContactForm() {
       const result = await response.json();
 
       if (response.ok && result.success) {
+        if (
+          typeof window !== "undefined" &&
+          typeof (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag === "function"
+        ) {
+          (window as unknown as { gtag: (...args: unknown[]) => void }).gtag(
+            "event",
+            "generate_lead",
+            {
+              currency: "INR",
+            }
+          );
+        }
+
         setStatusMessage({
           type: "success",
           text: "Thank you! Your message has been sent successfully. Our engineering team will review your requirements and get back to you shortly.",

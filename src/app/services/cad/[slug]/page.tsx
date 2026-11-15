@@ -257,6 +257,7 @@ const serviceDetails: ServiceDetail[] = [
     ],
     relatedArticles: [
       { title: "How to Convert PDF P&IDs into Editable CAD Drawings", href: "/blogs/pdf-pid-conversion/" },
+      { title: "Anatomy of an Industrial General Arrangement (GA) Drawing", href: "/blogs/industrial-ga-drawing-anatomy/" },
     ],
   },
   {

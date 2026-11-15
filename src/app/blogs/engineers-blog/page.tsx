@@ -217,7 +217,7 @@ export default function CADServicesPage() {
           <div className="cad-hero__grid">
             <div>
               <h1>
-                CAD Services.<br />
+                CAD Services. <br />
                 <span>Designed with Precision.</span>
               </h1>
               <p className="cad-hero__subtitle">

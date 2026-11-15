@@ -124,6 +124,9 @@ const serviceDetails: ServiceDetail[] = [
       { title: "Piping Stress Analysis Services", href: "/services/engineering/piping-stress-analysis/" },
       { title: "General Arrangement Drawing Services", href: "/services/cad/general-arrangement/" },
     ],
+    relatedArticles: [
+      { title: "Anatomy of an Industrial General Arrangement (GA) Drawing", href: "/blogs/industrial-ga-drawing-anatomy/" },
+    ],
   },
   {
     slug: "piping-engineering",
@@ -290,6 +293,7 @@ const serviceDetails: ServiceDetail[] = [
     ],
     relatedArticles: [
       { title: "Greenfield Projects: Planning for Future Capacity", href: "/blogs/greenfield-projects/" },
+      { title: "Industrial Plot Plan Development & Site Zoning Principles", href: "/blogs/industrial-plot-plan-site-zoning/" },
     ],
   },
   {
