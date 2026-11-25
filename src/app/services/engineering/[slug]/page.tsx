@@ -527,7 +527,7 @@ export default async function EngineeringServiceDetailPage({
         {/* Hierarchical Breadcrumb Navigation */}
         <nav
           aria-label="Breadcrumb"
-          className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-muted)]"
+          className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-muted)] sm:tracking-[0.2em]"
         >
           <Link
             href="/"
@@ -535,22 +535,22 @@ export default async function EngineeringServiceDetailPage({
           >
             Home
           </Link>
-          <span className="px-2">→</span>
+          <span aria-hidden="true">→</span>
           <Link
             href="/services/"
             className="transition-colors hover:text-[var(--color-primary)]"
           >
             Services
           </Link>
-          <span className="px-2">→</span>
+          <span aria-hidden="true">→</span>
           <Link
             href="/services/engineering/"
             className="transition-colors hover:text-[var(--color-primary)]"
           >
             Engineering
           </Link>
-          <span className="px-2">→</span>
-          <span className="text-[var(--color-text)]" aria-current="page">
+          <span aria-hidden="true">→</span>
+          <span className="min-w-0 break-words text-[var(--color-text)]" aria-current="page">
             {detail.h1}
           </span>
         </nav>

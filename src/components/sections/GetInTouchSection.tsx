@@ -174,9 +174,9 @@ export default function GetInTouchSection({ showForm = true }: GetInTouchSection
 
         {showForm ? (
           /* Two-column layout with Contact Form */
-          <div className="mt-12 grid gap-8 lg:grid-cols-12 lg:gap-10">
+          <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
             {/* Left Column: Direct Booking & Contact Info */}
-            <div className="space-y-6 lg:col-span-5">
+            <div className="min-w-0 space-y-6 lg:col-span-5">
               {/* Direct Technical Call / Appointment Card */}
               <div className="rounded-3xl border border-[var(--color-primary)] bg-[color-mix(in_srgb,var(--color-primary)_8%,var(--color-surface))] p-6 shadow-[0_16px_40px_var(--color-card-shadow)]">
                 <div className="flex items-center gap-3">
@@ -223,23 +223,23 @@ export default function GetInTouchSection({ showForm = true }: GetInTouchSection
               </div>
 
               {/* Contact Cards */}
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+              <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
                 {contactItems.map((item) => (
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="group flex items-start gap-3.5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-primary)] hover:shadow-md"
+                    className="group flex min-w-0 items-start gap-3.5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-primary)] hover:shadow-md"
                     target={item.label === "Address" ? "_blank" : undefined}
                     rel={item.label === "Address" ? "noreferrer" : undefined}
                   >
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-primary)_10%,var(--color-bg))] text-[var(--color-primary)]">
                       {item.icon}
                     </div>
-                    <div className="min-w-0 space-y-0.5">
+                    <div className="min-w-0 flex-1 space-y-0.5">
                       <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--color-muted)]">
                         {item.label}
                       </div>
-                      <div className="truncate text-sm font-semibold text-[var(--color-text)]">
+                      <div className="break-words text-sm font-semibold text-[var(--color-text)]">
                         {item.value}
                       </div>
                       <p className="text-xs text-[var(--color-muted)]">
@@ -273,7 +273,7 @@ export default function GetInTouchSection({ showForm = true }: GetInTouchSection
             </div>
 
             {/* Right Column: Contact Form */}
-            <div className="lg:col-span-7">
+            <div className="min-w-0 lg:col-span-7">
               <ContactForm />
             </div>
           </div>

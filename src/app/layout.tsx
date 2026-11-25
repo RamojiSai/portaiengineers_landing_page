@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
 import Header from "../components/layout/Header";
+import MobileStickyBar from "../components/layout/MobileStickyBar";
 import FooterSection from "../components/sections/FooterSection";
 import GlobalGetInTouch from "../components/layout/GlobalGetInTouch";
 import { JsonLd, globalOrganizationSchema, globalWebSiteSchema } from "../lib/schema";
@@ -63,7 +64,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col pb-[calc(4.5rem+env(safe-area-inset-bottom))] md:pb-0">
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-EC4J1LSR38"
           strategy="afterInteractive"
@@ -84,6 +85,7 @@ export default function RootLayout({
         </main>
         <GlobalGetInTouch />
         <FooterSection />
+        <MobileStickyBar />
       </body>
     </html>
   );
