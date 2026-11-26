@@ -210,12 +210,12 @@ function EngineeringServicesPageContent() {
               : "-translate-y-6 opacity-0"
               }`}
           >
-            <nav className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">
+            <nav aria-label="Breadcrumb" className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">
               <Link href="/" className="hover:underline">Home</Link>
-              <span className="px-2 text-[var(--color-muted)]">/</span>
+              <span aria-hidden="true" className="px-2 text-[var(--color-muted)]">/</span>
               <Link href="/services/" className="hover:underline">Services</Link>
-              <span className="px-2 text-[var(--color-muted)]">/</span>
-              <span className="text-[var(--color-text)]">Engineering</span>
+              <span aria-hidden="true" className="px-2 text-[var(--color-muted)]">/</span>
+              <span aria-current="page" className="text-[var(--color-text)]">Engineering</span>
             </nav>
             <h1 className="text-3xl font-semibold tracking-tight text-[var(--color-text)] sm:text-4xl">
               Plant & Piping Engineering Services

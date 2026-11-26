@@ -61,7 +61,7 @@ const startupHtml = `
 </header>
 
 
-<main class="startup-body">
+<div class="startup-body">
   <div class="startup-cert-card certReveal">
     <div class="cert-accent">
       <span class="saffron"></span>
@@ -199,7 +199,7 @@ const startupHtml = `
   <div class="startup-nav-card">
     <div class="startup-nav-card__inner">
       <div>
-        <h4 class="startup-nav-card__title">Explore More from Port AI Engineers</h4>
+        <h2 class="startup-nav-card__title">Explore More from Port AI Engineers</h2>
         <p class="startup-nav-card__desc">Read our engineering insights or connect with our technical team.</p>
       </div>
       <div class="startup-nav-card__links">
@@ -209,7 +209,7 @@ const startupHtml = `
       </div>
     </div>
   </div>
-</main>
+</div>
 `;
 
 export default function StartupCertifiedPage() {

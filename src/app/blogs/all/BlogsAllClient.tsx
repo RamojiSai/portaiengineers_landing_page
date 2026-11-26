@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-function useInView<T extends HTMLElement>(options?: IntersectionObserverInit) {
+function useInView<T extends HTMLElement>() {
   const ref = useRef<T | null>(null);
   const [inView, setInView] = useState(false);
 
@@ -14,17 +14,20 @@ function useInView<T extends HTMLElement>(options?: IntersectionObserverInit) {
       return;
     }
 
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setInView(true);
-        observer.disconnect();
-      }
-    }, options);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.05 }
+    );
 
     observer.observe(node);
 
     return () => observer.disconnect();
-  }, [options]);
+  }, []);
 
   return { ref, inView };
 }
@@ -36,12 +39,12 @@ function FadeIn({
   children: React.ReactNode;
   className?: string;
 }) {
-  const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.15 });
+  const { ref, inView } = useInView<HTMLDivElement>();
 
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ease-out ${
+      className={`transition-all duration-500 ease-out focus-within:translate-y-0 focus-within:opacity-100 ${
         inView ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
       } ${className ?? ""}`}
     >
@@ -104,19 +107,18 @@ const industries = [
 
 export default function BlogsAllClient() {
   return (
-    <main className="min-h-screen bg-[#0B1F4D] text-white">
+    <div className="min-h-screen bg-[#0B1F4D] text-white">
       {/* Hero */}
       <section className="w-full bg-[#0B1F4D] px-6 py-16 sm:px-10 sm:py-20">
         <div className="mx-auto w-full max-w-6xl">
-          <FadeIn>
             <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
               <div className="space-y-6">
                 <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-medium text-white/60">
                   <Link href="/" className="transition-colors hover:text-white">Home</Link>
-                  <span>/</span>
+                  <span aria-hidden="true">/</span>
                   <Link href="/blogs/" className="transition-colors hover:text-white">Blogs</Link>
-                  <span>/</span>
-                  <span className="text-[#D9A441]">Inside Port AI Engineers</span>
+                  <span aria-hidden="true">/</span>
+                  <span aria-current="page" className="text-[#D9A441]">Inside Port AI Engineers</span>
                 </nav>
                 <div className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold tracking-[0.22em] text-[#D9A441]">
                   ENGINEERING EXCELLENCE
@@ -147,11 +149,11 @@ export default function BlogsAllClient() {
                   alt="Engineering plant infrastructure"
                   width={992}
                   height={558}
+                  priority
                   className="h-64 w-full object-cover sm:h-72 lg:h-[360px]"
                 />
               </div>
             </div>
-          </FadeIn>
         </div>
       </section>
 
@@ -175,8 +177,8 @@ export default function BlogsAllClient() {
               <Image
                 src="/Low-Carbon-Ammonia-image1.webp"
                 alt="Industrial engineering design collaboration"
-                width={3000}
-                height={1285}
+                width={1920}
+                height={822}
                 className="h-64 w-full object-cover sm:h-80"
               />
               <figcaption className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
@@ -271,7 +273,7 @@ export default function BlogsAllClient() {
                     <div key={item.step} className="relative">
                       <div className="absolute -left-[6px] top-2 h-3 w-3 rounded-full border border-[#D9A441] bg-white" />
                       <div className="rounded-2xl border border-[#E5E7EB] bg-white px-5 py-4">
-                        <div className="text-xs font-semibold tracking-[0.22em] text-[#D9A441]">
+                        <div className="text-xs font-semibold tracking-[0.22em] text-[#9A6B12]">
                           {item.step}
                         </div>
                         <div className="mt-1 text-sm font-semibold text-slate-900 sm:text-base">
@@ -314,7 +316,7 @@ export default function BlogsAllClient() {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6">
-                  <div className="text-xs font-semibold tracking-[0.22em] text-[#D9A441]">
+                  <div className="text-xs font-semibold tracking-[0.22em] text-[#9A6B12]">
                     Mission
                   </div>
                   <p className="mt-3 text-base leading-relaxed text-slate-700 sm:text-lg">
@@ -324,7 +326,7 @@ export default function BlogsAllClient() {
                 </div>
 
                 <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6">
-                  <div className="text-xs font-semibold tracking-[0.22em] text-[#D9A441]">
+                  <div className="text-xs font-semibold tracking-[0.22em] text-[#9A6B12]">
                     Vision
                   </div>
                   <p className="mt-3 text-base leading-relaxed text-slate-700 sm:text-lg">
@@ -367,6 +369,6 @@ export default function BlogsAllClient() {
           </FadeIn>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

@@ -73,6 +73,7 @@ export default function ContactForm({
     text: string;
   }>({ type: null, text: "" });
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const [validationAnnouncement, setValidationAnnouncement] = useState<string>("");
   const hasTrackedStartRef = useRef(false);
 
   useEffect(() => {
@@ -124,11 +125,28 @@ export default function ContactForm({
     }
 
     setFieldErrors(errors);
-    const errorKeys = Object.keys(errors);
-    if (errorKeys.length > 0) {
-      trackFormValidationError(formLocation, errorKeys);
+    const orderedKeys = (["name", "email", "phone", "message"] as const).filter(
+      (key) => Boolean(errors[key])
+    );
+    if (orderedKeys.length > 0) {
+      const fieldLabels: Record<"name" | "email" | "phone" | "message", string> = {
+        name: "Full Name",
+        email: "Work Email",
+        phone: "Phone or WhatsApp",
+        message: "Project Scope & Timeline",
+      };
+      setValidationAnnouncement(
+        `Please fix ${orderedKeys.length} required or invalid field${
+          orderedKeys.length > 1 ? "s" : ""
+        }: ${orderedKeys.map((key) => fieldLabels[key]).join(", ")}.`
+      );
+      if (typeof document !== "undefined") {
+        document.getElementById(`contact-${orderedKeys[0]}`)?.focus();
+      }
+      trackFormValidationError(formLocation, orderedKeys);
       return false;
     }
+    setValidationAnnouncement("");
     return true;
   };
 
@@ -141,6 +159,9 @@ export default function ContactForm({
 
     if (fieldErrors[name as keyof FormState]) {
       setFieldErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+    if (validationAnnouncement) {
+      setValidationAnnouncement("");
     }
     if (statusMessage.type === "error") {
       setStatusMessage({ type: null, text: "" });
@@ -205,6 +226,7 @@ export default function ContactForm({
         });
         setFormData(initialFormState);
         setFieldErrors({});
+        setValidationAnnouncement("");
         hasTrackedStartRef.current = false;
       } else {
         setStatusMessage({
@@ -332,6 +354,9 @@ export default function ContactForm({
       </div>
 
       <form onSubmit={handleSubmit} noValidate className="space-y-4">
+        <div role="alert" aria-live="assertive" className="sr-only">
+          {validationAnnouncement}
+        </div>
         <input
           type="checkbox"
           name="botcheck"
@@ -354,7 +379,7 @@ export default function ContactForm({
               htmlFor="contact-name"
               className="block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--color-text)]"
             >
-              Full Name <span className="text-rose-500">*</span>
+              Full Name <span className="text-rose-500" aria-hidden="true">*</span>
             </label>
             <div className="mt-1.5">
               <input
@@ -413,7 +438,7 @@ export default function ContactForm({
               htmlFor="contact-email"
               className="block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--color-text)]"
             >
-              Work Email <span className="text-rose-500">*</span>
+              Work Email <span className="text-rose-500" aria-hidden="true">*</span>
             </label>
             <div className="mt-1.5">
               <input
@@ -509,7 +534,7 @@ export default function ContactForm({
             htmlFor="contact-message"
             className="block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--color-text)]"
           >
-            Project Scope &amp; Timeline <span className="text-rose-500">*</span>
+            Project Scope &amp; Timeline <span className="text-rose-500" aria-hidden="true">*</span>
           </label>
           <div className="mt-1.5">
             <textarea
@@ -527,7 +552,7 @@ export default function ContactForm({
                   : "border-[var(--color-border)] focus:border-[var(--color-primary)] focus:ring-[color-mix(in_srgb,var(--color-primary)_25%,transparent)]"
               } disabled:cursor-not-allowed disabled:opacity-60`}
               aria-invalid={!!fieldErrors.message}
-              aria-describedby={fieldErrors.message ? "message-error" : "message-hint"}
+              aria-describedby={fieldErrors.message ? "message-error message-hint" : "message-hint"}
             />
           </div>
           <p id="message-hint" className="mt-1.5 text-xs text-[var(--color-muted)]">

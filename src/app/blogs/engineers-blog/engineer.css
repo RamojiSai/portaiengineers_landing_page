@@ -248,6 +248,9 @@ html { scroll-behavior: smooth; }
   box-shadow: 0 8px 36px rgba(11,31,58,0.09);
   animation: imgCardFade 0.8s ease 0.2s both;
 }
+.cad-img-card--reverse {
+  flex-direction: row-reverse;
+}
 .cad-img-card__img {
   width: 240px;
   flex-shrink: 0;
@@ -592,7 +595,8 @@ html { scroll-behavior: smooth; }
 @media (max-width: 680px) {
   .cad-hero__grid    { grid-template-columns: 1fr; }
   .cad-hero__img-box { display: none; }
-  .cad-img-card      { flex-direction: column; gap: 20px; padding: 20px; }
+  .cad-img-card,
+  .cad-img-card--reverse { flex-direction: column; gap: 20px; padding: 20px; }
   .cad-img-card__img { width: 100%; max-width: 340px; }
   .cad-commitment    { padding: 30px 22px; }
   .cad-article       { padding: 36px 20px; }

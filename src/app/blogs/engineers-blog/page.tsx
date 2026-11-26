@@ -270,7 +270,7 @@ export default function CADServicesPage() {
       </div>
 
       {/* ── ARTICLE ── */}
-      <main className="cad-article">
+      <div className="cad-article">
 
         {/* Lead */}
         <p className="cad-lead">
@@ -311,7 +311,7 @@ export default function CADServicesPage() {
         </div>
 
         {/* Image 3 — Designer at workstation */}
-        <div className="cad-img-card" style={{ flexDirection: "row-reverse" }}>
+        <div className="cad-img-card cad-img-card--reverse">
           <Image
             className="cad-img-card__img"
             src="/images/blogs/cad-designer-workstation.webp"
@@ -508,7 +508,7 @@ export default function CADServicesPage() {
         <div className="cad-nav-card">
           <div className="cad-nav-card__inner">
             <div>
-              <h4 className="cad-nav-card__title">Explore Engineering &amp; CAD Services</h4>
+              <h2 className="cad-nav-card__title">Explore Engineering &amp; CAD Services</h2>
               <p className="cad-nav-card__desc">Browse our complete industrial services or discuss your project requirements.</p>
             </div>
             <div className="cad-nav-card__links">
@@ -528,7 +528,7 @@ export default function CADServicesPage() {
           </div>
         </div>
 
-      </main>
+      </div>
     </div>
   );
 }

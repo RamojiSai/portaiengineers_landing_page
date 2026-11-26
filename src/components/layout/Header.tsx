@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   SCHEDULE_CALL_URL,
   trackQuoteCtaClick,
@@ -79,8 +79,34 @@ function isDropdownEntryActive(pathname: string, entryHref: string) {
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeMobileMenu, setActiveMobileMenu] = useState<string | null>(null);
+  const [dismissedDropdown, setDismissedDropdown] = useState<string | null>(null);
   const [isDark, setIsDark] = useState(false);
+  const tabletToggleRef = useRef<HTMLButtonElement | null>(null);
+  const mobileToggleRef = useRef<HTMLButtonElement | null>(null);
   const pathname = usePathname() ?? "";
+
+  useEffect(() => {
+    setIsOpen(false);
+    setActiveMobileMenu(null);
+    setDismissedDropdown(null);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        setActiveMobileMenu(null);
+        const visibleBtn =
+          mobileToggleRef.current && mobileToggleRef.current.offsetParent !== null
+            ? mobileToggleRef.current
+            : tabletToggleRef.current;
+        visibleBtn?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [isOpen]);
 
   useEffect(() => {
     try {
@@ -185,7 +211,10 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-bg)_92%,transparent)] backdrop-blur-md">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:px-6 xl:gap-3 xl:px-8">
-        <Link href="/" className="flex shrink-0 items-center gap-2 xl:gap-3">
+        <Link
+          href="/"
+          className="flex shrink-0 items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] xl:gap-3"
+        >
           <Image
             src="/Logo.jpeg"
             alt="Port AI Engineers Logo"
@@ -201,7 +230,7 @@ export default function Header() {
 
         <nav
           aria-label="Primary navigation"
-          className="hidden items-center gap-3 text-[13px] font-medium text-[var(--color-text)] lg:flex xl:gap-6 xl:text-sm"
+          className="hidden items-center gap-2.5 text-[13px] font-medium text-[var(--color-text)] lg:flex xl:gap-6 xl:text-sm"
         >
           {navItems.map((item) => {
             const hasDropdown = Boolean(item.items && item.items.length > 0);
@@ -212,7 +241,7 @@ export default function Header() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`whitespace-nowrap transition-colors duration-200 hover:text-[var(--color-primary)] ${
+                  className={`whitespace-nowrap rounded-md py-0.5 transition-colors duration-200 hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 ${
                     isActive ? "font-semibold text-[var(--color-primary)]" : ""
                   }`}
                 >
@@ -221,19 +250,38 @@ export default function Header() {
               );
             }
 
+            const isSuppressed = dismissedDropdown === item.label;
+
             return (
-              <div key={item.label} className="group relative">
+              <div
+                key={item.label}
+                className="group relative"
+                onMouseEnter={() => {
+                  if (isSuppressed) setDismissedDropdown(null);
+                }}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+                    setDismissedDropdown((prev) => (prev === item.label ? null : prev));
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") {
+                    setDismissedDropdown(item.label);
+                    e.currentTarget.querySelector("a")?.focus();
+                  }
+                }}
+              >
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-1 whitespace-nowrap transition-colors duration-200 hover:text-[var(--color-primary)] ${
+                  className={`flex items-center gap-1 whitespace-nowrap rounded-md py-0.5 transition-colors duration-200 hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 ${
                     isActive ? "font-semibold text-[var(--color-primary)]" : ""
                   }`}
                 >
                   {item.label}
                   <span
                     className={`transition-transform duration-200 group-hover:rotate-180 ${
-                      isActive ? "rotate-180" : ""
-                    }`}
+                      !isSuppressed ? "group-focus-within:rotate-180" : ""
+                    } ${isActive ? "rotate-180" : ""}`}
                   >
                     <svg
                       className="h-3.5 w-3.5"
@@ -249,7 +297,13 @@ export default function Header() {
                     </svg>
                   </span>
                 </Link>
-                <div className="pointer-events-none absolute left-0 top-full z-30 pt-2 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+                <div
+                  className={`absolute left-0 top-full z-30 pt-2 ${
+                    isSuppressed
+                      ? "invisible pointer-events-none opacity-0"
+                      : "invisible pointer-events-none opacity-0 transition-all duration-200 group-hover:visible group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:visible group-focus-within:pointer-events-auto group-focus-within:opacity-100"
+                  }`}
+                >
                   <div className="w-56 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-2 text-sm text-[var(--color-text)] shadow-md">
                     <div className="flex flex-col gap-1">
                       {item.items!.map((entry) => {
@@ -259,7 +313,7 @@ export default function Header() {
                           <Link
                             key={entry.label}
                             href={entry.href}
-                            className={`rounded-md px-3 py-2 transition-colors duration-150 hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)] ${
+                            className={`rounded-md px-3 py-2 transition-colors duration-150 hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                               isEntryActive
                                 ? "bg-[var(--color-surface-strong)] font-medium text-[var(--color-primary)]"
                                 : "text-[var(--color-text)]"
@@ -282,7 +336,7 @@ export default function Header() {
             type="button"
             onClick={toggleTheme}
             aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--color-border)] text-[var(--color-text)] transition-colors duration-200 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--color-border)] text-[var(--color-text)] transition-colors duration-200 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] xl:h-10 xl:w-10"
           >
             {renderThemeIcon()}
           </button>
@@ -291,23 +345,25 @@ export default function Header() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackHeaderEvent("schedule_call_click", "header")}
-            className="inline-flex items-center justify-center whitespace-nowrap rounded-lg border border-[var(--color-border)] px-2.5 py-2 text-xs font-medium text-[var(--color-text)] transition-colors duration-200 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)] xl:px-3.5 xl:text-sm"
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-lg border border-[var(--color-border)] px-2.5 py-2 text-xs font-medium text-[var(--color-text)] transition-colors duration-200 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] xl:px-3.5 xl:text-sm"
           >
             Schedule a Call
           </a>
           <Link
             href="/contact/"
             onClick={() => trackHeaderEvent("quote_cta_click", "header")}
-            className="inline-flex items-center justify-center whitespace-nowrap rounded-lg bg-[var(--color-primary)] px-2.5 py-2 text-xs font-medium text-[var(--color-on-primary)] shadow-xs transition-colors duration-200 hover:bg-[var(--color-primary-hover)] xl:px-3.5 xl:text-sm"
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-lg bg-[var(--color-primary)] px-2.5 py-2 text-xs font-medium text-[var(--color-on-primary)] shadow-xs transition-colors duration-200 hover:bg-[var(--color-primary-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 xl:px-3.5 xl:text-sm"
           >
             Request a Project Quote
           </Link>
           <button
+            ref={tabletToggleRef}
             type="button"
-            aria-label="Toggle menu"
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={isOpen}
+            aria-controls="mobile-nav-drawer"
             onClick={toggleMenu}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--color-border)] text-[var(--color-text)] transition-colors duration-200 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)] lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-[var(--color-border)] text-[var(--color-text)] transition-colors duration-200 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] lg:hidden"
           >
             <svg
               className="h-5 w-5"
@@ -340,17 +396,19 @@ export default function Header() {
             type="button"
             onClick={toggleTheme}
             aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--color-border)] text-[var(--color-text)] transition-colors duration-200 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-[var(--color-border)] text-[var(--color-text)] transition-colors duration-200 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
           >
             {renderThemeIcon()}
           </button>
 
           <button
+            ref={mobileToggleRef}
             type="button"
-            aria-label="Toggle menu"
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={isOpen}
+            aria-controls="mobile-nav-drawer"
             onClick={toggleMenu}
-            className="inline-flex items-center justify-center rounded-lg border border-[var(--color-border)] p-2 text-[var(--color-text)] transition-colors duration-200 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)]"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-[var(--color-border)] text-[var(--color-text)] transition-colors duration-200 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
           >
             <svg
               className="h-5 w-5"
@@ -380,14 +438,20 @@ export default function Header() {
       </div>
 
       <div
-        className={`border-t border-[var(--color-border)] bg-[var(--color-bg)] transition-[max-height,opacity] duration-300 lg:hidden ${
-          isOpen ? "max-h-[80vh] overflow-y-auto opacity-100" : "max-h-0 overflow-hidden opacity-0"
+        id="mobile-nav-drawer"
+        className={`border-t border-[var(--color-border)] bg-[var(--color-bg)] lg:hidden ${
+          isOpen ? "block max-h-[80vh] overflow-y-auto opacity-100" : "hidden"
         }`}
       >
-        <nav className="flex flex-col gap-3 px-6 py-4 text-sm font-medium text-[var(--color-text)]">
+        <nav
+          aria-label="Mobile navigation"
+          className="flex flex-col gap-3 px-6 py-4 text-sm font-medium text-[var(--color-text)]"
+        >
           {navItems.map((item) => {
             const hasDropdown = Boolean(item.items && item.items.length > 0);
             const isActive = isNavItemActive(item);
+            const submenuId = `mobile-submenu-${item.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+            const isSubmenuOpen = activeMobileMenu === item.label;
 
             if (!hasDropdown) {
               return (
@@ -398,7 +462,7 @@ export default function Header() {
                       setIsOpen(false);
                       setActiveMobileMenu(null);
                     }}
-                    className={`block transition-colors duration-200 hover:text-[var(--color-primary)] ${
+                    className={`block rounded-md py-1 transition-colors duration-200 hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                       isActive ? "font-semibold text-[var(--color-primary)]" : ""
                     }`}
                   >
@@ -410,14 +474,14 @@ export default function Header() {
 
             return (
               <div key={item.label} className="flex flex-col gap-2">
-                <div className="flex items-center justify-between rounded-lg px-2 py-2">
+                <div className="flex items-center justify-between rounded-lg px-2 py-1">
                   <Link
                     href={item.href}
                     onClick={() => {
                       setIsOpen(false);
                       setActiveMobileMenu(null);
                     }}
-                    className={`flex-1 text-left transition-colors duration-200 hover:text-[var(--color-primary)] ${
+                    className={`flex-1 rounded-md py-1.5 text-left transition-colors duration-200 hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                       isActive ? "font-semibold text-[var(--color-primary)]" : ""
                     }`}
                   >
@@ -425,13 +489,15 @@ export default function Header() {
                   </Link>
                   <button
                     type="button"
-                    aria-label={`Toggle ${item.label} submenu`}
+                    aria-label={`${isSubmenuOpen ? "Collapse" : "Expand"} ${item.label} submenu`}
+                    aria-expanded={isSubmenuOpen}
+                    aria-controls={submenuId}
                     onClick={() => toggleMobileSubmenu(item.label)}
-                    className="p-1 text-[var(--color-text)] transition-colors hover:text-[var(--color-primary)]"
+                    className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-[var(--color-text)] transition-colors hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
                   >
                     <span
                       className={`inline-block transition-transform duration-200 ${
-                        activeMobileMenu === item.label ? "rotate-180" : ""
+                        isSubmenuOpen ? "rotate-180" : ""
                       }`}
                     >
                       <svg
@@ -450,11 +516,8 @@ export default function Header() {
                   </button>
                 </div>
                 <div
-                  className={`grid overflow-hidden transition-all duration-300 ${
-                    activeMobileMenu === item.label
-                      ? "grid-rows-[1fr] opacity-100"
-                      : "grid-rows-[0fr] opacity-0"
-                  }`}
+                  id={submenuId}
+                  className={isSubmenuOpen ? "grid grid-rows-[1fr] opacity-100" : "hidden"}
                 >
                   <div className="flex min-h-0 flex-col gap-1 pl-2">
                     {item.items!.map((entry) => {
@@ -468,7 +531,7 @@ export default function Header() {
                             setIsOpen(false);
                             setActiveMobileMenu(null);
                           }}
-                          className={`rounded-md px-3 py-2 text-[var(--color-muted)] transition-colors duration-150 hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)] ${
+                          className={`rounded-md px-3 py-2 text-[var(--color-muted)] transition-colors duration-150 hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] ${
                             isEntryActive
                               ? "bg-[var(--color-surface-strong)] font-medium text-[var(--color-primary)]"
                               : ""
@@ -490,7 +553,7 @@ export default function Header() {
                 trackHeaderEvent("quote_cta_click", "mobile_menu");
                 setIsOpen(false);
               }}
-              className="flex w-full items-center justify-center rounded-lg bg-[var(--color-primary)] px-4 py-2.5 text-sm font-medium text-[var(--color-on-primary)] shadow-xs transition-colors hover:bg-[var(--color-primary-hover)]"
+              className="flex min-h-[44px] w-full items-center justify-center rounded-lg bg-[var(--color-primary)] px-4 py-2.5 text-sm font-medium text-[var(--color-on-primary)] shadow-xs transition-colors hover:bg-[var(--color-primary-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
             >
               Request a Project Quote
             </Link>
@@ -502,7 +565,7 @@ export default function Header() {
                 trackHeaderEvent("schedule_call_click", "mobile_menu");
                 setIsOpen(false);
               }}
-              className="flex w-full items-center justify-center rounded-lg border border-[var(--color-border)] px-4 py-2.5 text-sm font-medium text-[var(--color-text)] transition-colors hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)]"
+              className="flex min-h-[44px] w-full items-center justify-center rounded-lg border border-[var(--color-border)] px-4 py-2.5 text-sm font-medium text-[var(--color-text)] transition-colors hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
             >
               Schedule a Call
             </a>

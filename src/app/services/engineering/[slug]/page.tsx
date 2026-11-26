@@ -520,7 +520,7 @@ export default async function EngineeringServiceDetailPage({
     ENGINEERING_IMAGE_DIMENSIONS[detail.image] ?? { width: 1536, height: 1024 };
 
   return (
-    <main className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
+    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
       <JsonLd schema={serviceSchema} />
       <JsonLd schema={webPageSchema} />
       <JsonLd schema={breadcrumbSchema} />
@@ -710,6 +710,6 @@ export default async function EngineeringServiceDetailPage({
           />
         </div>
       </section>
-    </main>
+    </div>
   );
 }

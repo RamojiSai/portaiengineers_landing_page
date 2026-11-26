@@ -206,7 +206,7 @@ export default function ServicesIndexPage() {
   });
 
   return (
-    <main className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
+    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
       <JsonLd schema={webPageSchema} />
       <JsonLd schema={breadcrumbSchema} />
       <JsonLd schema={itemListSchema} />
@@ -404,6 +404,6 @@ export default function ServicesIndexPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

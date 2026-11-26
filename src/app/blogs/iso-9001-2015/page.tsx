@@ -74,7 +74,7 @@ const isoHtml = `
 
 <div class="iso-banner certFadeIn">
     <div class="iso-banner-left">
-      <img src="/ISOimage.webp" alt="ISO 9001:2015 badge" />
+      <img src="/ISOimage.webp" alt="ISO 9001:2015 badge" width="945" height="945" decoding="async" />
     </div>
     <div class="iso-banner-right">
       <h2>ISO 9001:2015 · Quality Management System</h2>
@@ -107,7 +107,7 @@ const isoHtml = `
   </div>
 </div>
 
-<main class="article-wrap">
+<div class="article-wrap">
   <p class="lead">
     We are thrilled to announce that Port AI Engineers Pvt. Ltd. has officially achieved <strong>ISO 9001:2015 certification</strong> for its Quality Management System (QMS). This milestone is more than a certificate — it is the embodiment of our promise to every client, partner, and stakeholder: that quality, reliability, and excellence are non-negotiable at the heart of everything we do.
   </p>
@@ -323,7 +323,7 @@ const isoHtml = `
   <div class="iso-nav-card">
     <div class="iso-nav-card__inner">
       <div>
-        <h4 class="iso-nav-card__title">Explore More from Port AI Engineers</h4>
+        <h2 class="iso-nav-card__title">Explore More from Port AI Engineers</h2>
         <p class="iso-nav-card__desc">Read our engineering insights or connect with our quality management team.</p>
       </div>
       <div class="iso-nav-card__links">
@@ -333,7 +333,7 @@ const isoHtml = `
       </div>
     </div>
   </div>
-</main>
+</div>
 `;
 
 export default function Iso9001BlogPage() {

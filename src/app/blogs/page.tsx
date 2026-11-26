@@ -57,7 +57,7 @@ export default function BlogsListingPage() {
   ]);
 
   return (
-    <main className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
+    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
       <JsonLd schema={collectionPageSchema} />
       <JsonLd schema={breadcrumbSchema} />
       <section className="bg-[var(--color-bg)] px-6 py-16 sm:px-10 sm:py-20">
@@ -125,6 +125,6 @@ export default function BlogsListingPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

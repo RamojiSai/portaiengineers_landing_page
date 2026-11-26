@@ -209,9 +209,9 @@ export default function FooterSection() {
               </svg>
             </div>
             <div className="mt-5 space-y-3">
-              <h4 className="text-xl font-semibold text-[var(--color-on-footer)]">
+              <h3 className="text-xl font-semibold text-[var(--color-on-footer)]">
                 Let’s work together
-              </h4>
+              </h3>
               <p className="text-sm leading-relaxed text-[var(--color-on-footer-muted)]">
                 Initial enquiry response within 24 working hours. Anonymized samples available upon NDA review.
               </p>
