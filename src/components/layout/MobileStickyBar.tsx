@@ -1,41 +1,35 @@
 "use client";
 
 import Link from "next/link";
-
-const WHATSAPP_HREF =
-  "https://wa.me/919440584273?text=Hello%20Port%20AI%20Engineers%2C%20I%20would%20like%20to%20request%20a%20quote%20for%20an%20engineering%20or%20CAD%20project.";
-
-function trackMobileQuoteClick() {
-  if (
-    typeof window !== "undefined" &&
-    typeof (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag === "function"
-  ) {
-    (window as unknown as { gtag: (...args: unknown[]) => void }).gtag(
-      "event",
-      "quote_cta_click",
-      {
-        cta_location: "mobile_sticky_bar",
-      }
-    );
-  }
-}
+import { usePathname } from "next/navigation";
+import {
+  PHONE_HREF,
+  getWhatsAppHref,
+  trackPhoneClick,
+  trackQuoteCtaClick,
+  trackWhatsAppClick,
+} from "../../lib/analytics";
 
 export default function MobileStickyBar() {
+  const pathname = usePathname() ?? "";
+  const isContactPage = pathname.startsWith("/contact");
+
   return (
     <nav
       aria-label="Quick contact actions"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-surface)_96%,transparent)] backdrop-blur-md shadow-[0_-6px_24px_var(--color-card-shadow)] md:hidden pb-[env(safe-area-inset-bottom)]"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-surface)_96%,transparent)] pb-[env(safe-area-inset-bottom)] shadow-[0_-6px_24px_var(--color-card-shadow)] backdrop-blur-md md:hidden"
     >
       <div className="mx-auto grid max-w-md grid-cols-[1.35fr_1fr_1fr] items-center gap-2 px-3 py-2">
         <Link
-          href="/contact/"
-          onClick={trackMobileQuoteClick}
+          href={isContactPage ? "#contact-form" : "/contact/#contact-form"}
+          onClick={() => trackQuoteCtaClick("mobile_sticky_bar")}
           className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-[var(--color-primary)] px-3 py-2 text-center text-xs font-semibold text-[var(--color-on-primary)] shadow-xs transition-colors hover:bg-[var(--color-primary-hover)]"
         >
           Request Quote
         </Link>
         <a
-          href="tel:+919440584273"
+          href={PHONE_HREF}
+          onClick={() => trackPhoneClick("mobile_sticky_bar")}
           aria-label="Call Port AI Engineers at +91 9440584273"
           className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-2.5 py-2 text-xs font-semibold text-[var(--color-text)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
         >
@@ -54,9 +48,10 @@ export default function MobileStickyBar() {
           <span>Call</span>
         </a>
         <a
-          href={WHATSAPP_HREF}
+          href={getWhatsAppHref()}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackWhatsAppClick("mobile_sticky_bar")}
           aria-label="Chat on WhatsApp with Port AI Engineers"
           className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-2.5 py-2 text-xs font-semibold text-[var(--color-text)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
         >

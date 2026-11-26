@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ServiceEnquiryBar from "../../../../components/sections/ServiceEnquiryBar";
 import {
   JsonLd,
   createWebPageSchema,
@@ -575,6 +576,12 @@ export default async function EngineeringServiceDetailPage({
             </h1>
           </div>
 
+          <ServiceEnquiryBar
+            serviceName={detail.h1}
+            serviceSlug={detail.slug}
+            location="service_detail_top"
+          />
+
           <div className="overflow-hidden rounded-3xl border border-[var(--color-border)]">
             <Image
               src={detail.image}
@@ -696,24 +703,11 @@ export default async function EngineeringServiceDetailPage({
           )}
 
           {/* Next Steps CTA */}
-          <div className="rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 sm:p-8">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="space-y-1">
-                <h3 className="text-lg font-semibold text-[var(--color-text)]">
-                  Need help scoping this service?
-                </h3>
-                <p className="text-sm text-[var(--color-muted)]">
-                  Share your project requirements and we will tailor the scope to match.
-                </p>
-              </div>
-              <Link
-                href="/contact/"
-                className="inline-flex items-center justify-center rounded-full bg-[var(--color-primary)] px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-on-primary)] transition-colors duration-300 hover:bg-[color-mix(in_srgb,var(--color-primary)_85%,var(--color-bg))]"
-              >
-                Contact Us
-              </Link>
-            </div>
-          </div>
+          <ServiceEnquiryBar
+            serviceName={detail.h1}
+            serviceSlug={detail.slug}
+            location="service_detail_bottom"
+          />
         </div>
       </section>
     </main>

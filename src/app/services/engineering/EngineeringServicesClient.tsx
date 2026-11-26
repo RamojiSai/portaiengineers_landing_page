@@ -127,10 +127,10 @@ const featureBlocks = [
 ];
 
 const engineeringPillars = [
-  { value: "Precision", label: "Design Accuracy & QA" },
-  { value: "Agile", label: "Streamlined Delivery" },
-  { value: "Proactive", label: "Rework Prevention" },
-  { value: "Dedicated", label: "Technical Support" },
+  { value: "ISO 9001:2015", label: "Certified Quality System" },
+  { value: "24 Working Hrs", label: "Initial Enquiry Response" },
+  { value: "NDA Ready", label: "Confidentiality & Samples" },
+  { value: "Native Formats", label: "AutoCAD, SP3D, E3D, CAESAR II" },
 ];
 
 function EngineeringServicesPageContent() {
@@ -279,13 +279,13 @@ function EngineeringServicesPageContent() {
                     Engineering Disciplines ({activeIndex + 1}/{nodes.length})
                   </span>
                 </div>
-                <div className="flex gap-2 overflow-x-auto pb-2 -mx-2 px-2">
+                <div className="grid grid-cols-2 gap-2">
                   {nodes.map((node, index) => (
                     <button
                       key={`mobile-${node.key}`}
                       type="button"
                       onClick={() => handleSelectNode(index)}
-                      className={`shrink-0 rounded-xl border px-4 py-2.5 text-xs font-semibold transition-all duration-200 min-h-[44px] ${
+                      className={`rounded-xl border px-3 py-2.5 text-left text-xs font-semibold transition-all duration-200 min-h-[44px] ${
                         isActive(index)
                           ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-[var(--color-on-primary)] shadow-sm"
                           : "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] hover:border-[var(--color-border-strong)]"
@@ -502,13 +502,21 @@ function EngineeringServicesPageContent() {
               ))}
             </div>
 
-            <div className="pt-2">
+            <div className="flex flex-wrap gap-3 pt-2">
               <Link
-                href="/contact/"
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-primary)] transition-colors duration-300 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]"
+                href="/contact/?service=piping-engineering#contact-form"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-on-primary)] transition-opacity hover:opacity-90"
               >
-                Inquire About Engineering Services &rarr;
+                Request a Project Quote &rarr;
               </Link>
+              <a
+                href="https://calendar.app.google/4EDU6NFyWQLtrG91A"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-primary)] transition-colors duration-300 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]"
+              >
+                Schedule a Technical Call
+              </a>
             </div>
           </div>
 

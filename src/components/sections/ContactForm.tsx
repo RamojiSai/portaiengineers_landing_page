@@ -1,24 +1,71 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  EMAIL_HREF,
+  PHONE_HREF,
+  SCHEDULE_CALL_URL,
+  getWhatsAppHref,
+  trackEmailClick,
+  trackFormStart,
+  trackFormValidationError,
+  trackGenerateLead,
+  trackPhoneClick,
+  trackScheduleCallClick,
+  trackWhatsAppClick,
+} from "../../lib/analytics";
 
 interface FormState {
   name: string;
+  company: string;
   email: string;
   phone: string;
+  service: string;
   message: string;
   botcheck: string;
 }
 
+const SERVICE_OPTIONS = [
+  { slug: "pid", label: "P&ID Design & Drafting" },
+  { slug: "pfd", label: "Process Flow Diagram (PFD)" },
+  { slug: "piping-3d", label: "3D Piping Design & Modeling" },
+  { slug: "piping-engineering", label: "Piping Engineering & Specifications" },
+  { slug: "plant-layout", label: "Industrial Plant Layout" },
+  { slug: "general-arrangement", label: "General Arrangement (GA) Drawings" },
+  { slug: "isometric", label: "Piping Isometric Drawings" },
+  { slug: "piping-stress-analysis", label: "Piping Stress Analysis" },
+  { slug: "process", label: "Process Engineering" },
+  { slug: "instrumentation", label: "Instrumentation & Control" },
+  { slug: "conversion", label: "CAD Conversion (PDF / Legacy)" },
+  { slug: "automation", label: "CAD Automation" },
+  { slug: "training", label: "CAD Training" },
+  { slug: "fire-evacuation", label: "Fire Evacuation Drawings" },
+  { slug: "greenfield-projects", label: "Greenfield Projects" },
+  { slug: "brownfield-projects", label: "Brownfield Projects" },
+  { slug: "power-plants", label: "Power Plants" },
+  { slug: "other", label: "Multiple Disciplines / General Enquiry" },
+];
+
 const initialFormState: FormState = {
   name: "",
+  company: "",
   email: "",
   phone: "",
+  service: "",
   message: "",
   botcheck: "",
 };
 
-export default function ContactForm() {
+interface ContactFormProps {
+  formLocation?: "homepage" | "contact_page";
+  headingTag?: "h2" | "h3";
+}
+
+export default function ContactForm({
+  formLocation = "contact_page",
+  headingTag = "h3",
+}: ContactFormProps) {
+  const Heading = headingTag;
   const [formData, setFormData] = useState<FormState>(initialFormState);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [statusMessage, setStatusMessage] = useState<{
@@ -26,6 +73,27 @@ export default function ContactForm() {
     text: string;
   }>({ type: null, text: "" });
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const hasTrackedStartRef = useRef(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const serviceParam = params.get("service")?.trim().toLowerCase();
+    if (!serviceParam) return;
+    const match = SERVICE_OPTIONS.find(
+      (opt) => opt.slug === serviceParam || opt.label.toLowerCase() === serviceParam
+    );
+    if (match) {
+      setFormData((prev) => (prev.service ? prev : { ...prev, service: match.slug }));
+    }
+  }, []);
+
+  const markFormStarted = () => {
+    if (!hasTrackedStartRef.current) {
+      hasTrackedStartRef.current = true;
+      trackFormStart(formLocation);
+    }
+  };
 
   const validate = (): boolean => {
     const errors: Partial<Record<keyof FormState, string>> = {};
@@ -36,39 +104,44 @@ export default function ContactForm() {
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
-      errors.email = "Please enter your email address.";
+      errors.email = "Please enter your work email address.";
     } else if (!emailPattern.test(formData.email.trim())) {
-      errors.email = "Please enter a valid email address (e.g., name@example.com).";
+      errors.email = "Please enter a valid email address (e.g., name@company.com).";
     }
 
-    // Flexible international phone validation: allow +, digits, spaces, hyphens, parentheses, min 6 chars
-    const phoneClean = formData.phone.replace(/[\s\-\(\)\.]/g, "");
-    if (!formData.phone.trim()) {
-      errors.phone = "Please enter your phone number.";
-    } else if (phoneClean.length < 6 || !/^\+?[0-9]{6,15}$/.test(phoneClean)) {
-      errors.phone = "Please enter a valid phone number (at least 6 digits).";
+    const trimmedPhone = formData.phone.trim();
+    if (trimmedPhone) {
+      const phoneClean = trimmedPhone.replace(/[\s\-\(\)\.]/g, "");
+      if (phoneClean.length < 6 || !/^\+?[0-9]{6,15}$/.test(phoneClean)) {
+        errors.phone = "Enter a valid phone number (6–15 digits) or leave blank.";
+      }
     }
 
     if (!formData.message.trim()) {
-      errors.message = "Please enter your message or project requirements.";
+      errors.message = "Please describe your project requirements or scope.";
     } else if (formData.message.trim().length < 10) {
       errors.message = "Please provide at least 10 characters describing your requirement.";
     }
 
     setFieldErrors(errors);
-    return Object.keys(errors).length === 0;
+    const errorKeys = Object.keys(errors);
+    if (errorKeys.length > 0) {
+      trackFormValidationError(formLocation, errorKeys);
+      return false;
+    }
+    return true;
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
+    markFormStarted();
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear specific field error on user input
+
     if (fieldErrors[name as keyof FormState]) {
       setFieldErrors((prev) => ({ ...prev, [name]: undefined }));
     }
-    // Clear top error message once user resumes editing
     if (statusMessage.type === "error") {
       setStatusMessage({ type: null, text: "" });
     }
@@ -76,19 +149,16 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // Prevent duplicate submits if already in flight
     if (isSubmitting) return;
 
     if (!validate()) {
       return;
     }
 
-    // Check honeypot: if filled, quietly abort to avoid bot spam
     if (formData.botcheck) {
       setStatusMessage({
         type: "success",
-        text: "Thank you! Your message has been received.",
+        text: "Thank you! Your enquiry has been received.",
       });
       setFormData(initialFormState);
       return;
@@ -97,14 +167,19 @@ export default function ContactForm() {
     setIsSubmitting(true);
     setStatusMessage({ type: null, text: "" });
 
+    const selectedServiceLabel =
+      SERVICE_OPTIONS.find((opt) => opt.slug === formData.service)?.label || "General Enquiry";
+
     try {
       const payload = {
         access_key: "0eca3666-b187-4d18-ae70-1b3fbce80cee",
-        subject: "New Website Enquiry - Port AI Engineers",
+        subject: `New Project Quote Enquiry (${selectedServiceLabel}) - Port AI Engineers`,
         from_name: "Port AI Engineers Website",
         name: formData.name.trim(),
+        company: formData.company.trim() || "Not specified",
         email: formData.email.trim(),
-        phone: formData.phone.trim(),
+        phone: formData.phone.trim() || "Not provided",
+        service: selectedServiceLabel,
         message: formData.message.trim(),
         page_source: typeof window !== "undefined" ? window.location.href : "Website",
         botcheck: "",
@@ -122,37 +197,27 @@ export default function ContactForm() {
       const result = await response.json();
 
       if (response.ok && result.success) {
-        if (
-          typeof window !== "undefined" &&
-          typeof (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag === "function"
-        ) {
-          (window as unknown as { gtag: (...args: unknown[]) => void }).gtag(
-            "event",
-            "generate_lead",
-            {
-              currency: "INR",
-            }
-          );
-        }
+        trackGenerateLead(formLocation, formData.service || "general");
 
         setStatusMessage({
           type: "success",
-          text: "Thank you! Your message has been sent successfully. Our engineering team will review your requirements and get back to you shortly.",
+          text: "Thank you. Your project enquiry has been sent to our engineering team. You will receive an initial response within 24 working hours.",
         });
         setFormData(initialFormState);
         setFieldErrors({});
+        hasTrackedStartRef.current = false;
       } else {
         setStatusMessage({
           type: "error",
           text:
             result.message ||
-            "Unable to send your message at this moment. Please try again or email us directly at contact@portaiengineers.com.",
+            "Unable to submit your enquiry right now. Please try again or reach us directly by email, phone, or WhatsApp below.",
         });
       }
     } catch {
       setStatusMessage({
         type: "error",
-        text: "Network error occurred while sending your message. Please check your internet connection or email us at contact@portaiengineers.com.",
+        text: "Network error while sending your enquiry. Please check your connection or contact us directly via email, phone, or WhatsApp below.",
       });
     } finally {
       setIsSubmitting(false);
@@ -160,37 +225,57 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[0_16px_40px_var(--color-card-shadow)] sm:p-8">
-      <div className="mb-6 space-y-1">
-        <h3 className="text-xl font-semibold text-[var(--color-text)] sm:text-2xl">
-          Send Us a Message
-        </h3>
+    <div
+      id="contact-form"
+      className="scroll-mt-24 rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[0_16px_40px_var(--color-card-shadow)] sm:p-8"
+    >
+      <div className="mb-6 space-y-1.5">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <Heading className="text-xl font-semibold text-[var(--color-text)] sm:text-2xl">
+            Request a Project Quote
+          </Heading>
+          <span className="rounded-full bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--color-primary)]">
+            24-Hr Initial Response
+          </span>
+        </div>
         <p className="text-sm text-[var(--color-muted)]">
-          Fill out the form below and we will respond promptly with engineering guidance and quote estimates.
+          Share your engineering or CAD scope below. Our team provides an initial technical response within 24 working hours.
         </p>
       </div>
 
-      {/* Screen reader live notification and visual status banners */}
       <div aria-live="polite" className="mb-5">
         {statusMessage.type === "success" && (
           <div
             role="status"
-            className="flex items-start gap-3 rounded-2xl border border-emerald-300 bg-emerald-50 p-4 text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-200"
+            className="space-y-3 rounded-2xl border border-emerald-300 bg-emerald-50 p-4 text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-200"
           >
-            <svg
-              className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <div className="text-sm font-medium leading-relaxed">
-              {statusMessage.text}
+            <div className="flex items-start gap-3">
+              <svg
+                className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <div className="text-sm font-medium leading-relaxed">
+                {statusMessage.text}
+              </div>
+            </div>
+            <div className="pl-8">
+              <a
+                href={SCHEDULE_CALL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackScheduleCallClick(`${formLocation}_success_banner`)}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold underline hover:opacity-80"
+              >
+                Need to discuss specs sooner? Schedule a Technical Call &rarr;
+              </a>
             </div>
           </div>
         )}
@@ -198,29 +283,55 @@ export default function ContactForm() {
         {statusMessage.type === "error" && (
           <div
             role="alert"
-            className="flex items-start gap-3 rounded-2xl border border-rose-300 bg-rose-50 p-4 text-rose-900 dark:border-rose-800 dark:bg-rose-950/60 dark:text-rose-200"
+            className="space-y-3 rounded-2xl border border-rose-300 bg-rose-50 p-4 text-rose-900 dark:border-rose-800 dark:bg-rose-950/60 dark:text-rose-200"
           >
-            <svg
-              className="mt-0.5 h-5 w-5 shrink-0 text-rose-600 dark:text-rose-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <div className="text-sm font-medium leading-relaxed">
-              {statusMessage.text}
+            <div className="flex items-start gap-3">
+              <svg
+                className="mt-0.5 h-5 w-5 shrink-0 text-rose-600 dark:text-rose-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <div className="text-sm font-medium leading-relaxed">
+                {statusMessage.text}
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-3 pl-8 text-xs font-semibold">
+              <a
+                href={EMAIL_HREF}
+                onClick={() => trackEmailClick(`${formLocation}_error_fallback`)}
+                className="underline hover:opacity-80"
+              >
+                contact@portaiengineers.com
+              </a>
+              <a
+                href={PHONE_HREF}
+                onClick={() => trackPhoneClick(`${formLocation}_error_fallback`)}
+                className="underline hover:opacity-80"
+              >
+                Call +91 9440584273
+              </a>
+              <a
+                href={getWhatsAppHref()}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick(`${formLocation}_error_fallback`)}
+                className="underline hover:opacity-80"
+              >
+                WhatsApp Chat
+              </a>
             </div>
           </div>
         )}
       </div>
 
       <form onSubmit={handleSubmit} noValidate className="space-y-4">
-        {/* Anti-spam Honeypot */}
         <input
           type="checkbox"
           name="botcheck"
@@ -237,50 +348,72 @@ export default function ContactForm() {
           }
         />
 
-        {/* Full Name */}
-        <div>
-          <label
-            htmlFor="contact-name"
-            className="block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--color-text)]"
-          >
-            Full Name <span className="text-rose-500">*</span>
-          </label>
-          <div className="mt-1.5">
-            <input
-              type="text"
-              id="contact-name"
-              name="name"
-              autoComplete="name"
-              required
-              disabled={isSubmitting}
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="e.g. John Doe"
-              className={`w-full rounded-xl border bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] placeholder-[var(--color-muted)] transition-colors focus:outline-none focus:ring-2 ${
-                fieldErrors.name
-                  ? "border-rose-400 focus:border-rose-500 focus:ring-rose-200 dark:focus:ring-rose-950"
-                  : "border-[var(--color-border)] focus:border-[var(--color-primary)] focus:ring-[color-mix(in_srgb,var(--color-primary)_25%,transparent)]"
-              } disabled:cursor-not-allowed disabled:opacity-60`}
-              aria-invalid={!!fieldErrors.name}
-              aria-describedby={fieldErrors.name ? "name-error" : undefined}
-            />
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label
+              htmlFor="contact-name"
+              className="block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--color-text)]"
+            >
+              Full Name <span className="text-rose-500">*</span>
+            </label>
+            <div className="mt-1.5">
+              <input
+                type="text"
+                id="contact-name"
+                name="name"
+                autoComplete="name"
+                required
+                disabled={isSubmitting}
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="e.g. Rajesh Sharma"
+                className={`w-full rounded-xl border bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] placeholder-[var(--color-muted)] transition-colors focus:outline-none focus:ring-2 ${
+                  fieldErrors.name
+                    ? "border-rose-400 focus:border-rose-500 focus:ring-rose-200 dark:focus:ring-rose-950"
+                    : "border-[var(--color-border)] focus:border-[var(--color-primary)] focus:ring-[color-mix(in_srgb,var(--color-primary)_25%,transparent)]"
+                } disabled:cursor-not-allowed disabled:opacity-60`}
+                aria-invalid={!!fieldErrors.name}
+                aria-describedby={fieldErrors.name ? "name-error" : undefined}
+              />
+            </div>
+            {fieldErrors.name && (
+              <p id="name-error" className="mt-1 text-xs text-rose-600 dark:text-rose-400">
+                {fieldErrors.name}
+              </p>
+            )}
           </div>
-          {fieldErrors.name && (
-            <p id="name-error" className="mt-1 text-xs text-rose-600 dark:text-rose-400">
-              {fieldErrors.name}
-            </p>
-          )}
+
+          <div>
+            <label
+              htmlFor="contact-company"
+              className="block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--color-text)]"
+            >
+              Company / Organization{" "}
+              <span className="font-normal lowercase text-[var(--color-muted)]">(optional)</span>
+            </label>
+            <div className="mt-1.5">
+              <input
+                type="text"
+                id="contact-company"
+                name="company"
+                autoComplete="organization"
+                disabled={isSubmitting}
+                value={formData.company}
+                onChange={handleChange}
+                placeholder="EPC, Consultant, or Plant Name"
+                className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] placeholder-[var(--color-muted)] transition-colors focus:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--color-primary)_25%,transparent)] disabled:cursor-not-allowed disabled:opacity-60"
+              />
+            </div>
+          </div>
         </div>
 
-        {/* Email & Phone Grid */}
         <div className="grid gap-4 sm:grid-cols-2">
-          {/* Email Address */}
           <div>
             <label
               htmlFor="contact-email"
               className="block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--color-text)]"
             >
-              Email Address <span className="text-rose-500">*</span>
+              Work Email <span className="text-rose-500">*</span>
             </label>
             <div className="mt-1.5">
               <input
@@ -309,13 +442,13 @@ export default function ContactForm() {
             )}
           </div>
 
-          {/* Phone Number */}
           <div>
             <label
               htmlFor="contact-phone"
               className="block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--color-text)]"
             >
-              Phone Number <span className="text-rose-500">*</span>
+              Phone / WhatsApp{" "}
+              <span className="font-normal lowercase text-[var(--color-muted)]">(optional)</span>
             </label>
             <div className="mt-1.5">
               <input
@@ -323,11 +456,10 @@ export default function ContactForm() {
                 id="contact-phone"
                 name="phone"
                 autoComplete="tel"
-                required
                 disabled={isSubmitting}
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="+1 555 123 4567 or +91 99..."
+                placeholder="+91 98... or +1 555..."
                 className={`w-full rounded-xl border bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] placeholder-[var(--color-muted)] transition-colors focus:outline-none focus:ring-2 ${
                   fieldErrors.phone
                     ? "border-rose-400 focus:border-rose-500 focus:ring-rose-200 dark:focus:ring-rose-950"
@@ -345,13 +477,39 @@ export default function ContactForm() {
           </div>
         </div>
 
-        {/* Message */}
+        <div>
+          <label
+            htmlFor="contact-service"
+            className="block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--color-text)]"
+          >
+            Primary Service / Discipline{" "}
+            <span className="font-normal lowercase text-[var(--color-muted)]">(optional)</span>
+          </label>
+          <div className="mt-1.5">
+            <select
+              id="contact-service"
+              name="service"
+              disabled={isSubmitting}
+              value={formData.service}
+              onChange={handleChange}
+              className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] transition-colors focus:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--color-primary)_25%,transparent)] disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <option value="">Select a discipline (optional)</option>
+              {SERVICE_OPTIONS.map((option) => (
+                <option key={option.slug} value={option.slug}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
         <div>
           <label
             htmlFor="contact-message"
             className="block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--color-text)]"
           >
-            Project Requirements / Message <span className="text-rose-500">*</span>
+            Project Scope &amp; Timeline <span className="text-rose-500">*</span>
           </label>
           <div className="mt-1.5">
             <textarea
@@ -362,16 +520,19 @@ export default function ContactForm() {
               disabled={isSubmitting}
               value={formData.message}
               onChange={handleChange}
-              placeholder="Tell us about your engineering, 3D piping, or CAD project requirements, timelines, and deliverables..."
+              placeholder="Briefly describe your required deliverables (e.g., P&IDs, 3D piping, GA drawings, stress analysis), approximate sheet/line count, target CAD software, and timeline..."
               className={`w-full rounded-xl border bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] placeholder-[var(--color-muted)] transition-colors focus:outline-none focus:ring-2 ${
                 fieldErrors.message
                   ? "border-rose-400 focus:border-rose-500 focus:ring-rose-200 dark:focus:ring-rose-950"
                   : "border-[var(--color-border)] focus:border-[var(--color-primary)] focus:ring-[color-mix(in_srgb,var(--color-primary)_25%,transparent)]"
               } disabled:cursor-not-allowed disabled:opacity-60`}
               aria-invalid={!!fieldErrors.message}
-              aria-describedby={fieldErrors.message ? "message-error" : undefined}
+              aria-describedby={fieldErrors.message ? "message-error" : "message-hint"}
             />
           </div>
+          <p id="message-hint" className="mt-1.5 text-xs text-[var(--color-muted)]">
+            Do not attach drawings here. If NDA review or file sharing is needed, our team will provide a secure transfer path after initial contact.
+          </p>
           {fieldErrors.message && (
             <p id="message-error" className="mt-1 text-xs text-rose-600 dark:text-rose-400">
               {fieldErrors.message}
@@ -379,12 +540,11 @@ export default function ContactForm() {
           )}
         </div>
 
-        {/* Submit Button */}
-        <div className="pt-2">
+        <div className="space-y-2.5 pt-2">
           <button
             type="submit"
             disabled={isSubmitting}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] px-6 py-3 text-sm font-semibold text-[var(--color-on-primary)] shadow-md transition-all duration-300 hover:opacity-95 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+            className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] px-6 py-3 text-sm font-semibold text-[var(--color-on-primary)] shadow-md transition-all duration-300 hover:bg-[var(--color-primary-hover)] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
             aria-busy={isSubmitting}
           >
             {isSubmitting ? (
@@ -409,17 +569,18 @@ export default function ContactForm() {
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   />
                 </svg>
-                <span>Sending Message...</span>
+                <span>Submitting Enquiry...</span>
               </>
             ) : (
               <>
-                <span>Send Message</span>
-                <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
-                  &rarr;
-                </span>
+                <span>Request a Project Quote</span>
+                <span aria-hidden="true">&rarr;</span>
               </>
             )}
           </button>
+          <p className="text-xs text-[var(--color-muted)]">
+            Initial enquiry response within 24 working hours. Anonymized sample documentation available on NDA request.
+          </p>
         </div>
       </form>
     </div>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ServiceEnquiryBar from "../../../../components/sections/ServiceEnquiryBar";
 import {
   JsonLd,
   createWebPageSchema,
@@ -487,7 +488,7 @@ export default async function CadServiceDetailPage({
         {/* Hierarchical Breadcrumb Navigation */}
         <nav
           aria-label="Breadcrumb"
-          className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-muted)]"
+          className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-muted)] sm:tracking-[0.2em]"
         >
           <Link
             href="/"
@@ -495,22 +496,22 @@ export default async function CadServiceDetailPage({
           >
             Home
           </Link>
-          <span className="px-2">→</span>
+          <span aria-hidden="true">→</span>
           <Link
             href="/services/"
             className="transition-colors hover:text-[var(--color-primary)]"
           >
             Services
           </Link>
-          <span className="px-2">→</span>
+          <span aria-hidden="true">→</span>
           <Link
             href="/services/cad/"
             className="transition-colors hover:text-[var(--color-primary)]"
           >
             CAD
           </Link>
-          <span className="px-2">→</span>
-          <span className="text-[var(--color-text)]" aria-current="page">
+          <span aria-hidden="true">→</span>
+          <span className="min-w-0 break-words text-[var(--color-text)]" aria-current="page">
             {detail.h1}
           </span>
         </nav>
@@ -534,6 +535,12 @@ export default async function CadServiceDetailPage({
               {detail.h1}
             </h1>
           </div>
+
+          <ServiceEnquiryBar
+            serviceName={detail.h1}
+            serviceSlug={detail.slug}
+            location="service_detail_top"
+          />
 
           <div className="overflow-hidden rounded-3xl border border-[var(--color-border)]">
             <Image
@@ -656,24 +663,11 @@ export default async function CadServiceDetailPage({
           )}
 
           {/* Next Steps CTA */}
-          <div className="rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 sm:p-8">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="space-y-1">
-                <h3 className="text-lg font-semibold text-[var(--color-text)]">
-                  Need a tailored CAD solution?
-                </h3>
-                <p className="text-sm text-[var(--color-muted)]">
-                  Share your requirements and we will map the right deliverables.
-                </p>
-              </div>
-              <Link
-                href="/contact/"
-                className="inline-flex items-center justify-center rounded-full bg-[var(--color-primary)] px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-on-primary)] transition-colors duration-300 hover:bg-[color-mix(in_srgb,var(--color-primary)_85%,var(--color-bg))]"
-              >
-                Contact Us
-              </Link>
-            </div>
-          </div>
+          <ServiceEnquiryBar
+            serviceName={detail.h1}
+            serviceSlug={detail.slug}
+            location="service_detail_bottom"
+          />
         </div>
       </section>
     </main>

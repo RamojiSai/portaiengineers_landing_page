@@ -174,16 +174,22 @@ export default function Home() {
     {
       discipline: "P&ID & PFD Schematics",
       deliverable: "Process & Instrumentation Sample Sheet",
+      formats: "AutoCAD DWG · Review PDF",
+      serviceSlug: "pid",
       detail: "Redacted line lists, valve schedules, equipment tags, and control loop representations.",
     },
     {
       discipline: "3D Piping & Isometrics",
       deliverable: "Routing & Fabrication Spool Sample",
+      formats: "Plant 3D / SP3D / E3D · Iso BOM",
+      serviceSlug: "piping-3d",
       detail: "Anonymized 3D piping arrangement views, weld callouts, and isometric BOM formats.",
     },
     {
       discipline: "GA & Plant Layout",
       deliverable: "Equipment & Plot Plan Sample",
+      formats: "AutoCAD DWG · Plot Coordinates",
+      serviceSlug: "plant-layout",
       detail: "Confidentiality-screened general arrangement layouts, clearance zones, and pipe rack corridors.",
     },
   ];
@@ -392,7 +398,7 @@ export default function Home() {
               </p>
             </div>
             <Link
-              href="/contact/"
+              href="/contact/#contact-form"
               className="inline-flex min-h-[44px] w-fit items-center justify-center rounded-full border border-[var(--color-primary)] px-5 py-2 text-sm font-semibold text-[var(--color-primary)] transition-colors duration-200 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]"
             >
               Request Sample Documentation &rarr;
@@ -406,9 +412,14 @@ export default function Home() {
                 className="flex h-full flex-col justify-between rounded-2xl border border-dashed border-[var(--color-border-strong)] bg-[var(--color-surface)] p-6 shadow-[0_10px_28px_var(--color-card-shadow)]"
               >
                 <div className="space-y-3">
-                  <span className="inline-block rounded-full border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--color-primary)]">
-                    Confidentiality Review / NDA
-                  </span>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="inline-block rounded-full border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--color-primary)]">
+                      Confidentiality Review / NDA
+                    </span>
+                    <span className="text-[11px] font-medium text-[var(--color-muted)]">
+                      {sample.formats}
+                    </span>
+                  </div>
                   <h3 className="text-lg font-semibold text-[var(--color-text)]">
                     {sample.discipline}
                   </h3>
@@ -419,8 +430,16 @@ export default function Home() {
                     {sample.detail}
                   </p>
                 </div>
-                <div className="mt-5 border-t border-[var(--color-border)] pt-3 text-xs font-medium text-[var(--color-muted)]">
-                  Available upon enquiry and NDA clearance
+                <div className="mt-5 flex items-center justify-between border-t border-[var(--color-border)] pt-3 text-xs">
+                  <span className="font-medium text-[var(--color-muted)]">
+                    NDA clearance required
+                  </span>
+                  <Link
+                    href={`/contact/?service=${sample.serviceSlug}#contact-form`}
+                    className="font-semibold text-[var(--color-primary)] hover:underline"
+                  >
+                    Request Sample &rarr;
+                  </Link>
                 </div>
               </div>
             ))}

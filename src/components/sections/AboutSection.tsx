@@ -2,115 +2,122 @@
 
 import Link from "next/link";
 
+const deliveryStages = [
+  {
+    step: "01",
+    title: "Scope & Input Review",
+    detail:
+      "Review process data, P&IDs, plot constraints, client standards, and deliverable lists.",
+  },
+  {
+    step: "02",
+    title: "Discipline Engineering & CAD",
+    detail:
+      "Execute process design, 3D piping modeling, stress validation, and CAD drafting in target software.",
+  },
+  {
+    step: "03",
+    title: "ISO 9001:2015 QA Checking",
+    detail:
+      "Multi-stage internal review for line specs, clash clearance, tagging consistency, and code compliance.",
+  },
+  {
+    step: "04",
+    title: "Client Review & Handover",
+    detail:
+      "Deliver clean native CAD/3D files, isometrics, BOMs, and revision-tracked PDF packages.",
+  },
+];
+
 export default function AboutSection() {
   return (
     <section
-      className="relative flex min-h-screen items-center overflow-hidden bg-[linear-gradient(135deg,var(--color-primary-soft),var(--color-bg))] px-5 py-16 sm:px-10 sm:py-24"
+      className="relative scroll-mt-20 overflow-hidden border-t border-[var(--color-border)] bg-[linear-gradient(135deg,var(--color-primary-soft),var(--color-bg))] px-5 py-16 sm:px-10 sm:py-20"
       id="about"
     >
       <div className="absolute -left-20 top-8 h-48 w-48 rounded-full bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] blur-3xl" />
       <div className="absolute -bottom-16 right-6 h-56 w-56 rounded-full bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] blur-3xl" />
 
       <div className="relative mx-auto w-full max-w-6xl">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="space-y-6 text-center sm:text-left">
-            <div className="space-y-4">
-              <span className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">
-                About
+        <div className="grid items-start gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+          <div className="min-w-0 space-y-6 text-left">
+            <div className="space-y-3">
+              <span className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-primary)]">
+                About Port AI Engineers
               </span>
-              <h2 className="mx-auto text-[clamp(1.35rem,5.5vw,2.25rem)] font-semibold tracking-tight text-[var(--color-text)] sm:mx-0 sm:whitespace-nowrap">
-                Advanced Engineering Powered by AI
+              <h2 className="text-2xl font-semibold tracking-tight text-[var(--color-text)] sm:text-3xl lg:text-4xl">
+                Structured Plant Engineering &amp; CAD Delivery
               </h2>
-              <p className="text-sm leading-relaxed text-[var(--color-muted)] sm:text-base sm:text-justify lg:text-lg">
-                We combine automation, data intelligence, and rigorous
-                engineering practices to deliver faster, safer, and more
-                predictable outcomes.
+              <p className="text-sm leading-relaxed text-[var(--color-muted)] sm:text-base lg:text-lg">
+                Port AI Engineers Pvt. Ltd. is an ISO 9001:2015 certified engineering and CAD design services company headquartered in Hyderabad, India.
               </p>
             </div>
-            <div className="space-y-5 text-sm text-[var(--color-muted)] sm:text-base lg:text-lg">
-              <p className="leading-relaxed sm:text-justify">
-                Port AI Engineers Pvt. Ltd. is a technology-driven engineering and CAD
-                services company delivering precision-focused solutions for
-                complex industrial projects. With a strong foundation in plant
-                engineering, design automation, and industrial drafting, we
-                support global industries with safe, scalable, and cost-effective
-                engineering outcomes.
+
+            <div className="space-y-4 text-sm leading-relaxed text-[var(--color-muted)] sm:text-base">
+              <p>
+                We support EPC contractors, industrial plant owners, engineering consultants, and equipment manufacturers with dedicated process engineering, 3D piping design, pipe stress analysis, and fabrication-ready CAD documentation.
               </p>
-              <p className="leading-relaxed sm:text-justify">
-                Teams gain real-time visibility into design dependencies, risks,
-                and change impacts, ensuring every deliverable aligns with
-                compliance and operational goals.
+              <p>
+                Every engagement follows structured review checklists and standardized drafting automation so deliverables arrive coordinated across process, piping, instrumentation, and layout disciplines—reducing downstream site rework.
               </p>
             </div>
-            <div className="flex flex-wrap justify-center gap-3 sm:justify-start">
+
+            <div className="flex flex-wrap gap-2.5">
               {[
-                "Automation-first execution",
-                "Standards-compliant engineering checks",
-                "Enterprise-ready delivery",
+                "ISO 9001:2015 QMS",
+                "NDA & Confidentiality Ready",
+                "Multi-Platform CAD & Stress",
               ].map((item) => (
                 <span
                   key={item}
-                  className="rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-primary)]"
+                  className="rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3.5 py-1.5 text-xs font-semibold tracking-[0.06em] text-[var(--color-primary)]"
                 >
                   {item}
                 </span>
               ))}
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-start">
+
+            <div className="flex flex-wrap items-center gap-3 pt-1">
               <Link
                 href="/services/"
-                className="inline-flex items-center justify-center rounded-full border border-[var(--color-primary)] px-6 py-2 text-sm font-semibold text-[var(--color-primary)] transition-colors duration-300 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-primary)] transition-colors duration-300 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]"
               >
-                Learn More About Our Services
+                Explore Engineering &amp; CAD Capabilities &rarr;
               </Link>
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-sm">
-            <div className="fade-in-up rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[0_20px_50px_var(--color-card-shadow)] sm:p-8">
-              <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-muted)]">
-                <span>Operational Focus</span>
-                <span className="inline-flex items-center gap-1.5 text-[var(--color-primary)]">
-                  <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                  Active
+          <div className="relative mx-auto w-full min-w-0">
+            <div className="rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[0_20px_50px_var(--color-card-shadow)] sm:p-8">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--color-border)] pb-4">
+                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">
+                  Engineering Delivery Process
+                </span>
+                <span className="rounded-full bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] px-3 py-1 text-[11px] font-semibold text-[var(--color-primary)]">
+                  4-Stage Workflow
                 </span>
               </div>
-              <div className="mt-6 space-y-3.5">
-                {[
-                  {
-                    label: "Automation",
-                    status: "Standardized CAD",
-                    detail: "Standardized CAD workflows & custom tools",
-                  },
-                  {
-                    label: "Quality",
-                    status: "ISO 9001:2015",
-                    detail: "Multi-level drawing & engineering review",
-                  },
-                  {
-                    label: "Delivery",
-                    status: "Milestone-Tracked",
-                    detail: "Disciplined scheduling & clear handover",
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="rounded-2xl border border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-surface)_50%,transparent)] p-4 transition-all duration-300 hover:border-[var(--color-primary)]"
+
+              <ol className="mt-5 space-y-3.5">
+                {deliveryStages.map((stage) => (
+                  <li
+                    key={stage.step}
+                    className="flex items-start gap-3.5 rounded-2xl border border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-surface-strong)_45%,var(--color-bg))] p-4"
                   >
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-semibold text-[var(--color-text)]">
-                        {item.label}
-                      </span>
-                      <span className="rounded-full bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] px-2.5 py-0.5 text-xs font-semibold text-[var(--color-primary)]">
-                        {item.status}
-                      </span>
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[var(--color-primary)] text-xs font-bold text-[var(--color-on-primary)]">
+                      {stage.step}
+                    </span>
+                    <div className="min-w-0 space-y-1">
+                      <h3 className="text-sm font-semibold text-[var(--color-text)]">
+                        {stage.title}
+                      </h3>
+                      <p className="text-xs leading-relaxed text-[var(--color-muted)]">
+                        {stage.detail}
+                      </p>
                     </div>
-                    <p className="mt-1 text-xs text-[var(--color-muted)]">
-                      {item.detail}
-                    </p>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ol>
             </div>
           </div>
         </div>

@@ -123,10 +123,10 @@ const featureBlocks = [
 ];
 
 const cadPillars = [
-  { value: "Rigorous", label: "Drawing Accuracy & QA" },
-  { value: "Agile", label: "CAD Project Delivery" },
-  { value: "Standardized", label: "Drafting Automation" },
-  { value: "Dedicated", label: "Technical Support" },
+  { value: "ISO 9001:2015", label: "QMS Review Checklists" },
+  { value: "24 Working Hrs", label: "Initial Enquiry Response" },
+  { value: "NDA Ready", label: "Anonymized Samples on Request" },
+  { value: "CAD Standards", label: "AutoCAD, Plant 3D, SP3D, E3D" },
 ];
 
 function CADServicesPageContent() {
@@ -279,13 +279,13 @@ function CADServicesPageContent() {
                     CAD Capabilities ({cadActiveIndex + 1}/{cadNodes.length})
                   </span>
                 </div>
-                <div className="flex gap-2 overflow-x-auto pb-2 -mx-2 px-2">
+                <div className="grid grid-cols-2 gap-2">
                   {cadNodes.map((node, index) => (
                     <button
                       key={`mobile-${node.key}`}
                       type="button"
                       onClick={() => handleSelectCadNode(index)}
-                      className={`shrink-0 rounded-xl border px-4 py-2.5 text-xs font-semibold transition-all duration-200 min-h-[44px] ${
+                      className={`rounded-xl border px-3 py-2.5 text-left text-xs font-semibold transition-all duration-200 min-h-[44px] ${
                         isCadActive(index)
                           ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-[var(--color-on-primary)] shadow-sm"
                           : "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] hover:border-[var(--color-border-strong)]"
@@ -449,16 +449,16 @@ function CADServicesPageContent() {
               ))}
             </div>
 
-            <div className="pt-2 flex flex-wrap gap-4">
+            <div className="pt-2 flex flex-wrap gap-3">
               <Link
-                href="/contact/"
-                className="inline-flex items-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-on-primary)] transition-opacity hover:opacity-90"
+                href="/contact/?service=pid#contact-form"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-on-primary)] transition-opacity hover:opacity-90"
               >
-                Inquire About CAD Services &rarr;
+                Request a CAD Project Quote &rarr;
               </Link>
               <Link
                 href="/services/engineering/"
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-transparent px-6 py-2.5 text-sm font-semibold text-[var(--color-text)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--color-border)] bg-transparent px-6 py-2.5 text-sm font-semibold text-[var(--color-text)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
               >
                 Explore Engineering Services &rarr;
               </Link>

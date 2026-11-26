@@ -1,10 +1,24 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import {
+  EMAIL_HREF,
+  PHONE_HREF,
+  SCHEDULE_CALL_URL,
+  getWhatsAppHref,
+  trackEmailClick,
+  trackPhoneClick,
+  trackQuoteCtaClick,
+  trackScheduleCallClick,
+  trackWhatsAppClick,
+} from "../../lib/analytics";
 
 type FooterLink = {
   label: string;
   href: string;
   isExternal?: boolean;
+  trackType?: "email" | "phone" | "whatsapp" | "schedule" | "quote";
 };
 
 type FooterColumn = {
@@ -32,29 +46,47 @@ const footerColumns: FooterColumn[] = [
     links: [
       { label: "About", href: "/#about" },
       { label: "Industries", href: "/#industries" },
-      { label: "Certifications", href: "/blogs/iso-9001-2015/" },
-      { label: "Resources", href: "/blogs/" },
+      { label: "ISO 9001:2015 QMS", href: "/blogs/iso-9001-2015/" },
+      { label: "Startup India (DIPP265006)", href: "/blogs/startup-certified/" },
+      { label: "Resources & Blogs", href: "/blogs/" },
     ],
   },
   {
     title: "Contact",
     links: [
       {
-        label: "Hyderabad, Telangana, India",
+        label: "Kukatpally, Hyderabad, India",
         href: "https://maps.app.goo.gl/1m6XzmsweawyRhDh8",
         isExternal: true,
       },
       {
         label: "contact@portaiengineers.com",
-        href: "mailto:contact@portaiengineers.com",
+        href: EMAIL_HREF,
         isExternal: true,
+        trackType: "email",
       },
-      { label: "Contact Us", href: "/contact/" },
-      { label: "Request a Quote", href: "/contact/" },
+      {
+        label: "Call: +91 9440584273",
+        href: PHONE_HREF,
+        isExternal: true,
+        trackType: "phone",
+      },
+      {
+        label: "WhatsApp: +91 9440584273",
+        href: getWhatsAppHref(),
+        isExternal: true,
+        trackType: "whatsapp",
+      },
+      {
+        label: "Request a Project Quote",
+        href: "/contact/#contact-form",
+        trackType: "quote",
+      },
       {
         label: "Schedule a Call",
-        href: "https://calendar.app.google/4EDU6NFyWQLtrG91A",
+        href: SCHEDULE_CALL_URL,
         isExternal: true,
+        trackType: "schedule",
       },
     ],
   },
@@ -65,12 +97,7 @@ const socialLinks = [
     label: "LinkedIn",
     href: "https://www.linkedin.com/company/port-ai/",
     icon: (
-      <svg
-        className="h-4 w-4"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        aria-hidden="true"
-      >
+      <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm-2 7h4v10h-4v-10Zm7 0h3.8v1.4h.1c.5-.9 1.7-1.8 3.5-1.8 3.7 0 4.4 2.4 4.4 5.4v5h-4v-4.5c0-1.1 0-2.5-1.6-2.5-1.6 0-1.9 1.2-1.9 2.4v4.6h-4v-10Z" />
       </svg>
     ),
@@ -99,12 +126,7 @@ const socialLinks = [
     label: "Facebook",
     href: "https://www.facebook.com/profile.php?id=61588678006058",
     icon: (
-      <svg
-        className="h-4 w-4"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        aria-hidden="true"
-      >
+      <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M13.5 9.3V7.6c0-.8.5-1 1-1h2V3.2h-2.7c-2.7 0-3.6 2-3.6 3.3v2.8H8v3.2h2.2V21h3.3v-8.5h2.5l.4-3.2h-2.9Z" />
       </svg>
     ),
@@ -113,17 +135,20 @@ const socialLinks = [
     label: "YouTube",
     href: "https://youtube.com/@portaiengineers?si=FkXxfA4DgDnX2yEl",
     icon: (
-      <svg
-        className="h-4 w-4"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        aria-hidden="true"
-      >
+      <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M21.6 7.2c-.2-.8-.8-1.4-1.6-1.6C18.6 5.2 12 5.2 12 5.2s-6.6 0-8 .4c-.8.2-1.4.8-1.6 1.6-.4 1.4-.4 4.3-.4 4.3s0 2.9.4 4.3c.2.8.8 1.4 1.6 1.6 1.4.4 8 .4 8 .4s6.6 0 8-.4c.8-.2 1.4-.8 1.6-1.6.4-1.4.4-4.3.4-4.3s0-2.9-.4-4.3ZM10.5 14.7v-5.4l4.7 2.7-4.7 2.7Z" />
       </svg>
     ),
   },
 ];
+
+function trackFooterLink(trackType?: FooterLink["trackType"]) {
+  if (trackType === "email") trackEmailClick("footer");
+  if (trackType === "phone") trackPhoneClick("footer");
+  if (trackType === "whatsapp") trackWhatsAppClick("footer");
+  if (trackType === "schedule") trackScheduleCallClick("footer");
+  if (trackType === "quote") trackQuoteCtaClick("footer");
+}
 
 export default function FooterSection() {
   return (
@@ -144,7 +169,8 @@ export default function FooterSection() {
                         key={link.label}
                         href={link.href}
                         target={link.href.startsWith("http") ? "_blank" : undefined}
-                        rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+                        rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        onClick={() => trackFooterLink(link.trackType)}
                         className="transition-colors duration-300 hover:text-[var(--color-primary)]"
                       >
                         {link.label}
@@ -156,6 +182,7 @@ export default function FooterSection() {
                     <Link
                       key={link.label}
                       href={link.href}
+                      onClick={() => trackFooterLink(link.trackType)}
                       className="transition-colors duration-300 hover:text-[var(--color-primary)]"
                     >
                       {link.label}
@@ -182,27 +209,31 @@ export default function FooterSection() {
               </svg>
             </div>
             <div className="mt-5 space-y-3">
-              <h4 className="text-xl font-semibold text-[var(--color-on-footer)]">Let’s work together</h4>
+              <h4 className="text-xl font-semibold text-[var(--color-on-footer)]">
+                Let’s work together
+              </h4>
               <p className="text-sm leading-relaxed text-[var(--color-on-footer-muted)]">
-                Get answers and a customized quote for your projects
+                Initial enquiry response within 24 working hours. Anonymized samples available upon NDA review.
               </p>
               <div className="flex flex-col gap-2.5 pt-1">
                 <Link
-                  href="/contact/"
+                  href="/contact/#contact-form"
+                  onClick={() => trackQuoteCtaClick("footer_card")}
                   className="group inline-flex w-full items-center justify-between rounded-xl bg-[var(--color-primary)] px-4 py-2.5 text-xs font-semibold text-[var(--color-on-primary)] transition-opacity hover:opacity-95"
                 >
-                  Request a Quote
+                  <span>Request a Project Quote</span>
                   <span className="transition-transform duration-300 group-hover:translate-x-1">
                     →
                   </span>
                 </Link>
                 <a
-                  href="https://calendar.app.google/4EDU6NFyWQLtrG91A"
+                  href={SCHEDULE_CALL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackScheduleCallClick("footer_card")}
                   className="group inline-flex w-full items-center justify-between rounded-xl border border-[color-mix(in_srgb,var(--color-on-footer)_55%,transparent)] bg-transparent px-4 py-2.5 text-xs font-semibold text-[var(--color-on-footer)] transition-colors duration-300 hover:border-[var(--color-primary)] hover:bg-[color-mix(in_srgb,var(--color-on-footer)_8%,transparent)]"
                 >
-                  Schedule a Call
+                  <span>Schedule a Call</span>
                   <span className="transition-transform duration-300 group-hover:translate-x-1">
                     →
                   </span>
@@ -225,11 +256,11 @@ export default function FooterSection() {
               <div className="space-y-1 text-sm text-[var(--color-on-footer-muted)]">
                 <div className="leading-tight text-[var(--color-on-footer)]">
                   <span className="text-base font-semibold tracking-tight text-[var(--color-on-footer)]">
-                    Port AI Engineers
+                    Port AI Engineers Private Limited
                   </span>
                 </div>
                 <p className="max-w-md text-xs leading-relaxed text-[var(--color-on-footer-muted)]">
-                  Port AI Engineers provides engineering design, drafting and CAD services for EPC and industrial projects.
+                  Industrial plant engineering, 3D piping design, stress analysis, and CAD documentation services from Hyderabad, India.
                 </p>
               </div>
             </div>
@@ -250,16 +281,16 @@ export default function FooterSection() {
                 </span>
                 <div className="flex items-center gap-2">
                   {socialLinks.map((link) => (
-                    <Link
+                    <a
                       key={link.label}
                       href={link.href}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       aria-label={link.label}
                       className="group inline-flex h-8 w-8 items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--color-on-footer)_15%,transparent)] bg-[color-mix(in_srgb,var(--color-on-footer)_8%,transparent)] text-[var(--color-on-footer)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
                     >
                       {link.icon}
-                    </Link>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -272,23 +303,31 @@ export default function FooterSection() {
             <p className="text-xs text-[var(--color-on-footer-muted)]">
               © 2026 Port AI Engineers Private Limited. All rights reserved.
             </p>
-            <Link
-              href="/blogs/iso-9001-2015/"
-              className="flex items-center text-xs font-semibold text-[#38BDF8]"
-            >
-              <div className="relative flex items-center gap-3 rounded-2xl border border-[color-mix(in_srgb,var(--color-primary)_45%,transparent)] bg-[color-mix(in_srgb,var(--color-primary)_20%,transparent)] px-3 py-2 shadow-[0_18px_40px_var(--color-card-shadow)]">
-                <Image
-                  src="/ISOimage.webp"
-                  alt="ISO 9001:2015 certification badge"
-                  width={40}
-                  height={40}
-                  className="h-10 w-10 object-contain"
-                />
-                <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#38BDF8]">
-                  ISO Certified
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                href="/blogs/startup-certified/"
+                className="rounded-xl border border-[color-mix(in_srgb,var(--color-on-footer)_18%,transparent)] bg-[color-mix(in_srgb,var(--color-on-footer)_6%,transparent)] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--color-on-footer)] transition-colors hover:border-[var(--color-primary)] hover:text-[#38BDF8]"
+              >
+                Startup India · DIPP265006
+              </Link>
+              <Link
+                href="/blogs/iso-9001-2015/"
+                className="flex items-center text-xs font-semibold text-[#38BDF8]"
+              >
+                <div className="relative flex items-center gap-2.5 rounded-xl border border-[color-mix(in_srgb,var(--color-primary)_45%,transparent)] bg-[color-mix(in_srgb,var(--color-primary)_20%,transparent)] px-3 py-1.5 shadow-[0_18px_40px_var(--color-card-shadow)]">
+                  <Image
+                    src="/ISOimage.webp"
+                    alt="ISO 9001:2015 certification badge"
+                    width={32}
+                    height={32}
+                    className="h-8 w-8 object-contain"
+                  />
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#38BDF8]">
+                    ISO 9001:2015 Certified
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

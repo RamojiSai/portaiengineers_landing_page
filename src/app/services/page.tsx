@@ -362,37 +362,40 @@ export default function ServicesIndexPage() {
           {/* Project Discussion & Contact CTA */}
           <div className="rounded-3xl border border-[var(--color-border)] bg-[linear-gradient(135deg,var(--color-primary-soft),var(--color-surface))] p-8 text-center sm:p-12">
             <div className="mx-auto max-w-2xl space-y-4">
+              <span className="inline-block rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--color-primary)]">
+                ISO 9001:2015 QMS · NDA Sample Pack Available
+              </span>
               <h2 className="text-2xl font-semibold tracking-tight text-[var(--color-text)] sm:text-3xl">
                 Ready to Discuss Your Engineering or CAD Project?
               </h2>
               <p className="text-sm text-[var(--color-muted)] sm:text-base">
-                Whether you need multidisciplinary plant engineering, specialized piping stress validation, or fabrication-ready CAD drawings, Port AI Engineers is ready to collaborate.
+                Share your scope for process engineering, 3D piping, stress validation, or CAD documentation. Initial enquiry response within 24 working hours; anonymized sample drawings available upon NDA review.
               </p>
-              <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
+              <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+                <Link
+                  href="/contact/"
+                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-on-primary)] shadow-md transition-all duration-300 hover:bg-[var(--color-primary-hover)]"
+                >
+                  <span>Request a Project Quote</span>
+                  <span aria-hidden="true">&rarr;</span>
+                </Link>
                 <a
                   href="https://calendar.app.google/4EDU6NFyWQLtrG91A"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-on-primary)] shadow-md transition-all duration-300 hover:opacity-95 hover:shadow-lg"
+                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-[var(--color-primary)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--color-primary)] transition-colors hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]"
                 >
-                  <span>Schedule a Call</span>
-                  <span aria-hidden="true">&rarr;</span>
+                  <span>Schedule a Technical Call</span>
                 </a>
                 <Link
-                  href="/contact/"
-                  className="inline-flex items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--color-text)] transition-colors hover:border-[var(--color-primary)]"
-                >
-                  Contact Our Team
-                </Link>
-                <Link
                   href="/services/engineering/"
-                  className="inline-flex items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--color-text)] transition-colors hover:border-[var(--color-primary)]"
+                  className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--color-text)] transition-colors hover:border-[var(--color-primary)]"
                 >
                   Engineering Services
                 </Link>
                 <Link
                   href="/services/cad/"
-                  className="inline-flex items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--color-text)] transition-colors hover:border-[var(--color-primary)]"
+                  className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--color-text)] transition-colors hover:border-[var(--color-primary)]"
                 >
                   CAD Services
                 </Link>

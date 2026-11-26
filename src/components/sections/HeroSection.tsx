@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { trackQuoteCtaClick } from "../../lib/analytics";
 
 const SLIDE_INTERVAL_MS = 6000;
 
@@ -33,21 +34,6 @@ const coreDeliverables = [
   { label: "GA Drawings", href: "/services/cad/general-arrangement/" },
   { label: "Isometric Drawings", href: "/services/cad/isometric/" },
 ];
-
-function trackHeroQuoteClick() {
-  if (
-    typeof window !== "undefined" &&
-    typeof (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag === "function"
-  ) {
-    (window as unknown as { gtag: (...args: unknown[]) => void }).gtag(
-      "event",
-      "quote_cta_click",
-      {
-        cta_location: "hero",
-      }
-    );
-  }
-}
 
 export default function HeroSection() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -197,7 +183,7 @@ export default function HeroSection() {
           <div className="flex w-full flex-col gap-3 pt-1 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
             <Link
               href="/contact/"
-              onClick={trackHeroQuoteClick}
+              onClick={() => trackQuoteCtaClick("hero")}
               className="hero-cta-gradient inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-transparent px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
             >
               <span>Request a Project Quote</span>

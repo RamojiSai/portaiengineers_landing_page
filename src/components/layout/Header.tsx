@@ -4,6 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import {
+  SCHEDULE_CALL_URL,
+  trackQuoteCtaClick,
+  trackScheduleCallClick,
+} from "../../lib/analytics";
 
 type NavEntry = {
   label: string;
@@ -59,17 +64,9 @@ const navItems: NavItem[] = [
   },
 ];
 
-const SCHEDULE_CALL_URL = "https://calendar.app.google/4EDU6NFyWQLtrG91A";
-
 function trackHeaderEvent(eventName: "quote_cta_click" | "schedule_call_click", location: string) {
-  if (
-    typeof window !== "undefined" &&
-    typeof (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag === "function"
-  ) {
-    (window as unknown as { gtag: (...args: unknown[]) => void }).gtag("event", eventName, {
-      cta_location: location,
-    });
-  }
+  if (eventName === "quote_cta_click") trackQuoteCtaClick(location);
+  if (eventName === "schedule_call_click") trackScheduleCallClick(location);
 }
 
 function isDropdownEntryActive(pathname: string, entryHref: string) {
