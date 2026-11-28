@@ -2,32 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-
-function useInView<T extends HTMLElement>(options?: IntersectionObserverInit) {
-  const ref = useRef<T | null>(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setInView(true);
-        observer.disconnect();
-      }
-    }, options);
-
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, [options]);
-
-  return { ref, inView };
-}
+import TrackedLink from "../../../components/analytics/TrackedLink";
 
 function FadeIn({
   children,
@@ -36,18 +11,7 @@ function FadeIn({
   children: React.ReactNode;
   className?: string;
 }) {
-  const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.15 });
-
-  return (
-    <div
-      ref={ref}
-      className={`transition-all duration-700 ease-out ${
-        inView ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
-      } ${className ?? ""}`}
-    >
-      {children}
-    </div>
-  );
+  return <div className={className}>{children}</div>;
 }
 
 const services = [
@@ -104,19 +68,18 @@ const industries = [
 
 export default function BlogsAllClient() {
   return (
-    <main className="min-h-screen bg-[#0B1F4D] text-white">
+    <div className="min-h-screen bg-[#0B1F4D] text-white">
       {/* Hero */}
       <section className="w-full bg-[#0B1F4D] px-6 py-16 sm:px-10 sm:py-20">
         <div className="mx-auto w-full max-w-6xl">
-          <FadeIn>
             <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
               <div className="space-y-6">
                 <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-medium text-white/60">
                   <Link href="/" className="transition-colors hover:text-white">Home</Link>
-                  <span>/</span>
+                  <span aria-hidden="true">/</span>
                   <Link href="/blogs/" className="transition-colors hover:text-white">Blogs</Link>
-                  <span>/</span>
-                  <span className="text-[#D9A441]">Inside Port AI Engineers</span>
+                  <span aria-hidden="true">/</span>
+                  <span aria-current="page" className="text-[#D9A441]">Inside Port AI Engineers</span>
                 </nav>
                 <div className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold tracking-[0.22em] text-[#D9A441]">
                   ENGINEERING EXCELLENCE
@@ -147,11 +110,11 @@ export default function BlogsAllClient() {
                   alt="Engineering plant infrastructure"
                   width={992}
                   height={558}
+                  priority
                   className="h-64 w-full object-cover sm:h-72 lg:h-[360px]"
                 />
               </div>
             </div>
-          </FadeIn>
         </div>
       </section>
 
@@ -175,8 +138,8 @@ export default function BlogsAllClient() {
               <Image
                 src="/Low-Carbon-Ammonia-image1.webp"
                 alt="Industrial engineering design collaboration"
-                width={3000}
-                height={1285}
+                width={1920}
+                height={822}
                 className="h-64 w-full object-cover sm:h-80"
               />
               <figcaption className="px-5 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
@@ -271,7 +234,7 @@ export default function BlogsAllClient() {
                     <div key={item.step} className="relative">
                       <div className="absolute -left-[6px] top-2 h-3 w-3 rounded-full border border-[#D9A441] bg-white" />
                       <div className="rounded-2xl border border-[#E5E7EB] bg-white px-5 py-4">
-                        <div className="text-xs font-semibold tracking-[0.22em] text-[#D9A441]">
+                        <div className="text-xs font-semibold tracking-[0.22em] text-[#9A6B12]">
                           {item.step}
                         </div>
                         <div className="mt-1 text-sm font-semibold text-slate-900 sm:text-base">
@@ -314,7 +277,7 @@ export default function BlogsAllClient() {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6">
-                  <div className="text-xs font-semibold tracking-[0.22em] text-[#D9A441]">
+                  <div className="text-xs font-semibold tracking-[0.22em] text-[#9A6B12]">
                     Mission
                   </div>
                   <p className="mt-3 text-base leading-relaxed text-slate-700 sm:text-lg">
@@ -324,7 +287,7 @@ export default function BlogsAllClient() {
                 </div>
 
                 <div className="rounded-2xl border border-[#E5E7EB] bg-white p-6">
-                  <div className="text-xs font-semibold tracking-[0.22em] text-[#D9A441]">
+                  <div className="text-xs font-semibold tracking-[0.22em] text-[#9A6B12]">
                     Vision
                   </div>
                   <p className="mt-3 text-base leading-relaxed text-slate-700 sm:text-lg">
@@ -349,11 +312,19 @@ export default function BlogsAllClient() {
                   project from concept to completion.
                 </p>
                 <div className="flex flex-wrap items-center gap-4">
-                  <Link
-                    href="/contact/"
+                  <TrackedLink
+                    href="/contact/#contact-form"
+                    trackType="quote"
+                    ctaLocation="blog_all_footer"
                     className="inline-flex items-center justify-center rounded-full bg-[#0B1F4D] px-6 py-3 text-xs font-semibold tracking-[0.22em] text-white transition-colors duration-300 hover:bg-[#0B1F4D]/90"
                   >
                     GET IN TOUCH
+                  </TrackedLink>
+                  <Link
+                    href="/services/engineering-design-outsourcing/"
+                    className="inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 text-xs font-semibold tracking-[0.22em] text-slate-800 transition-colors duration-300 hover:bg-slate-100"
+                  >
+                    OUTSOURCING &rarr;
                   </Link>
                   <Link
                     href="/blogs/"
@@ -367,6 +338,6 @@ export default function BlogsAllClient() {
           </FadeIn>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

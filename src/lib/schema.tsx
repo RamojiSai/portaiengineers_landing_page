@@ -4,6 +4,13 @@ export const ORGANIZATION_ID = "https://portaiengineers.com/#organization";
 export const WEBSITE_ID = "https://portaiengineers.com/#website";
 export const CANONICAL_BASE = "https://portaiengineers.com";
 
+export const TARGET_COUNTRIES = [
+  { "@type": "Country", name: "India" },
+  { "@type": "Country", name: "United Arab Emirates" },
+  { "@type": "Country", name: "Saudi Arabia" },
+  { "@type": "Country", name: "Qatar" },
+];
+
 export function globalOrganizationSchema() {
   return {
     "@context": "https://schema.org",
@@ -22,9 +29,22 @@ export function globalOrganizationSchema() {
       postalCode: "500072",
       addressCountry: "IN",
     },
+    areaServed: TARGET_COUNTRIES,
+    knowsAbout: [
+      "P&ID Design and Drafting",
+      "Process Flow Diagrams (PFD)",
+      "3D Piping Design",
+      "General Arrangement (GA) Drawings",
+      "Industrial Plant Layout",
+      "Piping Stress Analysis",
+      "Fire Evacuation CAD Drawings",
+      "Engineering Design Outsourcing",
+    ],
     sameAs: [
       "https://www.linkedin.com/company/port-ai/",
       "https://www.instagram.com/portaiengineers",
+      "https://www.facebook.com/profile.php?id=61588678006058",
+      "https://youtube.com/@portaiengineers",
     ],
   };
 }
@@ -113,12 +133,14 @@ export function createServiceSchema({
   url,
   serviceType,
   image,
+  areaServed = TARGET_COUNTRIES,
 }: {
   name: string;
   description: string;
   url: string;
   serviceType: string;
   image?: string;
+  areaServed?: typeof TARGET_COUNTRIES;
 }) {
   const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -130,6 +152,7 @@ export function createServiceSchema({
     provider: {
       "@id": ORGANIZATION_ID,
     },
+    areaServed,
   };
 
   if (image) {
@@ -141,23 +164,76 @@ export function createServiceSchema({
   return schema;
 }
 
+export function createFaqSchema(
+  faqs: { question: string; answer: string }[]
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
 export function parseDateToIsoOrOmit(dateStr?: string): string | undefined {
   if (!dateStr) return undefined;
-  const match = dateStr.match(/^([A-Za-z]+)\s+(\d{1,2}),?\s+(\d{4})$/);
-  if (match) {
-    const [, monthName, dayStr, yearStr] = match;
-    const months: Record<string, string> = {
-      january: "01", feb: "02", february: "02", mar: "03", march: "03",
-      apr: "04", april: "04", may: "05", june: "06",
-      july: "07", aug: "08", august: "08", sep: "09", september: "09",
-      oct: "10", october: "10", nov: "11", november: "11", dec: "12", december: "12"
-    };
+  const trimmed = dateStr.trim();
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    return trimmed;
+  }
+
+  const months: Record<string, string> = {
+    january: "01",
+    jan: "01",
+    february: "02",
+    feb: "02",
+    march: "03",
+    mar: "03",
+    april: "04",
+    apr: "04",
+    may: "05",
+    june: "06",
+    jun: "06",
+    july: "07",
+    jul: "07",
+    august: "08",
+    aug: "08",
+    september: "09",
+    sep: "09",
+    sept: "09",
+    october: "10",
+    oct: "10",
+    november: "11",
+    nov: "11",
+    december: "12",
+    dec: "12",
+  };
+
+  const fullMatch = trimmed.match(/^([A-Za-z]+)\s+(\d{1,2}),?\s+(\d{4})$/);
+  if (fullMatch) {
+    const [, monthName, dayStr, yearStr] = fullMatch;
     const m = months[monthName.toLowerCase()];
     if (m) {
-      const d = dayStr.padStart(2, "0");
-      return `${yearStr}-${m}-${d}`;
+      return `${yearStr}-${m}-${dayStr.padStart(2, "0")}`;
     }
   }
+
+  const monthYearMatch = trimmed.match(/^([A-Za-z]+)\s+(\d{4})$/);
+  if (monthYearMatch) {
+    const [, monthName, yearStr] = monthYearMatch;
+    const m = months[monthName.toLowerCase()];
+    if (m) {
+      return `${yearStr}-${m}-01`;
+    }
+  }
+
   return undefined;
 }
 
@@ -168,6 +244,7 @@ export function createBlogPostingSchema({
   description,
   image,
   datePublished,
+  dateModified,
   authorName,
   type = "BlogPosting",
 }: {
@@ -177,6 +254,7 @@ export function createBlogPostingSchema({
   description: string;
   image?: string;
   datePublished?: string;
+  dateModified?: string;
   authorName: string;
   type?: "BlogPosting" | "Article";
 }) {
@@ -205,6 +283,11 @@ export function createBlogPostingSchema({
   const isoDate = parseDateToIsoOrOmit(datePublished);
   if (isoDate) {
     schema.datePublished = isoDate;
+  }
+
+  const isoModified = parseDateToIsoOrOmit(dateModified);
+  if (isoModified) {
+    schema.dateModified = isoModified;
   }
 
   return schema;

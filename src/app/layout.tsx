@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
 import Header from "../components/layout/Header";
+import MobileStickyBar from "../components/layout/MobileStickyBar";
 import FooterSection from "../components/sections/FooterSection";
 import GlobalGetInTouch from "../components/layout/GlobalGetInTouch";
 import { JsonLd, globalOrganizationSchema, globalWebSiteSchema } from "../lib/schema";
@@ -63,7 +64,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col pb-[calc(4.5rem+env(safe-area-inset-bottom))] md:pb-0">
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-EC4J1LSR38"
           strategy="afterInteractive"
@@ -78,12 +79,19 @@ export default function RootLayout({
         </Script>
         <JsonLd schema={globalOrganizationSchema()} />
         <JsonLd schema={globalWebSiteSchema()} />
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-[var(--color-primary)] focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-[var(--color-on-primary)] focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-bg)]"
+        >
+          Skip to main content
+        </a>
         <Header />
-        <main id="main-content" className="flex-1">
+        <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
           {children}
         </main>
         <GlobalGetInTouch />
         <FooterSection />
+        <MobileStickyBar />
       </body>
     </html>
   );

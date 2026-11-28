@@ -1,88 +1,98 @@
-"use client";
+import Link from "next/link";
+import TrackedLink from "../analytics/TrackedLink";
 
-import { useEffect, useRef, useState } from "react";
-
-const metrics = [
+const executionStandards = [
   {
-    value: "Verified",
-    label: "Quality-First Operations",
-    description: "Multi-stage QA and compliance checking across every deliverable.",
+    badge: "Cross-Discipline Alignment",
+    title: "Coordinated Engineering Handoffs",
+    description:
+      "Process schematics (PFD/P&ID), piping specifications, 3D models, stress analysis, and GA drawings stay synchronized across disciplines.",
+    href: "/services/",
+    ctaLabel: "Explore All Disciplines",
+    serviceInterest: undefined,
   },
   {
-    value: "Dedicated",
-    label: "Technical Engagement",
-    description: "Responsive support and transparent project communication.",
+    badge: "Drawing Verification",
+    title: "Multi-Stage QA & Checking",
+    description:
+      "Every deliverable undergoes structured checks for line tagging, spec breaks, nozzle orientation, clash clearance, and revision control.",
+    href: "/blogs/iso-9001-2015/",
+    ctaLabel: "See Quality Process",
+    serviceInterest: undefined,
   },
   {
-    value: "Rigorous",
-    label: "Design Accuracy",
-    description: "Detailed code compliance and drawing verification.",
+    badge: "IP & Confidentiality",
+    title: "NDA-Backed Sample Review",
+    description:
+      "Client specifications and drawings remain strictly protected, with NDA execution and anonymized documentation previews available on request.",
+    href: "/contact/?service=other#contact-form",
+    ctaLabel: "Request NDA Sample Pack",
+    serviceInterest: "other",
   },
   {
-    value: "Agile",
-    label: "Project Execution",
-    description: "Streamlined coordination from kickoff to client handover.",
+    badge: "Responsive Scoping",
+    title: "24 Working Hours Enquiry SLA",
+    description:
+      "Direct technical scoping from Hyderabad with an initial engineering response within 24 working hours and milestone-tracked delivery.",
+    href: "/contact/#contact-form",
+    ctaLabel: "Request a Project Quote",
+    serviceInterest: "general",
   },
 ];
 
 export default function ProvenResultsSection() {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const node = sectionRef.current;
-    if (!node) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.25 }
-    );
-
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section
-      ref={sectionRef}
-      className="relative w-full bg-[linear-gradient(135deg,var(--color-primary-soft),var(--color-bg))] px-6 py-20 sm:px-10 sm:py-24"
-    >
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-12 text-center">
-        <div className="space-y-3">
-          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--color-primary)]">
-            Proven Impact
+    <section className="relative w-full border-t border-[var(--color-border)] bg-[var(--color-bg)] px-5 py-16 sm:px-10 sm:py-20">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
+        <div className="space-y-3 text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-primary)]">
+            Engineering Governance
           </span>
-          <h2 className="text-3xl font-semibold tracking-tight text-[var(--color-text)] sm:text-4xl">
-            Demonstrated Engineering Rigor &amp; QA
+          <h2 className="text-2xl font-semibold tracking-tight text-[var(--color-text)] sm:text-3xl lg:text-4xl">
+            How We Safeguard Drawing Quality &amp; Project Confidentiality
           </h2>
-          <p className="text-sm text-[var(--color-muted)] sm:text-base">
-            Real results across operations, engagement, and intelligence
+          <p className="mx-auto max-w-2xl text-sm text-[var(--color-muted)] sm:text-base">
+            Practical engineering review controls, IP protection, and transparent enquiry commitments built for EPC and plant teams.
           </p>
         </div>
 
-        <div className="grid w-full gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {metrics.map((metric) => (
+        <div className="grid w-full gap-6 sm:grid-cols-2 xl:grid-cols-4">
+          {executionStandards.map((item) => (
             <div
-              key={metric.label}
-              className={`flex h-full flex-col gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 text-left shadow-[0_12px_30px_var(--color-card-shadow)] transition-all duration-300 ease-out hover:scale-[1.05] hover:border-[var(--color-primary)] hover:shadow-[0_24px_50px_var(--color-primary-glow)] ${
-                isVisible ? "fade-in-up" : "opacity-0"
-              }`}
+              key={item.title}
+              className="flex h-full flex-col justify-between gap-5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 text-left shadow-[0_12px_30px_var(--color-card-shadow)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-primary)]"
             >
-              <div className="text-3xl font-semibold text-[var(--color-primary)] sm:text-4xl">
-                {metric.value}
+              <div className="space-y-3">
+                <span className="inline-block rounded-full bg-[color-mix(in_srgb,var(--color-primary)_12%,transparent)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--color-primary)]">
+                  {item.badge}
+                </span>
+                <h3 className="text-lg font-semibold text-[var(--color-text)]">
+                  {item.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-[var(--color-muted)]">
+                  {item.description}
+                </p>
               </div>
-              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">
-                {metric.label}
-              </div>
-              <p className="text-sm text-[var(--color-muted)]">{metric.description}</p>
+              {item.serviceInterest ? (
+                <TrackedLink
+                  href={item.href}
+                  trackType="quote"
+                  ctaLocation="proven_results_card"
+                  serviceInterest={item.serviceInterest}
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-primary)] hover:underline"
+                >
+                  <span>{item.ctaLabel}</span>
+                  <span aria-hidden="true">&rarr;</span>
+                </TrackedLink>
+              ) : (
+                <Link
+                  href={item.href}
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-primary)] hover:underline"
+                >
+                  <span>{item.ctaLabel}</span>
+                  <span aria-hidden="true">&rarr;</span>
+                </Link>
+              )}
             </div>
           ))}
         </div>

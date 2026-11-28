@@ -13,6 +13,9 @@
 .engineering-blog-page {
   --navy:       #0B1F3A;
   --blue:       #1A4B8C;
+  --hero-navy:  #0B1F3A;
+  --hero-blue:  #1A4B8C;
+  --hero-white: #FFFFFF;
   --sky:        #2E86DE;
   --teal:       #0FA3B1;
   --gold:       #F4A946;
@@ -29,6 +32,22 @@
   --dark-card:  #0D2137;
 }
 
+html.dark .engineering-blog-page {
+  --navy:     #F1F5F9;
+  --blue:     #38BDF8;
+  --sky:      #38BDF8;
+  --cream:    var(--color-bg);
+  --white:    var(--color-surface);
+  --text:     var(--color-text);
+  --muted:    var(--color-muted);
+  --light-bg: var(--color-surface-strong);
+  --border:   var(--color-border);
+  --tag-bg:   rgba(56, 189, 248, 0.14);
+  --tag-text: #7DD3FC;
+  --success-bg: rgba(16, 185, 129, 0.14);
+  --dark-card: var(--color-surface-strong);
+}
+
 html { scroll-behavior: smooth; }
 
 .engineering-blog-page {
@@ -36,6 +55,28 @@ html { scroll-behavior: smooth; }
   color: var(--text);
   background: var(--cream);
   line-height: 1.75;
+}
+
+.engineering-blog-page .blog-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 18px;
+}
+.engineering-blog-page .blog-breadcrumb a {
+  color: rgba(255, 255, 255, 0.88);
+  text-decoration: none;
+}
+.engineering-blog-page .blog-breadcrumb a:hover {
+  color: var(--gold);
+  text-decoration: underline;
+}
+.engineering-blog-page .blog-breadcrumb span[aria-current="page"] {
+  color: var(--gold);
 }
 
 /* ── ANIMATIONS ── */
@@ -56,8 +97,8 @@ html { scroll-behavior: smooth; }
    HERO
    ================================================================ */
 .cad-hero {
-  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 60%, #1e6eb5 100%);
-  color: var(--white);
+  background: linear-gradient(135deg, var(--hero-navy) 0%, var(--hero-blue) 60%, #1e6eb5 100%);
+  color: var(--hero-white);
   position: relative;
   overflow: hidden;
 }
@@ -247,6 +288,9 @@ html { scroll-behavior: smooth; }
   margin-bottom: 48px;
   box-shadow: 0 8px 36px rgba(11,31,58,0.09);
   animation: imgCardFade 0.8s ease 0.2s both;
+}
+.cad-img-card--reverse {
+  flex-direction: row-reverse;
 }
 .cad-img-card__img {
   width: 240px;
@@ -445,7 +489,11 @@ html { scroll-behavior: smooth; }
 }
 .cad-commitment h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.8rem; color: var(--white); margin-bottom: 12px;
+  font-size: 1.8rem; color: var(--hero-white); margin-bottom: 12px;
+}
+.cad-commitment {
+  background: linear-gradient(135deg, var(--hero-navy) 0%, #1d3d70 100%);
+  color: var(--hero-white);
 }
 .cad-commitment p { color: rgba(255,255,255,0.75); font-size: 1rem; margin-bottom: 8px; }
 .cad-commit-grid {
@@ -476,8 +524,8 @@ html { scroll-behavior: smooth; }
 .cad-future__text p { margin-bottom: 0; }
 .cad-future__tags  { flex: 1 1 220px; display: flex; flex-wrap: wrap; gap: 8px; }
 .cad-future-tag {
-  background: linear-gradient(135deg, var(--light-bg), #e0f0ff);
-  color: var(--blue);
+  background: var(--tag-bg);
+  color: var(--tag-text);
   border: 1px solid var(--border);
   border-radius: 24px; padding: 8px 18px;
   font-size: 13px; font-weight: 600;
@@ -494,10 +542,10 @@ html { scroll-behavior: smooth; }
 }
 .cad-about__logo {
   width: 72px; height: 72px;
-  background: var(--navy); border-radius: 16px;
+  background: var(--hero-navy); border-radius: 16px;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
-.cad-about__logo svg { fill: var(--white); }
+.cad-about__logo svg { fill: var(--hero-white); }
 .cad-about__content  { flex: 1 1 260px; }
 .cad-about__content h3 { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
 .cad-about__content p  { font-size: 14px; color: var(--muted); margin-bottom: 14px; }
@@ -567,14 +615,44 @@ html { scroll-behavior: smooth; }
   color: var(--sky);
 }
 .cad-nav-card__btn--primary {
-  background: var(--blue);
-  border-color: var(--blue);
-  color: var(--white);
+  background: var(--hero-blue);
+  border-color: var(--hero-blue);
+  color: var(--hero-white);
 }
 .cad-nav-card__btn--primary:hover {
-  background: var(--navy);
-  border-color: var(--navy);
-  color: var(--white);
+  background: var(--hero-navy);
+  border-color: var(--hero-navy);
+  color: var(--hero-white);
+}
+html.dark .cad-nav-card__btn--primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+html.dark .cad-banner {
+  background: linear-gradient(90deg, var(--teal) 0%, var(--hero-blue) 100%);
+}
+html.dark .cad-banner__title,
+html.dark .cad-banner__stat {
+  color: var(--hero-white);
+}
+html.dark .cad-tag--primary {
+  color: var(--hero-navy);
+}
+html.dark .cad-hero h1 {
+  color: var(--hero-white);
+}
+html.dark .cad-pill--gold {
+  background: rgba(244, 169, 70, 0.16);
+  color: #FCD34D;
+}
+html.dark .cad-pill--teal {
+  background: rgba(15, 163, 177, 0.16);
+  color: #5EEAD4;
+}
+html.dark .cad-pill--navy {
+  background: rgba(56, 189, 248, 0.14);
+  color: #BAE6FD;
 }
 .cad-nav-card__btn--outline {
   border-color: var(--sky);
@@ -591,8 +669,9 @@ html { scroll-behavior: smooth; }
    ================================================================ */
 @media (max-width: 680px) {
   .cad-hero__grid    { grid-template-columns: 1fr; }
-  .cad-hero__img-box { display: none; }
-  .cad-img-card      { flex-direction: column; gap: 20px; padding: 20px; }
+  .cad-hero__img-box { display: block; margin-top: 20px; }
+  .cad-img-card,
+  .cad-img-card--reverse { flex-direction: column; gap: 20px; padding: 20px; }
   .cad-img-card__img { width: 100%; max-width: 340px; }
   .cad-commitment    { padding: 30px 22px; }
   .cad-article       { padding: 36px 20px; }

@@ -1,24 +1,25 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import TrackedLink from "../../../components/analytics/TrackedLink";
 
 export const metadata: Metadata = {
-  title: "CAD Services & Engineering Drawings in Industrial Projects",
+  title: "Industrial CAD Services & Drawings",
   description:
-    "Discover how Port AI Engineers delivers precision CAD services, code compliance, and reliable engineering documentation across industrial facilities.",
+    "How Port AI Engineers delivers 2D drafting, 3D modeling, P&ID documentation, CAD conversion & ISO 9001:2015 QA for industrial facilities.",
   alternates: {
     canonical: "https://portaiengineers.com/blogs/engineers-blog/",
   },
   openGraph: {
-    title: "CAD Services & Engineering Drawings in Industrial Projects | Port AI Engineers",
+    title: "Industrial CAD Services & Drawings | Port AI Engineers",
     description:
-      "Discover how Port AI Engineers delivers precision CAD services, code compliance, and reliable engineering documentation across industrial facilities.",
+      "How Port AI Engineers delivers 2D drafting, 3D modeling, P&ID documentation, CAD conversion & ISO 9001:2015 QA for industrial facilities.",
     url: "https://portaiengineers.com/blogs/engineers-blog/",
     siteName: "Port AI Engineers",
     images: [
       {
-        url: "/cad-services-BOtMPt39.jpg",
-        width: 1200,
-        height: 630,
+        url: "/images/blogs/cad-engineering-team.webp",
+        width: 720,
+        height: 480,
         alt: "Port AI Engineers - CAD Services & Engineering Drawings",
       },
     ],
@@ -27,10 +28,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "CAD Services & Engineering Drawings in Industrial Projects | Port AI Engineers",
+    title: "Industrial CAD Services & Drawings | Port AI Engineers",
     description:
-      "Discover how Port AI Engineers delivers precision CAD services, code compliance, and reliable engineering documentation across industrial facilities.",
-    images: ["/cad-services-BOtMPt39.jpg"],
+      "How Port AI Engineers delivers 2D drafting, 3D modeling, P&ID documentation, CAD conversion & ISO 9001:2015 QA for industrial facilities.",
+    images: ["/images/blogs/cad-engineering-team.webp"],
   },
 };
 
@@ -39,7 +40,7 @@ import React from "react";
 import "./engineer.css";
 import {
   JsonLd,
-  createWebPageSchema,
+  createBlogPostingSchema,
   createBreadcrumbSchema,
 } from "../../../lib/schema";
 
@@ -178,30 +179,42 @@ const SERVICES = [
 // COMPONENT
 // ══════════════════════════════════════════════════════════════
 export default function CADServicesPage() {
-  const webPageSchema = createWebPageSchema({
-    id: "https://portaiengineers.com/blogs/engineers-blog/#webpage",
-    url: "https://portaiengineers.com/blogs/engineers-blog/",
-    name: "CAD Services & Engineering Drawings in Industrial Projects",
+  const canonicalUrl = "https://portaiengineers.com/blogs/engineers-blog/";
+
+  const blogPostingSchema = createBlogPostingSchema({
+    id: `${canonicalUrl}#article`,
+    url: canonicalUrl,
+    headline: "CAD Services & Engineering Drawings in Industrial Projects",
     description:
-      "Discover how Port AI Engineers delivers precision CAD services, code compliance, and reliable engineering documentation across industrial facilities.",
+      "How Port AI Engineers delivers 2D drafting, 3D modeling, P&ID documentation, CAD conversion & ISO 9001:2015 QA for industrial facilities.",
+    image: "/images/blogs/cad-engineering-team.webp",
+    datePublished: "July 1, 2025",
+    authorName: "Port AI Engineers",
   });
 
   const breadcrumbSchema = createBreadcrumbSchema([
     { name: "Home", url: "https://portaiengineers.com/" },
     { name: "Blogs", url: "https://portaiengineers.com/blogs/" },
     {
-      name: "CAD Services & Engineering Drawings in Industrial Projects",
-      url: "https://portaiengineers.com/blogs/engineers-blog/",
+      name: "Industrial CAD Services & Drawings",
+      url: canonicalUrl,
     },
   ]);
 
   return (
     <div className="engineering-blog-page">
-      <JsonLd schema={webPageSchema} />
+      <JsonLd schema={blogPostingSchema} />
       <JsonLd schema={breadcrumbSchema} />
       {/* ── HERO ── */}
       <header className="cad-hero">
         <div className="cad-hero__inner">
+          <nav aria-label="Breadcrumb" className="blog-breadcrumb">
+            <Link href="/">Home</Link>
+            <span aria-hidden="true">/</span>
+            <Link href="/blogs/">Blogs</Link>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Industrial CAD Services</span>
+          </nav>
 
           {/* Blog Tags */}
           <div className="cad-tag-row">
@@ -217,7 +230,7 @@ export default function CADServicesPage() {
           <div className="cad-hero__grid">
             <div>
               <h1>
-                CAD Services.<br />
+                CAD Services. <br />
                 <span>Designed with Precision.</span>
               </h1>
               <p className="cad-hero__subtitle">
@@ -270,7 +283,7 @@ export default function CADServicesPage() {
       </div>
 
       {/* ── ARTICLE ── */}
-      <main className="cad-article">
+      <div className="cad-article">
 
         {/* Lead */}
         <p className="cad-lead">
@@ -311,7 +324,7 @@ export default function CADServicesPage() {
         </div>
 
         {/* Image 3 — Designer at workstation */}
-        <div className="cad-img-card" style={{ flexDirection: "row-reverse" }}>
+        <div className="cad-img-card cad-img-card--reverse">
           <Image
             className="cad-img-card__img"
             src="/images/blogs/cad-designer-workstation.webp"
@@ -508,7 +521,7 @@ export default function CADServicesPage() {
         <div className="cad-nav-card">
           <div className="cad-nav-card__inner">
             <div>
-              <h4 className="cad-nav-card__title">Explore Engineering &amp; CAD Services</h4>
+              <h2 className="cad-nav-card__title">Explore Engineering &amp; CAD Services</h2>
               <p className="cad-nav-card__desc">Browse our complete industrial services or discuss your project requirements.</p>
             </div>
             <div className="cad-nav-card__links">
@@ -521,14 +534,20 @@ export default function CADServicesPage() {
               <Link href="/services/engineering/" className="cad-nav-card__btn">
                 Engineering Services
               </Link>
-              <Link href="/contact/" className="cad-nav-card__btn cad-nav-card__btn--primary">
-                Contact Us
-              </Link>
+              <TrackedLink
+                href="/contact/?service=pid#contact-form"
+                trackType="quote"
+                ctaLocation="blog_engineers_footer"
+                serviceInterest="pid"
+                className="cad-nav-card__btn cad-nav-card__btn--primary"
+              >
+                Request a Quote
+              </TrackedLink>
             </div>
           </div>
         </div>
 
-      </main>
+      </div>
     </div>
   );
 }

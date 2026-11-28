@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { trackQuoteCtaClick } from "../../../lib/analytics";
 
 const NODE_SWITCH_MS = 10000;
 
@@ -123,16 +124,14 @@ const featureBlocks = [
 ];
 
 const cadPillars = [
-  { value: "Rigorous", label: "Drawing Accuracy & QA" },
-  { value: "Agile", label: "CAD Project Delivery" },
-  { value: "Standardized", label: "Drafting Automation" },
-  { value: "Dedicated", label: "Technical Support" },
+  { value: "ISO 9001:2015", label: "QMS Review Checklists" },
+  { value: "24 Working Hrs", label: "Initial Enquiry Response" },
+  { value: "NDA Ready", label: "Anonymized Samples on Request" },
+  { value: "CAD Standards", label: "AutoCAD, Plant 3D, SP3D, E3D" },
 ];
 
 function CADServicesPageContent() {
   const [cadActiveIndex, setCadActiveIndex] = useState(0);
-  const [isCadVisible, setIsCadVisible] = useState(false);
-  const [isWhyVisible, setIsWhyVisible] = useState(false);
 
   const activeCadNode = useMemo(
     () => cadNodes[cadActiveIndex],
@@ -153,48 +152,6 @@ function CADServicesPageContent() {
     setCadActiveIndex(index);
   };
 
-  useEffect(() => {
-    const section = document.getElementById("why-choose-services");
-    if (!section) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsWhyVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const section = document.getElementById("cad-flow");
-    if (!section) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsCadVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.05 }
-    );
-
-    observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
       {/* Section 1: Interactive CAD Wheel */}
@@ -203,17 +160,13 @@ function CADServicesPageContent() {
         className="w-full bg-[var(--color-bg)] px-6 py-16 sm:px-10"
       >
         <div className="mx-auto w-full max-w-6xl">
-          <div
-            className={`mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center transition-all duration-700 ease-out ${
-              isCadVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-            }`}
-          >
-            <nav className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">
+          <div className="mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center">
+            <nav aria-label="Breadcrumb" className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">
               <Link href="/" className="hover:underline">Home</Link>
-              <span className="px-2 text-[var(--color-muted)]">/</span>
+              <span aria-hidden="true" className="px-2 text-[var(--color-muted)]">/</span>
               <Link href="/services/" className="hover:underline">Services</Link>
-              <span className="px-2 text-[var(--color-muted)]">/</span>
-              <span className="text-[var(--color-text)]">CAD</span>
+              <span aria-hidden="true" className="px-2 text-[var(--color-muted)]">/</span>
+              <span aria-current="page" className="text-[var(--color-text)]">CAD</span>
             </nav>
             <h1 className="text-3xl font-semibold tracking-tight text-[var(--color-text)] sm:text-4xl">
               Industrial CAD Drafting & Design Services
@@ -279,13 +232,13 @@ function CADServicesPageContent() {
                     CAD Capabilities ({cadActiveIndex + 1}/{cadNodes.length})
                   </span>
                 </div>
-                <div className="flex gap-2 overflow-x-auto pb-2 -mx-2 px-2">
+                <div className="grid grid-cols-2 gap-2">
                   {cadNodes.map((node, index) => (
                     <button
                       key={`mobile-${node.key}`}
                       type="button"
                       onClick={() => handleSelectCadNode(index)}
-                      className={`shrink-0 rounded-xl border px-4 py-2.5 text-xs font-semibold transition-all duration-200 min-h-[44px] ${
+                      className={`rounded-xl border px-3 py-2.5 text-left text-xs font-semibold transition-all duration-200 min-h-[44px] ${
                         isCadActive(index)
                           ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-[var(--color-on-primary)] shadow-sm"
                           : "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text)] hover:border-[var(--color-border-strong)]"
@@ -329,7 +282,7 @@ function CADServicesPageContent() {
                   </p>
                 </div>
 
-                <div className="mt-8">
+                <div className="mt-8 flex flex-wrap gap-3">
                   <Link
                     href={`/services/cad/${activeCadNode.slug}/`}
                     className="group inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)] bg-transparent px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)] transition-colors duration-300 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]"
@@ -338,6 +291,13 @@ function CADServicesPageContent() {
                     <span className="transition-transform duration-300 group-hover:translate-x-1">
                       →
                     </span>
+                  </Link>
+                  <Link
+                    href={`/contact/?service=${activeCadNode.slug}#contact-form`}
+                    onClick={() => trackQuoteCtaClick("cad_hub_wheel_card", activeCadNode.slug)}
+                    className="inline-flex items-center gap-2 rounded-full bg-[var(--color-primary)] px-5 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-on-primary)] transition-opacity hover:opacity-90"
+                  >
+                    Request Quote
                   </Link>
                 </div>
               </article>
@@ -393,13 +353,7 @@ function CADServicesPageContent() {
         className="w-full bg-[var(--color-bg)] px-6 py-20 sm:px-10 sm:py-24 border-t border-[var(--color-border)]"
       >
         <div className="mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-          <div
-            className={`space-y-8 transition-all duration-700 ease-out ${
-              isWhyVisible
-                ? "translate-x-0 opacity-100"
-                : "-translate-x-6 opacity-0"
-            }`}
-          >
+          <div className="space-y-8">
             <div className="space-y-4">
               <h2 className="text-3xl font-semibold tracking-tight text-[var(--color-text)] sm:text-4xl">
                 Why Choose Our <span className="text-[var(--color-primary)]">CAD Services</span>
@@ -449,29 +403,24 @@ function CADServicesPageContent() {
               ))}
             </div>
 
-            <div className="pt-2 flex flex-wrap gap-4">
+            <div className="pt-2 flex flex-wrap gap-3">
               <Link
-                href="/contact/"
-                className="inline-flex items-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-on-primary)] transition-opacity hover:opacity-90"
+                href={`/contact/?service=${activeCadNode.slug}#contact-form`}
+                onClick={() => trackQuoteCtaClick("cad_hub_why_section", activeCadNode.slug)}
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-on-primary)] transition-opacity hover:opacity-90"
               >
-                Inquire About CAD Services &rarr;
+                Request a CAD Project Quote &rarr;
               </Link>
               <Link
                 href="/services/engineering/"
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-transparent px-6 py-2.5 text-sm font-semibold text-[var(--color-text)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--color-border)] bg-transparent px-6 py-2.5 text-sm font-semibold text-[var(--color-text)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
               >
                 Explore Engineering Services &rarr;
               </Link>
             </div>
           </div>
 
-          <div
-            className={`grid gap-4 sm:grid-cols-2 transition-all duration-700 ease-out ${
-              isWhyVisible
-                ? "translate-x-0 opacity-100"
-                : "translate-x-6 opacity-0"
-            }`}
-          >
+          <div className="grid gap-4 sm:grid-cols-2">
             {cadPillars.map((pillar) => (
               <div
                 key={pillar.label}
@@ -493,9 +442,5 @@ function CADServicesPageContent() {
 }
 
 export default function CADServicesClient() {
-  return (
-    <Suspense fallback={null}>
-      <CADServicesPageContent />
-    </Suspense>
-  );
+  return <CADServicesPageContent />;
 }

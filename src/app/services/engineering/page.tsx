@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import EngineeringServicesClient from "./EngineeringServicesClient";
 import {
   JsonLd,
@@ -11,7 +10,7 @@ import {
 export const metadata: Metadata = {
   title: "Plant & Piping Engineering Services",
   description:
-    "Multidisciplinary plant engineering services, including 3D piping engineering, process engineering, instrumentation & control, and piping stress analysis.",
+    "Multidisciplinary plant engineering services for India, UAE, Saudi Arabia & Qatar: 3D piping, process design, instrumentation, layout, and stress analysis.",
   alternates: {
     canonical: "https://portaiengineers.com/services/engineering/",
   },
@@ -103,9 +102,7 @@ export default function EngineeringServicesPage() {
       <JsonLd schema={webPageSchema} />
       <JsonLd schema={breadcrumbSchema} />
       <JsonLd schema={itemListSchema} />
-      <Suspense fallback={null}>
-        <EngineeringServicesClient />
-      </Suspense>
+      <EngineeringServicesClient />
     </>
   );
 }

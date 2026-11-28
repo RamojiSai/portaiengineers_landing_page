@@ -9,9 +9,9 @@ import {
 } from "../../lib/schema";
 
 export const metadata: Metadata = {
-  title: "Engineering Insights, Blogs & Technical Articles",
+  title: "Engineering Blogs & Technical Guides",
   description:
-    "Browse engineering insights, technical guides, and industry updates covering CAD services, piping stress analysis, greenfield projects, and ISO certifications.",
+    "Engineering guides and CAD articles covering P&ID vs PFD, PDF-to-CAD conversion, GA drawings, plot plans, pipe stress analysis & ISO 9001:2015 QMS.",
   alternates: {
     canonical: "https://portaiengineers.com/blogs/",
   },
@@ -57,12 +57,17 @@ export default function BlogsListingPage() {
   ]);
 
   return (
-    <main className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
+    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
       <JsonLd schema={collectionPageSchema} />
       <JsonLd schema={breadcrumbSchema} />
       <section className="bg-[var(--color-bg)] px-6 py-16 sm:px-10 sm:py-20">
         <div className="mx-auto max-w-6xl">
           <div className="space-y-6">
+            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">
+              <Link href="/" className="hover:underline">Home</Link>
+              <span aria-hidden="true" className="text-[var(--color-muted)]">/</span>
+              <span aria-current="page" className="text-[var(--color-text)]">Blogs</span>
+            </nav>
             <div className="inline-flex items-center rounded-full border border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-surface)_70%,transparent)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-primary)]">
               Blogs
             </div>
@@ -125,6 +130,6 @@ export default function BlogsListingPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
