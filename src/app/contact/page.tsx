@@ -74,7 +74,7 @@ export default function ContactPage() {
             Request a Project Quote or Schedule a Technical Call
           </h1>
           <p className="mx-auto max-w-2xl text-sm text-[var(--color-muted)] sm:text-base lg:text-lg">
-            Share your project scope, target software, and timeline below. Our Hyderabad engineering team responds within 24 working hours and supports EPCs across India, UAE, Saudi Arabia &amp; Qatar.
+            Share your project scope, target software, and timeline below. Our Hyderabad engineering team responds within 24 working hours and supports EPCs and industrial plants across India and international projects.
           </p>
         </div>
 

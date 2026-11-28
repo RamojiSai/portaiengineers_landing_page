@@ -395,13 +395,13 @@ export default function ServicesIndexPage() {
           <div className="rounded-3xl border border-[var(--color-border)] bg-[linear-gradient(135deg,var(--color-primary-soft),var(--color-surface))] p-8 text-center sm:p-12">
             <div className="mx-auto max-w-2xl space-y-4">
               <span className="inline-block rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--color-primary)]">
-                ISO 9001:2015 QMS · NDA Sample Pack Available
+                ISO 9001:2015 Certified Quality System
               </span>
               <h2 className="text-2xl font-semibold tracking-tight text-[var(--color-text)] sm:text-3xl">
                 Ready to Discuss Your Engineering or CAD Project?
               </h2>
               <p className="text-sm text-[var(--color-muted)] sm:text-base">
-                Share your scope for process engineering, 3D piping, stress validation, or CAD documentation. Initial enquiry response within 24 working hours; anonymized sample drawings available upon NDA review.
+                Share your project requirements for process engineering, 3D piping, stress validation, or CAD documentation. Our Hyderabad team responds within 24 working hours.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
                 <TrackedLink

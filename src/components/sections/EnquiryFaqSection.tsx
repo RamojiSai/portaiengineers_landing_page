@@ -10,9 +10,9 @@ export const enquiryFaqs = [
       "Share your required discipline (e.g., P&ID, PFD, 3D Piping, Isometrics, GA Drawings, Stress Analysis, or Plant Layout), approximate sheet or line count, target CAD/stress platform, and project schedule. No initial file upload is needed on this form.",
   },
   {
-    question: "Can we sign an NDA and review sample drawings before starting?",
+    question: "How are project files and technical specifications reviewed before kickoff?",
     answer:
-      "Yes. Anonymized engineering sample documentation is available upon request, subject to confidentiality and NDA review. Once we receive your enquiry, our team arranges a secure sharing and walkthrough process.",
+      "Submit high-level scope requirements, engineering disciplines, and target timelines through the website enquiry form. Once our team reviews your enquiry, input drawings, technical specifications, and commercial terms are coordinated prior to kickoff.",
   },
   {
     question: "Which CAD and pipe stress software platforms do you deliver in?",
@@ -22,7 +22,7 @@ export const enquiryFaqs = [
   {
     question: "Do you work with EPC contractors, consultants, and plants outside Hyderabad?",
     answer:
-      "Yes. While our engineering operations center is in Hyderabad, India, we collaborate remotely with EPC contractors, plant owners, and engineering consultants across India, the UAE, Saudi Arabia, and Qatar.",
+      "Yes. Based in Hyderabad, India, our engineering team works across India and collaborates remotely with EPC contractors, plant owners, and engineering consultants on domestic and international industrial projects.",
   },
 ];
 

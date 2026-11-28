@@ -569,13 +569,13 @@ export default async function CadServiceDetailPage({
           <div className="grid gap-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 text-xs sm:grid-cols-3 sm:text-sm">
             <div>
               <span className="block font-semibold uppercase tracking-[0.14em] text-[var(--color-primary)]">
-                Regional Delivery
+                Delivery Coverage
               </span>
               <Link
                 href="/services/engineering-design-outsourcing/"
                 className="mt-1 inline-block text-[var(--color-text)] hover:text-[var(--color-primary)] hover:underline"
               >
-                India · UAE · Saudi Arabia · Qatar
+                India &amp; International Projects
               </Link>
             </div>
             <div>
@@ -591,13 +591,13 @@ export default async function CadServiceDetailPage({
             </div>
             <div>
               <span className="block font-semibold uppercase tracking-[0.14em] text-[var(--color-primary)]">
-                Confidentiality
+                Project Enquiries
               </span>
               <Link
-                href="/privacy/"
+                href="/contact/#contact-form"
                 className="mt-1 inline-block text-[var(--color-text)] hover:text-[var(--color-primary)] hover:underline"
               >
-                NDA &amp; Sample Review Ready
+                Discuss Your Project
               </Link>
             </div>
           </div>

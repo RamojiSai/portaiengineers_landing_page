@@ -212,7 +212,7 @@ export default function HeroSection() {
               <polyline points="12 6 12 12 16 14" />
             </svg>
             <span>
-              Initial enquiry response within 24 working hours · Serving India, UAE, Saudi Arabia &amp; Qatar
+              Initial enquiry response within 24 working hours · Serving India and international industrial projects
             </span>
           </p>
         </div>

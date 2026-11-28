@@ -692,7 +692,7 @@ export default function ContactForm({
             />
           </div>
           <p id="message-hint" className="mt-1.5 text-xs text-[var(--color-muted)]">
-            Do not attach drawings here. If NDA review or file sharing is needed, our team will provide a secure transfer path after initial contact.
+            Do not paste project files or drawings here. Share high-level scope requirements first, and our team will coordinate file transfer details after initial contact.
           </p>
           {fieldErrors.message && (
             <p id="message-error" className="mt-1 text-xs text-rose-600 dark:text-rose-400">
@@ -740,9 +740,9 @@ export default function ContactForm({
             )}
           </button>
           <p className="text-xs text-[var(--color-muted)]">
-            Initial enquiry response within 24 working hours. Anonymized sample documentation available on NDA request.{" "}
+            Share your project requirements for an initial response within 24 working hours.{" "}
             <Link href="/privacy/" className="font-medium text-[var(--color-primary)] underline-offset-2 hover:underline">
-              Privacy &amp; NDA policy
+              Privacy Policy
             </Link>
             .
           </p>

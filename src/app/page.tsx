@@ -172,30 +172,6 @@ export default function Home() {
     },
   ];
 
-  const samplePlaceholders = [
-    {
-      discipline: "P&ID & PFD Schematics",
-      deliverable: "Process & Instrumentation Sample Sheet",
-      formats: "AutoCAD DWG · Review PDF",
-      serviceSlug: "pid",
-      detail: "Redacted line lists, valve schedules, equipment tags, and control loop representations.",
-    },
-    {
-      discipline: "3D Piping & Isometrics",
-      deliverable: "Routing & Fabrication Spool Sample",
-      formats: "Plant 3D / SP3D / E3D · Iso BOM",
-      serviceSlug: "piping-3d",
-      detail: "Anonymized 3D piping arrangement views, weld callouts, and isometric BOM formats.",
-    },
-    {
-      discipline: "GA & Plant Layout",
-      deliverable: "Equipment & Plot Plan Sample",
-      formats: "AutoCAD DWG · Plot Coordinates",
-      serviceSlug: "plant-layout",
-      detail: "Confidentiality-screened general arrangement layouts, clearance zones, and pipe rack corridors.",
-    },
-  ];
-
   const isoScopes = [
     "Engineering Design Services",
     "Technical Consultancy",
@@ -256,7 +232,7 @@ export default function Home() {
                 href="/services/engineering-design-outsourcing/"
                 className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--color-text)] transition-colors duration-300 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
               >
-                Outsourcing (India · UAE · KSA · Qatar) &rarr;
+                Engineering Design Outsourcing &rarr;
               </Link>
             </div>
           </div>
@@ -388,87 +364,14 @@ export default function Home() {
           </div>
 
           <p className="mx-auto max-w-4xl text-center text-xs leading-relaxed text-[var(--color-muted)] sm:text-sm">
-            Additional sectors supported across our engineering and CAD workflows include Refineries, LNG &amp; Gas Processing, Fertilizers, Food &amp; Beverage, Water &amp; Wastewater Treatment, Cement Plants, Steel &amp; Metals, Paints &amp; Coatings, Pulp &amp; Paper, Mining &amp; Minerals, Marine &amp; Offshore, Manufacturing Plants, and Industrial Utilities — serving clients across India, the UAE, Saudi Arabia, and Qatar.{" "}
+            Additional sectors supported across our engineering and CAD workflows include Refineries, LNG &amp; Gas Processing, Fertilizers, Food &amp; Beverage, Water &amp; Wastewater Treatment, Cement Plants, Steel &amp; Metals, Paints &amp; Coatings, Pulp &amp; Paper, Mining &amp; Minerals, Marine &amp; Offshore, Manufacturing Plants, and Industrial Utilities — supporting projects across India and international industrial markets.{" "}
             <Link
               href="/services/engineering-design-outsourcing/"
               className="font-semibold text-[var(--color-primary)] hover:underline"
             >
-              Explore regional engineering outsourcing &rarr;
+              Explore engineering design outsourcing &rarr;
             </Link>
           </p>
-        </div>
-      </section>
-
-      <section
-        id="samples"
-        className="border-t border-[var(--color-border)] bg-[var(--color-bg)] px-5 py-14 sm:px-10 sm:py-16"
-      >
-        <div className="mx-auto w-full max-w-6xl space-y-8">
-          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div className="space-y-2">
-              <span className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-primary)]">
-                Technical Documentation
-              </span>
-              <h2 className="text-2xl font-semibold tracking-tight text-[var(--color-text)] sm:text-3xl">
-                Anonymized Engineering Samples
-              </h2>
-              <p className="max-w-2xl text-sm text-[var(--color-muted)] sm:text-base">
-                Engineering sample documentation available on request, subject to confidentiality and NDA review.
-              </p>
-            </div>
-            <TrackedLink
-              href="/contact/#contact-form"
-              trackType="quote"
-              ctaLocation="homepage_samples_header"
-              serviceInterest="other"
-              className="inline-flex min-h-[44px] w-fit items-center justify-center rounded-full border border-[var(--color-primary)] px-5 py-2 text-sm font-semibold text-[var(--color-primary)] transition-colors duration-200 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]"
-            >
-              Request Sample Documentation &rarr;
-            </TrackedLink>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-3">
-            {samplePlaceholders.map((sample) => (
-              <div
-                key={sample.discipline}
-                className="flex h-full flex-col justify-between rounded-2xl border border-dashed border-[var(--color-border-strong)] bg-[var(--color-surface)] p-6 shadow-[0_10px_28px_var(--color-card-shadow)]"
-              >
-                <div className="space-y-3">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="inline-block rounded-full border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--color-primary)]">
-                      Confidentiality Review / NDA
-                    </span>
-                    <span className="text-[11px] font-medium text-[var(--color-muted)]">
-                      {sample.formats}
-                    </span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-[var(--color-text)]">
-                    {sample.discipline}
-                  </h3>
-                  <p className="text-xs font-medium uppercase tracking-[0.1em] text-[var(--color-muted-strong)]">
-                    {sample.deliverable}
-                  </p>
-                  <p className="text-sm leading-relaxed text-[var(--color-muted)]">
-                    {sample.detail}
-                  </p>
-                </div>
-                <div className="mt-5 flex items-center justify-between border-t border-[var(--color-border)] pt-3 text-xs">
-                  <span className="font-medium text-[var(--color-muted)]">
-                    NDA clearance required
-                  </span>
-                  <TrackedLink
-                    href={`/contact/?service=${sample.serviceSlug}#contact-form`}
-                    trackType="quote"
-                    ctaLocation="homepage_sample_card"
-                    serviceInterest={sample.serviceSlug}
-                    className="font-semibold text-[var(--color-primary)] hover:underline"
-                  >
-                    Request Sample &rarr;
-                  </TrackedLink>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 

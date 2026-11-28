@@ -17,7 +17,7 @@ export const contactItems = [
     label: "Email",
     value: "contact@portaiengineers.com",
     href: EMAIL_HREF,
-    description: "Send scope notes or request an NDA sample pack.",
+    description: "Share your project requirements or discipline scope notes.",
     external: false,
     icon: (
       <svg
@@ -207,7 +207,7 @@ export default function ContactChannels({
           </div>
         </div>
         <p className="mt-3 text-sm leading-relaxed text-[var(--color-muted)]">
-          Book a convenient Google Calendar slot to align on scope, target CAD/stress software, NDA sample review, and schedule.
+          Book a convenient Google Calendar slot to discuss your project scope, target CAD/stress software, and schedule.
         </p>
         <div className="mt-4">
           <a

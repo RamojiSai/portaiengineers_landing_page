@@ -134,7 +134,7 @@ const featureBlocks = [
 const engineeringPillars = [
   { value: "ISO 9001:2015", label: "Certified Quality System" },
   { value: "24 Working Hrs", label: "Initial Enquiry Response" },
-  { value: "NDA Ready", label: "Confidentiality & Samples" },
+  { value: "Design Reviews", label: "Tag, Spec & Clash Checks" },
   { value: "Native Formats", label: "AutoCAD, SP3D, E3D, CAESAR II" },
 ];
 

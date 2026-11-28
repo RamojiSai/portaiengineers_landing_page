@@ -53,7 +53,8 @@ const footerColumns: FooterColumn[] = [
       { label: "ISO 9001:2015 QMS", href: "/blogs/iso-9001-2015/" },
       { label: "Startup India (DIPP265006)", href: "/blogs/startup-certified/" },
       { label: "Resources & Blogs", href: "/blogs/" },
-      { label: "Privacy & NDA Policy", href: "/privacy/" },
+      { label: "Privacy Policy", href: "/privacy/" },
+      { label: "Terms of Use", href: "/terms-of-use/" },
     ],
   },
   {
@@ -233,7 +234,7 @@ export default function FooterSection() {
                 Let’s work together
               </h3>
               <p className="text-sm leading-relaxed text-[var(--color-on-footer-muted)]">
-                Initial enquiry response within 24 working hours. Anonymized samples available upon NDA review.
+                Discuss your engineering requirements with our Hyderabad team. Initial enquiry response within 24 working hours.
               </p>
               <div className="flex flex-col gap-2.5 pt-1">
                 <Link
