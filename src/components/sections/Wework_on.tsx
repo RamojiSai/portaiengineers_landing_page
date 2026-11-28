@@ -1,17 +1,17 @@
 import Image from "next/image";
 
 const designPlatforms = [
-  { name: "AutoCAD", category: "2D Drafting & P&ID", image: "/autocad-CUR7zBdd.png" },
-  { name: "AutoCAD Plant 3D", category: "3D Plant & Spec-Driven P&ID", image: "/autocad-plant3d-BBiTCeXl.webp" },
-  { name: "SP3D", category: "Enterprise 3D Plant Design", image: "/sp3d-DUucQ2SU.png" },
+  { name: "AutoCAD", category: "2D Drafting & P&ID", image: "/images/platforms/autocad.webp" },
+  { name: "AutoCAD Plant 3D", category: "3D Plant & Spec-Driven P&ID", image: "/images/platforms/autocad-plant3d.webp" },
+  { name: "SP3D", category: "Enterprise 3D Plant Design", image: "/images/platforms/sp3d.webp" },
   { name: "E3D", category: "AVEVA 3D Plant Modeling", image: null, text: "E3D" },
-  { name: "PDMS", category: "3D Piping & Plant Layout", image: "/pdms-BoeT2FrU.png" },
-  { name: "CADWORX", category: "Plant & Isometric Modeling", image: "/cadworx-Cu0tcT4O.webp" },
+  { name: "PDMS", category: "3D Piping & Plant Layout", image: "/images/platforms/pdms.webp" },
+  { name: "CADWORX", category: "Plant & Isometric Modeling", image: "/images/platforms/cadworx.webp" },
 ];
 
 const stressAnalysisPlatforms = [
-  { name: "CAESAR II", category: "Pipe Stress & Flexibility Analysis", image: "/caesar-ii-4cfuN5G6.png" },
-  { name: "AutoPIPE", category: "Thermal & Structural Pipe Stress", image: "/autopipe-B2IGFGbp.png" },
+  { name: "CAESAR II", category: "Pipe Stress & Flexibility Analysis", image: "/images/platforms/caesar-ii.webp" },
+  { name: "AutoPIPE", category: "Thermal & Structural Pipe Stress", image: "/images/platforms/autopipe.webp" },
 ];
 
 export function WorkPlatformsSection() {

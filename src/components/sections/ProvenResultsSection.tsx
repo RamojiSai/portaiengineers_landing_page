@@ -1,4 +1,5 @@
 import Link from "next/link";
+import TrackedLink from "../analytics/TrackedLink";
 
 const executionStandards = [
   {
@@ -8,6 +9,7 @@ const executionStandards = [
       "Process schematics (PFD/P&ID), piping specifications, 3D models, stress analysis, and GA drawings stay synchronized across disciplines.",
     href: "/services/",
     ctaLabel: "Explore All Disciplines",
+    serviceInterest: undefined,
   },
   {
     badge: "Drawing Verification",
@@ -16,6 +18,7 @@ const executionStandards = [
       "Every deliverable undergoes structured checks for line tagging, spec breaks, nozzle orientation, clash clearance, and revision control.",
     href: "/blogs/iso-9001-2015/",
     ctaLabel: "See Quality Process",
+    serviceInterest: undefined,
   },
   {
     badge: "IP & Confidentiality",
@@ -24,6 +27,7 @@ const executionStandards = [
       "Client specifications and drawings remain strictly protected, with NDA execution and anonymized documentation previews available on request.",
     href: "/contact/?service=other#contact-form",
     ctaLabel: "Request NDA Sample Pack",
+    serviceInterest: "other",
   },
   {
     badge: "Responsive Scoping",
@@ -32,6 +36,7 @@ const executionStandards = [
       "Direct technical scoping from Hyderabad with an initial engineering response within 24 working hours and milestone-tracked delivery.",
     href: "/contact/#contact-form",
     ctaLabel: "Request a Project Quote",
+    serviceInterest: "general",
   },
 ];
 
@@ -68,13 +73,26 @@ export default function ProvenResultsSection() {
                   {item.description}
                 </p>
               </div>
-              <Link
-                href={item.href}
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-primary)] hover:underline"
-              >
-                <span>{item.ctaLabel}</span>
-                <span aria-hidden="true">&rarr;</span>
-              </Link>
+              {item.serviceInterest ? (
+                <TrackedLink
+                  href={item.href}
+                  trackType="quote"
+                  ctaLocation="proven_results_card"
+                  serviceInterest={item.serviceInterest}
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-primary)] hover:underline"
+                >
+                  <span>{item.ctaLabel}</span>
+                  <span aria-hidden="true">&rarr;</span>
+                </TrackedLink>
+              ) : (
+                <Link
+                  href={item.href}
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-primary)] hover:underline"
+                >
+                  <span>{item.ctaLabel}</span>
+                  <span aria-hidden="true">&rarr;</span>
+                </Link>
+              )}
             </div>
           ))}
         </div>

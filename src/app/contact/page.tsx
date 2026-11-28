@@ -2,17 +2,18 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ContactChannels from "../../components/sections/ContactChannels";
 import ContactForm from "../../components/sections/ContactForm";
-import EnquiryFaqSection from "../../components/sections/EnquiryFaqSection";
+import EnquiryFaqSection, { enquiryFaqs } from "../../components/sections/EnquiryFaqSection";
 import {
   JsonLd,
   createWebPageSchema,
   createBreadcrumbSchema,
+  createFaqSchema,
 } from "../../lib/schema";
 
 export const metadata: Metadata = {
   title: "Contact Us | Hyderabad, India",
   description:
-    "Contact Port AI Engineers Pvt. Ltd. in Kukatpally, Hyderabad, India. Inquire about industrial plant engineering, 3D piping design, and CAD services.",
+    "Contact Port AI Engineers Pvt. Ltd. in Hyderabad for project quotes on P&ID, 3D piping, stress analysis & CAD across India, UAE, Saudi Arabia & Qatar.",
   alternates: {
     canonical: "https://portaiengineers.com/contact/",
   },
@@ -57,10 +58,13 @@ export default function ContactPage() {
     { name: "Contact", url: "https://portaiengineers.com/contact/" },
   ]);
 
+  const faqSchema = createFaqSchema(enquiryFaqs);
+
   return (
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
       <JsonLd schema={contactPageSchema} />
       <JsonLd schema={breadcrumbSchema} />
+      <JsonLd schema={faqSchema} />
       <section id="contact" className="mx-auto w-full max-w-6xl px-5 py-14 sm:px-10 sm:py-20">
         <div className="space-y-4 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--color-primary)]">
@@ -70,7 +74,7 @@ export default function ContactPage() {
             Request a Project Quote or Schedule a Technical Call
           </h1>
           <p className="mx-auto max-w-2xl text-sm text-[var(--color-muted)] sm:text-base lg:text-lg">
-            Share your project scope, target deliverables, and schedule below. Our engineering team provides an initial response within 24 working hours.
+            Share your project scope, target software, and timeline below. Our Hyderabad engineering team responds within 24 working hours and supports EPCs across India, UAE, Saudi Arabia &amp; Qatar.
           </p>
         </div>
 

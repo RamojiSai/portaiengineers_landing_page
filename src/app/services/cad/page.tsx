@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import CADServicesClient from "./CADServicesClient";
 import {
   JsonLd,
@@ -9,9 +8,9 @@ import {
 } from "../../../lib/schema";
 
 export const metadata: Metadata = {
-  title: "Industrial CAD Services, P&ID, Isometrics & Automation",
+  title: "Industrial CAD & P&ID Services",
   description:
-    "Professional CAD services including PFD, P&ID diagrams, isometric drawings, general arrangement layouts, CAD conversion, and drafting automation.",
+    "Industrial CAD drafting services for India, UAE, Saudi Arabia & Qatar: PFD, P&ID diagrams, piping isometrics, GA drawings, fire plans, and CAD conversion.",
   alternates: {
     canonical: "https://portaiengineers.com/services/cad/",
   },
@@ -99,9 +98,7 @@ export default function CADServicesPage() {
       <JsonLd schema={webPageSchema} />
       <JsonLd schema={breadcrumbSchema} />
       <JsonLd schema={itemListSchema} />
-      <Suspense fallback={null}>
-        <CADServicesClient />
-      </Suspense>
+      <CADServicesClient />
     </>
   );
 }

@@ -3,23 +3,25 @@ import Image from "next/image";
 import Link from "next/link";
 
 import AboutSection from "../components/sections/AboutSection";
+import { enquiryFaqs } from "../components/sections/EnquiryFaqSection";
 import HeroSection from "../components/sections/HeroSection";
 import ProvenResultsSection from "../components/sections/ProvenResultsSection";
-import { JsonLd, createWebPageSchema } from "../lib/schema";
+import TrackedLink from "../components/analytics/TrackedLink";
+import { JsonLd, createFaqSchema, createWebPageSchema } from "../lib/schema";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Port AI Engineers | Industrial Plant Engineering & CAD Services",
+    absolute: "Port AI Engineers | Plant Engineering & CAD Services",
   },
   description:
-    "Precision-focused industrial plant engineering, 3D piping design, process engineering, stress analysis, and advanced CAD automation services powered by AI.",
+    "Industrial plant engineering, 3D piping, P&ID drafting, stress analysis & CAD outsourcing from Hyderabad for India, UAE, Saudi Arabia & Qatar.",
   alternates: {
     canonical: "https://portaiengineers.com/",
   },
   openGraph: {
-    title: "Port AI Engineers | Industrial Plant Engineering & CAD Services",
+    title: "Port AI Engineers | Plant Engineering & CAD Services",
     description:
-      "Precision-focused industrial plant engineering, 3D piping design, process engineering, stress analysis, and advanced CAD automation services powered by AI.",
+      "Industrial plant engineering, 3D piping, P&ID drafting, stress analysis & CAD outsourcing from Hyderabad for India, UAE, Saudi Arabia & Qatar.",
     url: "https://portaiengineers.com/",
     siteName: "Port AI Engineers",
     images: [
@@ -35,9 +37,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Port AI Engineers | Industrial Plant Engineering & CAD Services",
+    title: "Port AI Engineers | Plant Engineering & CAD Services",
     description:
-      "Precision-focused industrial plant engineering, 3D piping design, process engineering, stress analysis, and advanced CAD automation services powered by AI.",
+      "Industrial plant engineering, 3D piping, P&ID drafting, stress analysis & CAD outsourcing from Hyderabad for India, UAE, Saudi Arabia & Qatar.",
     images: ["/hero-petrochemical-DMHvwGIB.webp"],
   },
 };
@@ -205,14 +207,17 @@ export default function Home() {
   const webPageSchema = createWebPageSchema({
     id: "https://portaiengineers.com/#webpage",
     url: "https://portaiengineers.com/",
-    name: "Port AI Engineers | Industrial Plant Engineering & CAD Services",
+    name: "Port AI Engineers | Plant Engineering & CAD Services",
     description:
-      "Precision-focused industrial plant engineering, 3D piping design, process engineering, stress analysis, and advanced CAD automation services powered by AI.",
+      "Industrial plant engineering, 3D piping, P&ID drafting, stress analysis & CAD outsourcing from Hyderabad for India, UAE, Saudi Arabia & Qatar.",
   });
+
+  const faqSchema = createFaqSchema(enquiryFaqs);
 
   return (
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
       <JsonLd schema={webPageSchema} />
+      <JsonLd schema={faqSchema} />
       <HeroSection />
 
       <section
@@ -233,17 +238,25 @@ export default function Home() {
               Comprehensive plant engineering, 3D piping design, and fabrication-ready CAD deliverables supporting project execution from concept through commissioning.
             </p>
             <div className="flex flex-wrap items-center gap-3 pt-1">
-              <Link
-                href="/contact/"
+              <TrackedLink
+                href="/contact/#contact-form"
+                trackType="quote"
+                ctaLocation="homepage_capabilities"
                 className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-on-primary)] transition-colors duration-300 hover:bg-[var(--color-primary-hover)]"
               >
                 Request a Project Quote &rarr;
-              </Link>
+              </TrackedLink>
               <Link
                 href="/services/"
                 className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-primary)] transition-colors duration-300 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]"
               >
                 Explore All Services &rarr;
+              </Link>
+              <Link
+                href="/services/engineering-design-outsourcing/"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--color-text)] transition-colors duration-300 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
+              >
+                Outsourcing (India · UAE · KSA · Qatar) &rarr;
               </Link>
             </div>
           </div>
@@ -375,7 +388,13 @@ export default function Home() {
           </div>
 
           <p className="mx-auto max-w-4xl text-center text-xs leading-relaxed text-[var(--color-muted)] sm:text-sm">
-            Additional sectors supported across our engineering and CAD workflows include Refineries, LNG &amp; Gas Processing, Fertilizers, Food &amp; Beverage, Water &amp; Wastewater Treatment, Cement Plants, Steel &amp; Metals, Paints &amp; Coatings, Pulp &amp; Paper, Mining &amp; Minerals, Marine &amp; Offshore, Manufacturing Plants, and Industrial Utilities.
+            Additional sectors supported across our engineering and CAD workflows include Refineries, LNG &amp; Gas Processing, Fertilizers, Food &amp; Beverage, Water &amp; Wastewater Treatment, Cement Plants, Steel &amp; Metals, Paints &amp; Coatings, Pulp &amp; Paper, Mining &amp; Minerals, Marine &amp; Offshore, Manufacturing Plants, and Industrial Utilities — serving clients across India, the UAE, Saudi Arabia, and Qatar.{" "}
+            <Link
+              href="/services/engineering-design-outsourcing/"
+              className="font-semibold text-[var(--color-primary)] hover:underline"
+            >
+              Explore regional engineering outsourcing &rarr;
+            </Link>
           </p>
         </div>
       </section>
@@ -397,12 +416,15 @@ export default function Home() {
                 Engineering sample documentation available on request, subject to confidentiality and NDA review.
               </p>
             </div>
-            <Link
+            <TrackedLink
               href="/contact/#contact-form"
+              trackType="quote"
+              ctaLocation="homepage_samples_header"
+              serviceInterest="other"
               className="inline-flex min-h-[44px] w-fit items-center justify-center rounded-full border border-[var(--color-primary)] px-5 py-2 text-sm font-semibold text-[var(--color-primary)] transition-colors duration-200 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]"
             >
               Request Sample Documentation &rarr;
-            </Link>
+            </TrackedLink>
           </div>
 
           <div className="grid gap-5 md:grid-cols-3">
@@ -434,12 +456,15 @@ export default function Home() {
                   <span className="font-medium text-[var(--color-muted)]">
                     NDA clearance required
                   </span>
-                  <Link
+                  <TrackedLink
                     href={`/contact/?service=${sample.serviceSlug}#contact-form`}
+                    trackType="quote"
+                    ctaLocation="homepage_sample_card"
+                    serviceInterest={sample.serviceSlug}
                     className="font-semibold text-[var(--color-primary)] hover:underline"
                   >
                     Request Sample &rarr;
-                  </Link>
+                  </TrackedLink>
                 </div>
               </div>
             ))}
@@ -475,7 +500,7 @@ export default function Home() {
                   </div>
                   <div className="flex shrink-0 items-center gap-2.5 rounded-2xl border border-[color-mix(in_srgb,var(--color-primary)_30%,transparent)] bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] px-3.5 py-2">
                     <Image
-                      src="/ISOimage.webp"
+                      src="/images/certifications/iso-badge.webp"
                       alt="ISO 9001:2015 certification badge"
                       width={44}
                       height={44}
@@ -527,7 +552,7 @@ export default function Home() {
                     </div>
                     <div className="shrink-0 overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] p-1">
                       <Image
-                        src="/images/certifications/startup-india.webp"
+                        src="/images/certifications/startup-india-thumb.webp"
                         alt="Startup India Certificate of Recognition DIPP265006"
                         width={76}
                         height={54}

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import TrackedLink from "../../components/analytics/TrackedLink";
+import { SCHEDULE_CALL_URL } from "../../lib/analytics";
 import {
   JsonLd,
   createWebPageSchema,
@@ -10,14 +12,14 @@ import {
 export const metadata: Metadata = {
   title: "Engineering & CAD Services Portfolio",
   description:
-    "Explore comprehensive engineering and CAD services by Port AI Engineers Pvt. Ltd., spanning plant engineering, 3D piping, stress analysis, and drafting solutions.",
+    "Industrial plant engineering, P&ID drafting, 3D piping, stress analysis & CAD services for India, UAE, Saudi Arabia & Qatar by Port AI Engineers.",
   alternates: {
     canonical: "https://portaiengineers.com/services/",
   },
   openGraph: {
     title: "Engineering & CAD Services Portfolio | Port AI Engineers",
     description:
-      "Explore comprehensive engineering and CAD services by Port AI Engineers Pvt. Ltd., spanning plant engineering, 3D piping, stress analysis, and drafting solutions.",
+      "Industrial plant engineering, P&ID drafting, 3D piping, stress analysis & CAD services for India, UAE, Saudi Arabia & Qatar by Port AI Engineers.",
     url: "https://portaiengineers.com/services/",
     siteName: "Port AI Engineers",
     images: [
@@ -35,7 +37,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Engineering & CAD Services Portfolio | Port AI Engineers",
     description:
-      "Explore comprehensive engineering and CAD services by Port AI Engineers Pvt. Ltd., spanning plant engineering, 3D piping, stress analysis, and drafting solutions.",
+      "Industrial plant engineering, P&ID drafting, 3D piping, stress analysis & CAD services for India, UAE, Saudi Arabia & Qatar by Port AI Engineers.",
     images: ["/images/hero/engineering-services-1.webp"],
   },
 };
@@ -202,6 +204,10 @@ export default function ServicesIndexPage() {
         name: "CAD Services",
         url: "https://portaiengineers.com/services/cad/",
       },
+      {
+        name: "Engineering Design Outsourcing",
+        url: "https://portaiengineers.com/services/engineering-design-outsourcing/",
+      },
     ],
   });
 
@@ -215,14 +221,40 @@ export default function ServicesIndexPage() {
           {/* Hero Header */}
           <div className="flex flex-col gap-4 text-center sm:text-left">
             <span className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-primary)]">
-              Services Portfolio
+              Services Portfolio · India, UAE, Saudi Arabia &amp; Qatar
             </span>
             <h1 className="text-3xl font-semibold tracking-tight sm:text-5xl">
-              Industrial Engineering & CAD Services
+              Industrial Engineering &amp; CAD Services
             </h1>
             <p className="max-w-3xl text-base text-[var(--color-muted)] sm:text-lg">
-              Port AI Engineers delivers comprehensive industrial plant engineering and fabrication-ready CAD drafting services. From front-end process conceptualization and 3D piping layouts to detailed isometric drafting and design automation, our multidisciplinary teams deliver code-compliant, precision solutions for complex industrial facilities worldwide.
+              Port AI Engineers delivers comprehensive industrial plant engineering and fabrication-ready CAD drafting services. From front-end process conceptualization and 3D piping layouts to detailed isometric drafting and design automation, our multidisciplinary teams deliver code-compliant, precision solutions across India and the Gulf region.
             </p>
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2 sm:justify-start">
+              <TrackedLink
+                href="/contact/#contact-form"
+                trackType="quote"
+                ctaLocation="services_hub_hero"
+                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-on-primary)] shadow-md transition-colors hover:bg-[var(--color-primary-hover)]"
+              >
+                <span>Request a Project Quote</span>
+                <span aria-hidden="true">&rarr;</span>
+              </TrackedLink>
+              <TrackedLink
+                href={SCHEDULE_CALL_URL}
+                external
+                trackType="calendar"
+                ctaLocation="services_hub_hero"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[var(--color-primary)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--color-primary)] transition-colors hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]"
+              >
+                Schedule a Technical Call
+              </TrackedLink>
+              <Link
+                href="/services/engineering-design-outsourcing/"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--color-text)] transition-colors hover:border-[var(--color-primary)]"
+              >
+                Engineering Design Outsourcing &rarr;
+              </Link>
+            </div>
           </div>
 
           {/* Primary Division Cards */}
@@ -372,21 +404,24 @@ export default function ServicesIndexPage() {
                 Share your scope for process engineering, 3D piping, stress validation, or CAD documentation. Initial enquiry response within 24 working hours; anonymized sample drawings available upon NDA review.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-                <Link
-                  href="/contact/"
+                <TrackedLink
+                  href="/contact/#contact-form"
+                  trackType="quote"
+                  ctaLocation="services_hub_bottom"
                   className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-on-primary)] shadow-md transition-all duration-300 hover:bg-[var(--color-primary-hover)]"
                 >
                   <span>Request a Project Quote</span>
                   <span aria-hidden="true">&rarr;</span>
-                </Link>
-                <a
-                  href="https://calendar.app.google/4EDU6NFyWQLtrG91A"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                </TrackedLink>
+                <TrackedLink
+                  href={SCHEDULE_CALL_URL}
+                  external
+                  trackType="calendar"
+                  ctaLocation="services_hub_bottom"
                   className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-[var(--color-primary)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--color-primary)] transition-colors hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]"
                 >
                   <span>Schedule a Technical Call</span>
-                </a>
+                </TrackedLink>
                 <Link
                   href="/services/engineering/"
                   className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--color-text)] transition-colors hover:border-[var(--color-primary)]"

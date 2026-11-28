@@ -5,9 +5,9 @@ import {
   PHONE_HREF,
   SCHEDULE_CALL_URL,
   getWhatsAppHref,
+  trackCalendarClick,
   trackEmailClick,
   trackPhoneClick,
-  trackScheduleCallClick,
   trackWhatsAppClick,
 } from "../../lib/analytics";
 
@@ -40,7 +40,7 @@ export const contactItems = [
     label: "Phone",
     value: "+91 9440584273",
     href: PHONE_HREF,
-    description: "Speak directly with our engineering team.",
+    description: "Speak with our engineers (Mon–Sat, IST & GCC working hours overlap).",
     external: false,
     icon: (
       <svg
@@ -155,10 +155,14 @@ export const socialLinks = [
   },
 ];
 
-export function handleChannelClick(key: string, location: string) {
-  if (key === "email") trackEmailClick(location);
-  if (key === "phone") trackPhoneClick(location);
-  if (key === "whatsapp") trackWhatsAppClick(location);
+export function handleChannelClick(
+  key: string,
+  location: string,
+  serviceInterest?: string
+) {
+  if (key === "email") trackEmailClick(location, serviceInterest);
+  if (key === "phone") trackPhoneClick(location, serviceInterest);
+  if (key === "whatsapp") trackWhatsAppClick(location, serviceInterest);
 }
 
 interface ContactChannelsProps {
@@ -210,7 +214,7 @@ export default function ContactChannels({
             href={SCHEDULE_CALL_URL}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackScheduleCallClick(location)}
+            onClick={() => trackCalendarClick(location)}
             className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] px-5 py-3 text-sm font-semibold text-[var(--color-on-primary)] shadow-md transition-all duration-300 hover:bg-[var(--color-primary-hover)] hover:shadow-lg"
           >
             <span>Schedule a Call</span>

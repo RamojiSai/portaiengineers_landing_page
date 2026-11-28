@@ -7,7 +7,7 @@ import {
 } from "../../../lib/schema";
 
 export const metadata: Metadata = {
-  title: "Inside Port AI Engineers | Engineering Excellence",
+  title: "Inside Port AI Engineers",
   description:
     "A closer look at how precision engineering, process-driven workflows, and ISO-grade delivery shape our mission for modern industrial projects.",
   alternates: {

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ServicePageTracker from "../../../../components/analytics/ServicePageTracker";
 import ServiceEnquiryBar from "../../../../components/sections/ServiceEnquiryBar";
 import {
   JsonLd,
@@ -32,10 +33,10 @@ type ServiceDetail = {
 };
 
 const CAD_IMAGE_DIMENSIONS: Record<string, { width: number; height: number }> = {
-  "/PFD.jpeg": { width: 1024, height: 724 },
-  "/images/services/cad-pid.png": { width: 822, height: 518 },
+  "/images/services/pfd.webp": { width: 1024, height: 724 },
+  "/images/services/cad-pid.webp": { width: 822, height: 518 },
   "/images/services/piping-isometric.webp": { width: 1536, height: 1024 },
-  "/GeneralArrangements.jpg": { width: 1144, height: 755 },
+  "/images/services/general-arrangement.webp": { width: 1144, height: 755 },
   "/images/services/cad-training.webp": { width: 992, height: 992 },
   "/images/services/cad-conversion.webp": { width: 1024, height: 516 },
   "/images/services/cad-automation.webp": { width: 1536, height: 1024 },
@@ -48,30 +49,27 @@ const serviceDetails: ServiceDetail[] = [
     title: "PFD Design & Drafting Services",
     metaTitle: "PFD Design & Drafting Services | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers delivers detailed Process Flow Diagram (PFD) design and drafting services, mapping equipment, stream balances, and industrial process workflows.",
+      "Process Flow Diagram (PFD) engineering and CAD drafting services for EPCs and industrial plants in India, UAE, Saudi Arabia & Qatar.",
     h1: "PFD Design & Drafting Services",
-    image: "/PFD.jpeg",
+    image: "/images/services/pfd.webp",
     imageAlt: "Process flow diagram for industrial engineering",
     description: [
-      "Port AI Engineers provides Process Flow Diagram (PFD) design and drafting services, preparing structured schematics that illustrate major equipment sequences, stream balances, and operating conditions across industrial systems.",
-      "Our drafting specialists organize primary process flowpaths, fluid characteristics, and utility distribution networks to establish a dependable foundation for downstream P&ID development.",
-      "We support process consultants, EPC engineering teams, and industrial operators across India and the Gulf region, coordinating standard process documentation for projects in the UAE, Saudi Arabia, and Qatar.",
-      "Our drafting team organizes main equipment sequences, fluid stream identifications, and core utility distribution networks with clarity.",
-      "Each diagram incorporates standardized equipment tags, basic stream temperature and pressure annotations, and balanced flow indicators.",
-      "Our team aligns process assumptions early to reduce rework and keep design reviews efficient across client engineering teams.",
-      "Each diagram is delivered with consistent legends and tagging so teams can reference them throughout the project lifecycle, resulting in faster alignment, cleaner handoffs, and confident decision-making.",
+      "Port AI Engineers provides Process Flow Diagram (PFD) design and drafting services, preparing structured schematics that illustrate major equipment sequences, mass and energy stream balances, and operating conditions across industrial systems.",
+      "Our drafting specialists work in AutoCAD and AutoCAD Plant 3D to capture primary process flowpaths, stream temperature and pressure flags, control valve loops, and utility distribution headers as a dependable basis for downstream P&ID development.",
+      "We support process consultants, EPC engineering teams, and industrial operators across India and the Gulf region, coordinating standardized PFD documentation for facilities in the UAE, Saudi Arabia, and Qatar.",
+      "Each diagram incorporates consistent equipment numbering, standardized ISA/ISO symbology, and structured revision legends so process, mechanical, and instrumentation teams stay aligned throughout design reviews and HAZOP preparation.",
     ],
     highlights: [
-      "System-level flow clarity and process sequencing",
-      "Major equipment tagging and stream identification",
-      "Stream and utility balance reference coordination",
+      "System-level flow clarity and major equipment sequencing",
+      "Major equipment tagging and operating stream identification",
+      "Mass, heat, and utility balance reference coordination",
       "Review-ready drafting standards and legend consistency",
     ],
     deliverables: [
-      "System-level flow diagrams highlighting major process equipment",
+      "System-level Process Flow Diagrams highlighting major process equipment",
       "Stream identification and utility balance reference tables",
       "Standardized process legend, symbology, and tag conventions",
-      "Review-ready drafting sheets prepared for detailed design handoff",
+      "Review-ready native CAD and PDF packages for P&ID handoff",
     ],
     outcomes: [
       "Faster technical alignment across multi-discipline engineering teams",
@@ -82,6 +80,7 @@ const serviceDetails: ServiceDetail[] = [
       { title: "P&ID Design & Drafting Services", href: "/services/cad/pid/" },
       { title: "Process Engineering Services", href: "/services/engineering/process/" },
       { title: "Piping Engineering Services", href: "/services/engineering/piping-engineering/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
     ],
     relatedArticles: [
       { title: "PFD vs. P&ID: Key Differences in Plant Engineering", href: "/blogs/pfd-vs-pid/" },
@@ -90,26 +89,23 @@ const serviceDetails: ServiceDetail[] = [
   {
     slug: "pid",
     title: "P&ID Design & Drafting Services",
-    metaTitle: "P&ID Design & Drafting Services | Port AI Engineers",
+    metaTitle: "P&ID Engineering & Drafting Services | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers provides professional P&ID design and drafting services, delivering standards-compliant piping and instrumentation diagrams for industrial plants.",
+      "P&ID engineering and CAD drafting services in AutoCAD & Plant 3D for industrial plants across India, UAE, Saudi Arabia & Qatar.",
     h1: "P&ID Design & Drafting Services",
-    image: "/images/services/cad-pid.png",
+    image: "/images/services/cad-pid.webp",
     imageAlt: "Piping and instrumentation diagram",
     description: [
-      "Port AI Engineers delivers comprehensive P&ID design and drafting services, developing detailed piping and instrumentation diagrams that clearly capture process control logic, line specifications, and safety systems for industrial facilities.",
-      "Our engineering specialists handle complete P&ID development, conversion from legacy formats, and drawing reviews across mechanical, process, and instrumentation disciplines.",
-      "We support EPC contractors, engineering consultants, and industrial facility owners across India and the Gulf region, including outsourced drafting requirements in the UAE, Saudi Arabia, and Qatar.",
-      "Our drafting specialists document pipeline sizes, valve types, instrumentation bubbles, inline components, and safety relief devices in full detail.",
-      "By incorporating process control interlocks, utility connections, and boundary battery limits, our drawings serve as the authoritative coordination blueprint between mechanical, electrical, and automation engineers.",
-      "Each sheet is structured for maintenance, operational clarity, and long-term facility asset management.",
-      "This ensures your project team has a reliable, audit-ready source of truth from detailed design through field commissioning and continuous operations.",
+      "Port AI Engineers delivers comprehensive P&ID engineering and drafting services, developing detailed piping and instrumentation diagrams that capture process control logic, piping specifications, and safety relief systems for industrial facilities.",
+      "Our engineering specialists execute greenfield P&ID development, intelligent AutoCAD Plant 3D / CAD conversion from legacy redlines or PDFs, and multi-discipline consistency reviews across process, mechanical, and instrumentation teams.",
+      "We support EPC contractors, engineering consultants, and industrial plant owners across India and the Gulf region, including outsourced drafting packages for facilities in the UAE, Saudi Arabia, and Qatar.",
+      "Our sheets document line numbers, wall-thickness and spec breaks, valve tags, instrumentation bubbles, interlock loops, and battery-limit tie-ins — serving as the authoritative reference for HAZOP studies, procurement MTOs, and commissioning.",
     ],
     highlights: [
       "Detailed piping line designations, sizes, and spec breaks",
       "Instrument tag references and automated control logic clarity",
       "Valve schedules, safety relief valves, and inline specialty items",
-      "Long-term operational reference and standards compliance",
+      "HAZOP-ready symbology and audit-ready revision control",
     ],
     deliverables: [
       "Detailed P&ID sheets with control logic and interlock references",
@@ -126,6 +122,8 @@ const serviceDetails: ServiceDetail[] = [
       { title: "PFD Design & Drafting Services", href: "/services/cad/pfd/" },
       { title: "Piping Engineering Services", href: "/services/engineering/piping-engineering/" },
       { title: "Instrumentation Engineering Services", href: "/services/engineering/instrumentation/" },
+      { title: "CAD Conversion Services", href: "/services/cad/conversion/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
     ],
     relatedArticles: [
       { title: "PFD vs. P&ID: Key Differences in Plant Engineering", href: "/blogs/pfd-vs-pid/" },
@@ -137,17 +135,15 @@ const serviceDetails: ServiceDetail[] = [
     title: "Piping Isometric Drawing Services",
     metaTitle: "Piping Isometric Drawing Services | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers provides piping isometric drawing services, producing fabrication-ready isometrics with accurate dimensions, weld details, and integrated BOMs.",
+      "Fabrication-ready piping isometric drawings with weld maps, spool tags, and accurate BOM/MTOs for India, UAE, Saudi Arabia & Qatar plants.",
     h1: "Piping Isometric Drawing Services",
     image: "/images/services/piping-isometric.webp",
     imageAlt: "Industrial piping isometric drawing",
     description: [
-      "Port AI Engineers delivers precision piping isometric drawing services, translating complex piping designs into fabrication-ready isometric drawings with comprehensive dimensional and welding details.",
-      "Our isometric drafting workflows extract accurate cut pipe lengths, fitting angles, spool boundaries, and integrated Bills of Materials (BOM) to streamline shop fabrication and field erection.",
-      "Each drawing captures 3D piping routing in a single-line isometric projection, detailing exact cut lengths, fitting angles, and elevations.",
-      "Our team incorporates complete bills of materials (BOM), spool numbering, weld identification (shop vs. field), and support location coordinates.",
-      "We validate constructability against physical routing constraints to prevent site revisions and schedule delays during fabrication and erection.",
-      "Each drawing is reviewed for clarity, dimensional accuracy, and compatibility with fabrication shop workflows, reducing rework and improving installation confidence.",
+      "Port AI Engineers delivers precision piping isometric drawing services, translating 3D plant models and GA layouts into fabrication-ready isometrics with comprehensive dimensional and welding details.",
+      "Our isometric drafting workflows in AutoCAD Plant 3D, SP3D, E3D, PDMS, and CADWORX extract accurate cut pipe lengths, fitting orientations, spool boundaries, and integrated Bills of Materials (BOM) to streamline shop fabrication and site erection.",
+      "Each drawing captures 3D routing in single-line projection with shop versus field weld designations, support tag coordinates, slope callouts, and NDT/PWHT line specification references.",
+      "Supporting EPCs and pipe spool fabricators across India, the UAE, Saudi Arabia, and Qatar, every isometric package is checked against P&ID line lists and 3D model geometry before release.",
     ],
     highlights: [
       "Fabrication-ready clarity with complete three-dimensional coordinates",
@@ -169,26 +165,28 @@ const serviceDetails: ServiceDetail[] = [
     relatedServices: [
       { title: "3D Piping Design Services", href: "/services/engineering/piping-3d/" },
       { title: "Piping Engineering Services", href: "/services/engineering/piping-engineering/" },
-      { title: "General Arrangement Drawing Services", href: "/services/cad/general-arrangement/" },
+      { title: "GA & General Arrangement Drawings", href: "/services/cad/general-arrangement/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
+    ],
+    relatedArticles: [
+      { title: "Anatomy of an Industrial General Arrangement (GA) Drawing", href: "/blogs/industrial-ga-drawing-anatomy/" },
+      { title: "CAD Services Designed with Precision", href: "/blogs/engineers-blog/" },
     ],
   },
   {
     slug: "general-arrangement",
-    title: "General Arrangement Drawing Services",
-    metaTitle: "General Arrangement Drawing Services | Port AI Engineers",
+    title: "General Arrangement (GA) Drawing Services",
+    metaTitle: "GA & General Arrangement Drawings | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers provides General Arrangement (GA) drawing services, delivering coordinated equipment layouts, elevation views, and site structural plans.",
-    h1: "General Arrangement Drawing Services",
-    image: "/GeneralArrangements.jpg",
+      "Coordinated General Arrangement (GA) drawings for equipment, piping & structures across industrial plants in India, UAE, Saudi Arabia & Qatar.",
+    h1: "General Arrangement (GA) Drawing Services",
+    image: "/images/services/general-arrangement.webp",
     imageAlt: "Industrial general arrangement drawing",
     description: [
       "Port AI Engineers provides General Arrangement (GA) drawing services, producing coordinated equipment arrangement drawings, piping GA layouts, and structural spatial plans for industrial plants and process facilities.",
       "We coordinate equipment positioning, maintenance clearances, nozzle orientations, and operator transit corridors across civil, structural, and mechanical disciplines.",
-      "Our team supports plant operators, EPC contractors, and fabricators across India and the Gulf region, delivering coordinated GA drawing sets for projects in the UAE, Saudi Arabia, and Qatar.",
-      "Our deliverables illustrate physical equipment placement, nozzle positions, structural foundations, maintenance drop areas, and operator transit corridors in plan and section views.",
-      "By coordinating equipment centerlines with structural steel and piping headers, our layouts minimize spatial interferences across disciplines.",
-      "Each layout is optimized for plant workflow, safety egress, crane access, and long-term equipment maintainability.",
-      "This rigorous spatial planning helps industrial projects transition smoothly from conceptual layout to site construction and equipment installation.",
+      "Our team supports plant operators, EPC contractors, and skid fabricators across India and the Gulf region, delivering coordinated GA drawing sets for projects in the UAE, Saudi Arabia, and Qatar.",
+      "Deliverables detail physical equipment centerlines, foundation footprints, platform elevations, crane laydown zones, and plan/section views — helping teams catch structural or operational interferences before site construction begins.",
     ],
     highlights: [
       "Optimized spatial coordination across equipment, piping, and structures",
@@ -212,36 +210,36 @@ const serviceDetails: ServiceDetail[] = [
       { title: "3D Piping Design Services", href: "/services/engineering/piping-3d/" },
       { title: "Piping Engineering Services", href: "/services/engineering/piping-engineering/" },
       { title: "Piping Isometric Drawing Services", href: "/services/cad/isometric/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
     ],
     relatedArticles: [
       { title: "Anatomy of an Industrial General Arrangement (GA) Drawing", href: "/blogs/industrial-ga-drawing-anatomy/" },
+      { title: "Industrial Plot Plan Development & Site Zoning Principles", href: "/blogs/industrial-plot-plan-site-zoning/" },
     ],
   },
   {
     slug: "conversion",
     title: "CAD Conversion Services",
-    metaTitle: "CAD Conversion Services | Port AI Engineers",
+    metaTitle: "PDF & Legacy CAD Conversion Services | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers provides CAD conversion services, transforming legacy paper drawings, PDF files, and raster scans into standardized, editable CAD vector formats.",
+      "Convert legacy blueprints, scans & PDFs into clean, layered AutoCAD & intelligent P&ID files for India, UAE, Saudi Arabia & Qatar plants.",
     h1: "CAD Conversion Services",
     image: "/images/services/cad-conversion.webp",
     imageAlt: "CAD drawing conversion workflow",
     description: [
-      "Port AI Engineers provides professional CAD conversion services, modernizing legacy paper blueprints, raster scans, and PDF drawing sets into dimensionally accurate, layered CAD vector files.",
-      "Our engineering drawing conversion process standardizes layers, blocks, and dimension styles according to client specifications, delivering clean digital archives ready for ongoing plant revamps and modifications.",
-      "Whether digitizing legacy paper blueprints, raster scans, PDF sets, or obsolete CAD formats, our team verifies dimensional accuracy against original callouts.",
-      "We structure converted drawings into standardized layers, normalized blocks, and clean vector geometry ready for modern engineering modifications.",
-      "This enhances collaboration, improves digital archival, and streamlines future plant revamps and turnaround planning.",
-      "Teams gain faster access to reliable, editable documentation that integrates directly into ongoing plant design workflows.",
+      "Port AI Engineers provides professional CAD conversion services, modernizing legacy paper blueprints, scanned TIF/PDF drawing sets, and outdated formats into dimensionally accurate, layered CAD vector files.",
+      "Our conversion workflow avoids noisy auto-tracing — recreating clean geometry, standardized layer conventions, attributed title blocks, and true-scale dimensions aligned to your client CAD manual.",
+      "Supporting plant brownfield revamps and digital archival programs across India, the UAE, Saudi Arabia, and Qatar, we also rebuild legacy P&IDs as intelligent, tagged diagrams ready for digital asset handover.",
+      "Every converted sheet is checked line-by-line against source markups so operating plants gain dependable documentation for shutdown planning and modifications.",
     ],
     highlights: [
-      "Legacy blueprint and raster data modernization into editable vector CAD",
+      "True vector redrawing — no jagged auto-trace artifacts",
       "Standardized layer conventions, block definitions, and dimension styles",
-      "Dimensional verification against original design notes and callouts",
+      "Dimensional and tag verification against original redlines and callouts",
       "QA-checked deliverables formatted for ongoing plant maintenance",
     ],
     deliverables: [
-      "Clean, fully editable CAD source files in standard formats",
+      "Clean, fully editable DWG / DXF CAD source files",
       "Layer, font, and block normalization packages",
       "Dimensionally validated drawing sets matching original schematics",
       "Revision-ready digital drawing libraries for plant engineering teams",
@@ -252,9 +250,10 @@ const serviceDetails: ServiceDetail[] = [
       "Consistent, organized digital drawing archives across facilities",
     ],
     relatedServices: [
+      { title: "P&ID Engineering & Drafting Services", href: "/services/cad/pid/" },
       { title: "CAD Automation Services", href: "/services/cad/automation/" },
-      { title: "General Arrangement Drawing Services", href: "/services/cad/general-arrangement/" },
-      { title: "CAD Training Services", href: "/services/cad/training/" },
+      { title: "Brownfield Engineering Services", href: "/services/engineering/brownfield-projects/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
     ],
     relatedArticles: [
       { title: "How to Convert PDF P&IDs into Editable CAD Drawings", href: "/blogs/pdf-pid-conversion/" },
@@ -264,25 +263,23 @@ const serviceDetails: ServiceDetail[] = [
   {
     slug: "training",
     title: "CAD Training Services",
-    metaTitle: "CAD Training Services | Port AI Engineers",
+    metaTitle: "Industrial CAD Training Services | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers offers specialized CAD training services, equipping engineering teams with practical drafting workflows, layer standards, and industry practices.",
+      "Practical industrial CAD training for drafting teams covering P&IDs, GA layouts, layer standards & Plant 3D across India and the Gulf region.",
     h1: "CAD Training Services",
     image: "/images/services/cad-training.webp",
     imageAlt: "Industrial CAD training",
     description: [
-      "Port AI Engineers delivers specialized CAD training services, preparing engineering and drafting teams with practical, project-based workflows for industrial and plant design.",
-      "Our training programs focus on industry drafting conventions, layer and block standardization, dynamic blocks, and efficient modeling practices tailored to engineering production environments.",
-      "Our training modules focus on industry drafting conventions, layer management, title block standards, dynamic blocks, and efficient command workflows.",
-      "Participants gain hands-on practice in drafting process schematics, isometric layouts, and general arrangement plans.",
-      "Training materials and reference templates are structured for ongoing drafting team reference and continuous improvement.",
-      "This practical instruction builds long-term drafting capability, accelerates onboarding for new engineers, and elevates overall output quality.",
+      "Port AI Engineers delivers practical industrial CAD training services, equipping engineering and drafting teams with project-ready workflows for process plants and manufacturing facilities.",
+      "Unlike generic software tutorials, our modules train teams on plant drafting conventions: title block control, XREF discipline overlays, dynamic block libraries, P&ID symbology, isometric annotation, and GA layout standards.",
+      "Delivered from Hyderabad for Indian industrial teams and remotely for EPC drafting groups in the UAE, Saudi Arabia, and Qatar, sessions combine guided lab exercises with reusable project templates.",
+      "Engineers and new drafters leave with structured checklists and template libraries that cut drawing review cycles and standardize deliverable quality across multi-user teams.",
     ],
     highlights: [
-      "Workflow-specific drafting modules tailored to engineering operations",
-      "Hands-on project exercises based on real industrial drafting deliverables",
-      "Standardization guidance covering layers, blocks, and dimensioning",
-      "Reusable learning materials and reference templates for team use",
+      "Workflow-specific drafting modules tailored to plant engineering operations",
+      "Hands-on exercises built around P&IDs, isometrics, and GA layouts",
+      "Standardization guidance covering layers, XREFs, blocks, and plotting",
+      "Reusable templates and QC checklists for ongoing team onboarding",
     ],
     deliverables: [
       "Structured, workflow-based drafting training sessions",
@@ -291,53 +288,61 @@ const serviceDetails: ServiceDetail[] = [
       "Reference documentation supporting consistent team drafting habits",
     ],
     outcomes: [
-      "Higher drafting accuracy and reduced drafting revision cycles",
+      "Higher drafting accuracy and reduced drawing revision cycles",
       "Faster team ramp-up and seamless onboarding for drafting staff",
       "Consistent, professional drawing output across the organization",
     ],
     relatedServices: [
       { title: "CAD Automation Services", href: "/services/cad/automation/" },
       { title: "CAD Conversion Services", href: "/services/cad/conversion/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
+    ],
+    relatedArticles: [
+      { title: "CAD Services Designed with Precision", href: "/blogs/engineers-blog/" },
+      { title: "ISO 9001:2015 QMS Certification Milestone", href: "/blogs/iso-9001-2015/" },
     ],
   },
   {
     slug: "automation",
     title: "CAD Automation Services",
-    metaTitle: "CAD Automation Services | Port AI Engineers",
+    metaTitle: "CAD Drafting Automation Services | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers offers CAD automation services, creating custom drafting routines, dynamic block libraries, and automated drawing workflows for engineering teams.",
+      "Custom CAD automation scripts, block libraries & batch checks for engineering teams in India, UAE, Saudi Arabia & Qatar.",
     h1: "CAD Automation Services",
     image: "/images/services/cad-automation.webp",
     imageAlt: "CAD automation and drafting workflow",
     description: [
-      "Port AI Engineers provides custom CAD automation services, streamlining engineering workflows and eliminating repetitive drafting tasks through tailored scripts, macros, and dynamic libraries.",
-      "We build automated drafting workflows that standardize title blocks, enforce layer hygiene, and accelerate drawing package production while maintaining strict engineering quality standards.",
-      "By automating routine tasks such as title block population, layer standardization, batch plotting, and drawing index generation, teams eliminate manual errors.",
-      "Our custom routines free engineers and draftsmen to focus on high-value design coordination and constructability reviews.",
-      "Automation scripts are documented for maintainability, ease of use, and future expansion as project requirements grow.",
-      "The result is faster turnaround times, strict standard compliance, and scalable CAD delivery capacity for demanding project schedules.",
+      "Port AI Engineers provides custom CAD automation services, eliminating repetitive drafting tasks through tailored scripts, dynamic block libraries, and automated QA checks.",
+      "We build repeatable CAD routines that automate title block population, layer compliance verification, batch DWG/PDF plotting, tag extraction, and drawing register generation.",
+      "Supporting multi-discipline EPC and OEM drafting teams across India, the UAE, Saudi Arabia, and Qatar, our tools integrate cleanly into standard AutoCAD and plant design environments with clear user documentation.",
+      "Automating deterministic drafting checks frees senior engineers and drafters to concentrate on constructability reviews, routing decisions, and client design milestones.",
     ],
     highlights: [
-      "Automation scripts and routines aligned to company drafting standards",
-      "Elimination of repetitive manual drafting tasks and batch operations",
-      "Consistent drafting quality, title block standardization, and layer hygiene",
-      "Scalable delivery workflows supporting large drawing packages",
+      "Automation scripts aligned to project CAD manuals and layer standards",
+      "Elimination of repetitive manual title-block and attribute updates",
+      "Automated batch plotting, layer checking, and drawing register extraction",
+      "Documented routines built for long-term team maintainability",
     ],
     deliverables: [
       "Custom CAD automation scripts, tools, and macro routines",
       "Standardized dynamic drawing templates and block libraries",
       "Usage documentation and script maintenance guidelines",
-      "Automated batch generation and processing workflows",
+      "Automated batch generation and QC processing workflows",
     ],
     outcomes: [
-      "Significantly reduced drafting hours on routine drawing preparation",
-      "Fewer manual errors and standardized drawing package quality",
-      "Scalable delivery capacity to handle large engineering project volumes",
+      "Reduced manual drafting hours on repetitive drawing packages",
+      "Fewer human transcription errors in tags and title blocks",
+      "Scalable delivery workflows supporting high-volume EPC submittals",
     ],
     relatedServices: [
       { title: "CAD Conversion Services", href: "/services/cad/conversion/" },
       { title: "Piping Isometric Drawing Services", href: "/services/cad/isometric/" },
       { title: "CAD Training Services", href: "/services/cad/training/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
+    ],
+    relatedArticles: [
+      { title: "CAD Services Designed with Precision", href: "/blogs/engineers-blog/" },
+      { title: "How to Convert PDF P&IDs into Editable CAD Drawings", href: "/blogs/pdf-pid-conversion/" },
     ],
   },
   {
@@ -345,42 +350,42 @@ const serviceDetails: ServiceDetail[] = [
     title: "Fire Evacuation Drawing Services",
     metaTitle: "Fire Evacuation Drawing Services | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers delivers compliant fire evacuation drawing services, providing clear emergency exit routes, safety equipment maps, and facility layouts.",
+      "Code-aligned fire evacuation drawings, emergency exit route plans & fire safety equipment CAD maps for India, UAE, Saudi Arabia & Qatar facilities.",
     h1: "Fire Evacuation Drawing Services",
     image: "/images/services/fire-evacuation.webp",
     imageAlt: "Fire evacuation layout drawing",
     description: [
-      "Port AI Engineers provides fire evacuation drawing services, developing compliant emergency evacuation plans, exit route layouts, and fire safety drawings for industrial plants and commercial facilities.",
-      "Our CAD team maps primary and secondary emergency exit layouts, assembly areas, and emergency equipment locations to ensure audit readiness and workforce safety.",
-      "We support industrial plants, commercial complexes, and manufacturing facilities across India and the Gulf region, ensuring evacuation layouts meet statutory life-safety standards in the UAE, Saudi Arabia, and Qatar.",
-      "Our drawings map primary and secondary escape routes, emergency assembly points, fire alarm pull stations, fire extinguishers, and hose reel positions.",
-      "By incorporating architectural floor plans and industrial plant layouts, we ensure symbols and directional arrows are immediately legible in high-stress situations.",
-      "Our documentation supports safety audits, regulatory compliance inspections, personnel training, and facility emergency readiness.",
-      "Each evacuation plan is organized for quick visual comprehension, strengthening plant safety culture and regulatory compliance.",
+      "Port AI Engineers provides fire evacuation drawing services, developing clear, audit-ready emergency egress plans, escape route signage drawings, and fire protection equipment CAD maps for industrial plants and commercial facilities.",
+      "We support facility owners, HSE consultants, and EPC teams across India and the Gulf region, aligning fire evacuation drawings with statutory life-safety practices and civil-defense review expectations across India, the UAE, Saudi Arabia, and Qatar.",
+      "Each plan accurately plots primary and secondary escape routes, muster assembly points, fire extinguishers, hydrant/hose reel stations, call points, emergency lighting, and 'You Are Here' floor orientation.",
+      "Built on verified plant GA and architectural floor plans, our colour-coded evacuation drawings remain legible in both wall-mounted safety displays and HSE audit binders.",
     ],
     highlights: [
-      "Compliance-ready evacuation layouts with primary and secondary routes",
-      "Clear safety signage, exit door locations, and assembly area mapping",
-      "Accurate fire equipment callouts including extinguishers and alarm points",
-      "High-visibility layouts designed for rapid comprehension during emergencies",
+      "High-visibility primary and secondary escape routes with distance clarity",
+      "Standardized fire safety symbols (ISO 7010 / NFPA 170 alignment)",
+      "Accurate mapping of extinguishers, hydrants, call points & assembly zones",
+      "Audit-ready orientation and scale formatting for facility posting",
     ],
     deliverables: [
-      "Facility fire evacuation route layouts and floor plan drawings",
-      "Emergency safety equipment location maps and symbol references",
-      "Code-compliant directional labeling and exit path documentation",
-      "Audit-ready emergency evacuation sheets formatted for facility display",
+      "Facility fire evacuation route layouts and 'You Are Here' boards",
+      "Emergency firefighting and alarm equipment location CAD maps",
+      "Standardized symbol legends, bilingual labeling options & directional keys",
+      "Print-ready PDF and editable DWG sheets formatted for HSE audits",
     ],
     outcomes: [
-      "Improved personnel safety readiness during emergencies",
-      "Clear documentation supporting facility safety compliance audits",
-      "Faster, organized emergency egress and response coordination",
+      "Improved workforce emergency orientation and muster clarity",
+      "Audit-ready life-safety documentation for facility HSE inspections",
+      "Consistent visual standards across multi-building industrial sites",
     ],
     relatedServices: [
-      { title: "General Arrangement Drawing Services", href: "/services/cad/general-arrangement/" },
+      { title: "GA & General Arrangement Drawings", href: "/services/cad/general-arrangement/" },
+      { title: "Industrial Plant Layout Services", href: "/services/engineering/plant-layout/" },
       { title: "CAD Conversion Services", href: "/services/cad/conversion/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
     ],
     relatedArticles: [
       { title: "Industrial Fire Evacuation Drawing Standards: Egress Mapping & Symbols", href: "/blogs/fire-evacuation-drawing-standards/" },
+      { title: "Fire Evacuation Planning for Industrial Facilities", href: "/blogs/fire-evacuation-planning/" },
     ],
   },
 ];
@@ -458,7 +463,7 @@ export default async function CadServiceDetailPage({
     name: detail.h1,
     description: detail.metaDescription,
     url: canonicalUrl,
-    serviceType: "Industrial CAD Drafting Services",
+    serviceType: detail.title,
     image: detail.image,
   });
 
@@ -481,6 +486,11 @@ export default async function CadServiceDetailPage({
 
   return (
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
+      <ServicePageTracker
+        serviceSlug={detail.slug}
+        serviceCategory="cad"
+        serviceName={detail.h1}
+      />
       <JsonLd schema={serviceSchema} />
       <JsonLd schema={webPageSchema} />
       <JsonLd schema={breadcrumbSchema} />
@@ -542,14 +552,54 @@ export default async function CadServiceDetailPage({
             location="service_detail_top"
           />
 
-          <div className="overflow-hidden rounded-3xl border border-[var(--color-border)]">
+          <div className="overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)]">
             <Image
               src={detail.image}
               alt={detail.imageAlt}
               width={imageDimensions.width}
               height={imageDimensions.height}
+              priority
+              fetchPriority="high"
+              loading="eager"
+              sizes="(max-width: 1024px) 100vw, 1024px"
               className="h-auto max-h-[70vh] w-full object-contain sm:max-h-[75vh]"
             />
+          </div>
+
+          <div className="grid gap-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 text-xs sm:grid-cols-3 sm:text-sm">
+            <div>
+              <span className="block font-semibold uppercase tracking-[0.14em] text-[var(--color-primary)]">
+                Regional Delivery
+              </span>
+              <Link
+                href="/services/engineering-design-outsourcing/"
+                className="mt-1 inline-block text-[var(--color-text)] hover:text-[var(--color-primary)] hover:underline"
+              >
+                India · UAE · Saudi Arabia · Qatar
+              </Link>
+            </div>
+            <div>
+              <span className="block font-semibold uppercase tracking-[0.14em] text-[var(--color-primary)]">
+                Quality Framework
+              </span>
+              <Link
+                href="/blogs/iso-9001-2015/"
+                className="mt-1 inline-block text-[var(--color-text)] hover:text-[var(--color-primary)] hover:underline"
+              >
+                ISO 9001:2015 QMS Checked
+              </Link>
+            </div>
+            <div>
+              <span className="block font-semibold uppercase tracking-[0.14em] text-[var(--color-primary)]">
+                Confidentiality
+              </span>
+              <Link
+                href="/privacy/"
+                className="mt-1 inline-block text-[var(--color-text)] hover:text-[var(--color-primary)] hover:underline"
+              >
+                NDA &amp; Sample Review Ready
+              </Link>
+            </div>
           </div>
 
           <div className="space-y-4 text-base text-[var(--color-muted)] sm:text-lg">

@@ -2,15 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   EMAIL_HREF,
   PHONE_HREF,
   SCHEDULE_CALL_URL,
+  getServiceNameFromSlug,
+  getServiceSlugFromPathname,
   getWhatsAppHref,
+  trackCalendarClick,
   trackEmailClick,
   trackPhoneClick,
   trackQuoteCtaClick,
-  trackScheduleCallClick,
   trackWhatsAppClick,
 } from "../../lib/analytics";
 
@@ -39,6 +42,7 @@ const footerColumns: FooterColumn[] = [
       { label: "CAD Conversion", href: "/services/cad/conversion/" },
       { label: "Piping Engineering", href: "/services/engineering/piping-engineering/" },
       { label: "3D Piping Design", href: "/services/engineering/piping-3d/" },
+      { label: "Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
     ],
   },
   {
@@ -49,6 +53,7 @@ const footerColumns: FooterColumn[] = [
       { label: "ISO 9001:2015 QMS", href: "/blogs/iso-9001-2015/" },
       { label: "Startup India (DIPP265006)", href: "/blogs/startup-certified/" },
       { label: "Resources & Blogs", href: "/blogs/" },
+      { label: "Privacy & NDA Policy", href: "/privacy/" },
     ],
   },
   {
@@ -142,15 +147,23 @@ const socialLinks = [
   },
 ];
 
-function trackFooterLink(trackType?: FooterLink["trackType"]) {
-  if (trackType === "email") trackEmailClick("footer");
-  if (trackType === "phone") trackPhoneClick("footer");
-  if (trackType === "whatsapp") trackWhatsAppClick("footer");
-  if (trackType === "schedule") trackScheduleCallClick("footer");
-  if (trackType === "quote") trackQuoteCtaClick("footer");
+function trackFooterLink(trackType?: FooterLink["trackType"], serviceSlug?: string) {
+  if (trackType === "email") trackEmailClick("footer", serviceSlug);
+  if (trackType === "phone") trackPhoneClick("footer", serviceSlug);
+  if (trackType === "whatsapp") trackWhatsAppClick("footer", serviceSlug);
+  if (trackType === "schedule") trackCalendarClick("footer", serviceSlug);
+  if (trackType === "quote") trackQuoteCtaClick("footer", serviceSlug);
 }
 
 export default function FooterSection() {
+  const pathname = usePathname();
+  const activeServiceSlug = getServiceSlugFromPathname(pathname);
+  const activeServiceName = getServiceNameFromSlug(activeServiceSlug);
+  const quoteHref = activeServiceSlug
+    ? `/contact/?service=${encodeURIComponent(activeServiceSlug)}#contact-form`
+    : "/contact/#contact-form";
+  const whatsappHref = getWhatsAppHref(activeServiceName);
+
   return (
     <footer className="w-full bg-[var(--color-footer-bg)] text-[var(--color-on-footer)]">
       <div className="border-t border-[color-mix(in_srgb,var(--color-on-footer)_10%,transparent)]" />
@@ -163,14 +176,21 @@ export default function FooterSection() {
               </h3>
               <div className="flex flex-col gap-2 text-sm text-[var(--color-on-footer)]">
                 {column.links.map((link) => {
+                  const resolvedHref =
+                    link.trackType === "quote"
+                      ? quoteHref
+                      : link.trackType === "whatsapp"
+                        ? whatsappHref
+                        : link.href;
+
                   if (link.isExternal) {
                     return (
                       <a
                         key={link.label}
-                        href={link.href}
-                        target={link.href.startsWith("http") ? "_blank" : undefined}
-                        rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                        onClick={() => trackFooterLink(link.trackType)}
+                        href={resolvedHref}
+                        target={resolvedHref.startsWith("http") ? "_blank" : undefined}
+                        rel={resolvedHref.startsWith("http") ? "noopener noreferrer" : undefined}
+                        onClick={() => trackFooterLink(link.trackType, activeServiceSlug)}
                         className="transition-colors duration-300 hover:text-[var(--color-primary)]"
                       >
                         {link.label}
@@ -181,8 +201,8 @@ export default function FooterSection() {
                   return (
                     <Link
                       key={link.label}
-                      href={link.href}
-                      onClick={() => trackFooterLink(link.trackType)}
+                      href={resolvedHref}
+                      onClick={() => trackFooterLink(link.trackType, activeServiceSlug)}
                       className="transition-colors duration-300 hover:text-[var(--color-primary)]"
                     >
                       {link.label}
@@ -217,8 +237,8 @@ export default function FooterSection() {
               </p>
               <div className="flex flex-col gap-2.5 pt-1">
                 <Link
-                  href="/contact/#contact-form"
-                  onClick={() => trackQuoteCtaClick("footer_card")}
+                  href={quoteHref}
+                  onClick={() => trackQuoteCtaClick("footer_card", activeServiceSlug)}
                   className="group inline-flex w-full items-center justify-between rounded-xl bg-[var(--color-primary)] px-4 py-2.5 text-xs font-semibold text-[var(--color-on-primary)] transition-opacity hover:opacity-95"
                 >
                   <span>Request a Project Quote</span>
@@ -230,7 +250,7 @@ export default function FooterSection() {
                   href={SCHEDULE_CALL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => trackScheduleCallClick("footer_card")}
+                  onClick={() => trackCalendarClick("footer_card", activeServiceSlug)}
                   className="group inline-flex w-full items-center justify-between rounded-xl border border-[color-mix(in_srgb,var(--color-on-footer)_55%,transparent)] bg-transparent px-4 py-2.5 text-xs font-semibold text-[var(--color-on-footer)] transition-colors duration-300 hover:border-[var(--color-primary)] hover:bg-[color-mix(in_srgb,var(--color-on-footer)_8%,transparent)]"
                 >
                   <span>Schedule a Call</span>
@@ -247,7 +267,7 @@ export default function FooterSection() {
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-4">
               <Image
-                src="/Logo.jpeg"
+                src="/images/brand/logo-mark.webp"
                 alt="Port AI Engineers logo"
                 width={48}
                 height={48}
@@ -264,35 +284,23 @@ export default function FooterSection() {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="relative h-20 w-20 overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--color-on-footer)_10%,transparent)] bg-[color-mix(in_srgb,var(--color-on-footer)_6%,transparent)]">
-                <Image
-                  src="/LocationQR.png"
-                  alt="Location QR code"
-                  width={80}
-                  height={80}
-                  loading="lazy"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="space-y-2">
-                <span className="text-xs uppercase tracking-[0.2em] text-[var(--color-on-footer-muted)]">
-                  Follow us on
-                </span>
-                <div className="flex items-center gap-2">
-                  {socialLinks.map((link) => (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={link.label}
-                      className="group inline-flex h-8 w-8 items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--color-on-footer)_15%,transparent)] bg-[color-mix(in_srgb,var(--color-on-footer)_8%,transparent)] text-[var(--color-on-footer)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
-                    >
-                      {link.icon}
-                    </a>
-                  ))}
-                </div>
+            <div className="flex flex-col items-start gap-2 md:items-end">
+              <span className="text-xs uppercase tracking-[0.2em] text-[var(--color-on-footer-muted)]">
+                Follow us on
+              </span>
+              <div className="flex items-center gap-2">
+                {socialLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={link.label}
+                    className="group inline-flex h-8 w-8 items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--color-on-footer)_15%,transparent)] bg-[color-mix(in_srgb,var(--color-on-footer)_8%,transparent)] text-[var(--color-on-footer)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
+                  >
+                    {link.icon}
+                  </a>
+                ))}
               </div>
             </div>
           </div>
@@ -316,7 +324,7 @@ export default function FooterSection() {
               >
                 <div className="relative flex items-center gap-2.5 rounded-xl border border-[color-mix(in_srgb,var(--color-primary)_45%,transparent)] bg-[color-mix(in_srgb,var(--color-primary)_20%,transparent)] px-3 py-1.5 shadow-[0_18px_40px_var(--color-card-shadow)]">
                   <Image
-                    src="/ISOimage.webp"
+                    src="/images/certifications/iso-badge.webp"
                     alt="ISO 9001:2015 certification badge"
                     width={32}
                     height={32}

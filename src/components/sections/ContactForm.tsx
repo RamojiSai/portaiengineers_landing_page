@@ -1,17 +1,19 @@
 "use client";
 
+import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import {
   EMAIL_HREF,
   PHONE_HREF,
   SCHEDULE_CALL_URL,
   getWhatsAppHref,
+  trackCalendarClick,
   trackEmailClick,
   trackFormStart,
+  trackFormSubmit,
   trackFormValidationError,
   trackGenerateLead,
   trackPhoneClick,
-  trackScheduleCallClick,
   trackWhatsAppClick,
 } from "../../lib/analytics";
 
@@ -21,6 +23,8 @@ interface FormState {
   email: string;
   phone: string;
   service: string;
+  country: string;
+  software: string;
   message: string;
   botcheck: string;
 }
@@ -43,7 +47,28 @@ const SERVICE_OPTIONS = [
   { slug: "greenfield-projects", label: "Greenfield Projects" },
   { slug: "brownfield-projects", label: "Brownfield Projects" },
   { slug: "power-plants", label: "Power Plants" },
+  { slug: "engineering-design-outsourcing", label: "Engineering Design Outsourcing" },
   { slug: "other", label: "Multiple Disciplines / General Enquiry" },
+];
+
+const COUNTRY_OPTIONS = [
+  "India",
+  "United Arab Emirates (UAE)",
+  "Saudi Arabia",
+  "Qatar",
+  "Other / International",
+];
+
+const SOFTWARE_OPTIONS = [
+  "AutoCAD",
+  "AutoCAD Plant 3D",
+  "SmartPlant 3D (SP3D)",
+  "AVEVA E3D",
+  "AVEVA PDMS",
+  "CADWORX",
+  "CAESAR II",
+  "AutoPIPE",
+  "Multiple / Not Decided",
 ];
 
 const initialFormState: FormState = {
@@ -52,6 +77,8 @@ const initialFormState: FormState = {
   email: "",
   phone: "",
   service: "",
+  country: "",
+  software: "",
   message: "",
   botcheck: "",
 };
@@ -72,6 +99,11 @@ export default function ContactForm({
     type: "success" | "error" | null;
     text: string;
   }>({ type: null, text: "" });
+  const [submittedSummary, setSubmittedSummary] = useState<{
+    service: string;
+    country?: string;
+    software?: string;
+  } | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [validationAnnouncement, setValidationAnnouncement] = useState<string>("");
   const hasTrackedStartRef = useRef(false);
@@ -80,19 +112,37 @@ export default function ContactForm({
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
     const serviceParam = params.get("service")?.trim().toLowerCase();
-    if (!serviceParam) return;
-    const match = SERVICE_OPTIONS.find(
-      (opt) => opt.slug === serviceParam || opt.label.toLowerCase() === serviceParam
-    );
-    if (match) {
-      setFormData((prev) => (prev.service ? prev : { ...prev, service: match.slug }));
+    const countryParam = params.get("country")?.trim().toLowerCase();
+
+    const countryMap: Record<string, string> = {
+      india: "India",
+      uae: "United Arab Emirates (UAE)",
+      "united-arab-emirates": "United Arab Emirates (UAE)",
+      "saudi-arabia": "Saudi Arabia",
+      ksa: "Saudi Arabia",
+      qatar: "Qatar",
+    };
+
+    const matchedService = serviceParam
+      ? SERVICE_OPTIONS.find(
+          (opt) => opt.slug === serviceParam || opt.label.toLowerCase() === serviceParam
+        )
+      : undefined;
+    const matchedCountry = countryParam ? countryMap[countryParam] : undefined;
+
+    if (matchedService || matchedCountry) {
+      setFormData((prev) => ({
+        ...prev,
+        ...(matchedService && !prev.service ? { service: matchedService.slug } : {}),
+        ...(matchedCountry && !prev.country ? { country: matchedCountry } : {}),
+      }));
     }
   }, []);
 
   const markFormStarted = () => {
     if (!hasTrackedStartRef.current) {
       hasTrackedStartRef.current = true;
-      trackFormStart(formLocation);
+      trackFormStart(formLocation, formData.service || undefined);
     }
   };
 
@@ -187,9 +237,16 @@ export default function ContactForm({
 
     setIsSubmitting(true);
     setStatusMessage({ type: null, text: "" });
+    setSubmittedSummary(null);
 
     const selectedServiceLabel =
       SERVICE_OPTIONS.find((opt) => opt.slug === formData.service)?.label || "General Enquiry";
+
+    trackFormSubmit(
+      formLocation,
+      formData.service || "general",
+      formData.country || undefined
+    );
 
     try {
       const payload = {
@@ -201,6 +258,8 @@ export default function ContactForm({
         email: formData.email.trim(),
         phone: formData.phone.trim() || "Not provided",
         service: selectedServiceLabel,
+        country: formData.country || "Not specified",
+        software: formData.software || "Not specified",
         message: formData.message.trim(),
         page_source: typeof window !== "undefined" ? window.location.href : "Website",
         botcheck: "",
@@ -218,11 +277,20 @@ export default function ContactForm({
       const result = await response.json();
 
       if (response.ok && result.success) {
-        trackGenerateLead(formLocation, formData.service || "general");
+        trackGenerateLead(
+          formLocation,
+          formData.service || "general",
+          formData.country || undefined
+        );
 
         setStatusMessage({
           type: "success",
           text: "Thank you. Your project enquiry has been sent to our engineering team. You will receive an initial response within 24 working hours.",
+        });
+        setSubmittedSummary({
+          service: selectedServiceLabel,
+          country: formData.country || undefined,
+          software: formData.software || undefined,
         });
         setFormData(initialFormState);
         setFieldErrors({});
@@ -284,8 +352,15 @@ export default function ContactForm({
                   clipRule="evenodd"
                 />
               </svg>
-              <div className="text-sm font-medium leading-relaxed">
-                {statusMessage.text}
+              <div className="space-y-1.5 text-sm font-medium leading-relaxed">
+                <p>{statusMessage.text}</p>
+                {submittedSummary && (
+                  <p className="text-xs font-normal opacity-90">
+                    Recorded scope: <strong>{submittedSummary.service}</strong>
+                    {submittedSummary.country ? ` · ${submittedSummary.country}` : ""}
+                    {submittedSummary.software ? ` · ${submittedSummary.software}` : ""}
+                  </p>
+                )}
               </div>
             </div>
             <div className="pl-8">
@@ -293,7 +368,12 @@ export default function ContactForm({
                 href={SCHEDULE_CALL_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => trackScheduleCallClick(`${formLocation}_success_banner`)}
+                onClick={() =>
+                  trackCalendarClick(
+                    `${formLocation}_success_banner`,
+                    submittedSummary?.service
+                  )
+                }
                 className="inline-flex items-center gap-1.5 text-xs font-semibold underline hover:opacity-80"
               >
                 Need to discuss specs sooner? Schedule a Technical Call &rarr;
@@ -484,7 +564,7 @@ export default function ContactForm({
                 disabled={isSubmitting}
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="+91 98... or +1 555..."
+                placeholder="+91 98... / +971 50... / +966 50..."
                 className={`w-full rounded-xl border bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] placeholder-[var(--color-muted)] transition-colors focus:outline-none focus:ring-2 ${
                   fieldErrors.phone
                     ? "border-rose-400 focus:border-rose-500 focus:ring-rose-200 dark:focus:ring-rose-950"
@@ -526,6 +606,62 @@ export default function ContactForm({
                 </option>
               ))}
             </select>
+          </div>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label
+              htmlFor="contact-country"
+              className="block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--color-text)]"
+            >
+              Project Region / Country{" "}
+              <span className="font-normal lowercase text-[var(--color-muted)]">(optional)</span>
+            </label>
+            <div className="mt-1.5">
+              <select
+                id="contact-country"
+                name="country"
+                disabled={isSubmitting}
+                value={formData.country}
+                onChange={handleChange}
+                className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] transition-colors focus:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--color-primary)_25%,transparent)] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <option value="">Select region / country (optional)</option>
+                {COUNTRY_OPTIONS.map((country) => (
+                  <option key={country} value={country}>
+                    {country}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label
+              htmlFor="contact-software"
+              className="block text-xs font-semibold uppercase tracking-[0.15em] text-[var(--color-text)]"
+            >
+              Preferred CAD / Stress Software{" "}
+              <span className="font-normal lowercase text-[var(--color-muted)]">(optional)</span>
+            </label>
+            <div className="mt-1.5">
+              <select
+                id="contact-software"
+                name="software"
+                disabled={isSubmitting}
+                value={formData.software}
+                onChange={handleChange}
+                className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] transition-colors focus:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--color-primary)_25%,transparent)] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <option value="">Select software platform (optional)</option>
+                {SOFTWARE_OPTIONS.map((sw) => (
+                  <option key={sw} value={sw}>
+                    {sw}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
 
@@ -604,7 +740,11 @@ export default function ContactForm({
             )}
           </button>
           <p className="text-xs text-[var(--color-muted)]">
-            Initial enquiry response within 24 working hours. Anonymized sample documentation available on NDA request.
+            Initial enquiry response within 24 working hours. Anonymized sample documentation available on NDA request.{" "}
+            <Link href="/privacy/" className="font-medium text-[var(--color-primary)] underline-offset-2 hover:underline">
+              Privacy &amp; NDA policy
+            </Link>
+            .
           </p>
         </div>
       </form>

@@ -1,29 +1,31 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import TrackedLink from "../../../components/analytics/TrackedLink";
 import "./iso.css";
 import {
   JsonLd,
-  createWebPageSchema,
+  createBlogPostingSchema,
   createBreadcrumbSchema,
 } from "../../../lib/schema";
 
 export const metadata: Metadata = {
   title: "ISO 9001:2015 Certification Milestone",
   description:
-    "Port AI Engineers Pvt. Ltd. has achieved ISO 9001:2015 certification for its Quality Management System, validating engineering design and quality excellence.",
+    "Port AI Engineers Pvt. Ltd. maintains ISO 9001:2015 certification for its Quality Management System across engineering design and CAD services.",
   alternates: {
     canonical: "https://portaiengineers.com/blogs/iso-9001-2015/",
   },
   openGraph: {
     title: "ISO 9001:2015 Certification Milestone | Port AI Engineers",
     description:
-      "Port AI Engineers Pvt. Ltd. has achieved ISO 9001:2015 certification for its Quality Management System, validating engineering design and quality excellence.",
+      "Port AI Engineers Pvt. Ltd. maintains ISO 9001:2015 certification for its Quality Management System across engineering design and CAD services.",
     url: "https://portaiengineers.com/blogs/iso-9001-2015/",
     siteName: "Port AI Engineers",
     images: [
       {
-        url: "/ISOimage.webp",
-        width: 1200,
-        height: 630,
+        url: "/images/certifications/iso-badge.webp",
+        width: 128,
+        height: 128,
         alt: "Port AI Engineers - ISO 9001:2015 Certification",
       },
     ],
@@ -34,14 +36,21 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ISO 9001:2015 Certification Milestone | Port AI Engineers",
     description:
-      "Port AI Engineers Pvt. Ltd. has achieved ISO 9001:2015 certification for its Quality Management System, validating engineering design and quality excellence.",
-    images: ["/ISOimage.webp"],
+      "Port AI Engineers Pvt. Ltd. maintains ISO 9001:2015 certification for its Quality Management System across engineering design and CAD services.",
+    images: ["/images/certifications/iso-badge.webp"],
   },
 };
 
 const isoHtml = `
 <header class="hero">
   <div class="hero-inner">
+    <nav aria-label="Breadcrumb" class="blog-breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <a href="/blogs/">Blogs</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">ISO 9001:2015 Certification</span>
+    </nav>
     <div class="blog-tag-row">
       <span class="tag tag-primary">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
@@ -74,7 +83,7 @@ const isoHtml = `
 
 <div class="iso-banner certFadeIn">
     <div class="iso-banner-left">
-      <img src="/ISOimage.webp" alt="ISO 9001:2015 badge" width="945" height="945" decoding="async" />
+      <img src="/images/certifications/iso-badge.webp" alt="ISO 9001:2015 badge" width="128" height="128" decoding="async" />
     </div>
     <div class="iso-banner-right">
       <h2>ISO 9001:2015 · Quality Management System</h2>
@@ -320,29 +329,21 @@ const isoHtml = `
     </div>
   </div>
 
-  <div class="iso-nav-card">
-    <div class="iso-nav-card__inner">
-      <div>
-        <h2 class="iso-nav-card__title">Explore More from Port AI Engineers</h2>
-        <p class="iso-nav-card__desc">Read our engineering insights or connect with our quality management team.</p>
-      </div>
-      <div class="iso-nav-card__links">
-        <a href="/blogs/" class="iso-nav-card__btn">&larr; Back to Blogs</a>
-        <a href="/services/engineering/" class="iso-nav-card__btn">Engineering Services</a>
-        <a href="/contact/" class="iso-nav-card__btn iso-nav-card__btn--primary">Contact Us</a>
-      </div>
-    </div>
-  </div>
 </div>
 `;
 
 export default function Iso9001BlogPage() {
-  const webPageSchema = createWebPageSchema({
-    id: "https://portaiengineers.com/blogs/iso-9001-2015/#webpage",
-    url: "https://portaiengineers.com/blogs/iso-9001-2015/",
-    name: "ISO 9001:2015 Certification Milestone",
+  const canonicalUrl = "https://portaiengineers.com/blogs/iso-9001-2015/";
+
+  const blogPostingSchema = createBlogPostingSchema({
+    id: `${canonicalUrl}#article`,
+    url: canonicalUrl,
+    headline: "ISO 9001:2015 Certification Milestone",
     description:
-      "Port AI Engineers Pvt. Ltd. has achieved ISO 9001:2015 certification for its Quality Management System, validating engineering design and quality excellence.",
+      "Port AI Engineers Pvt. Ltd. maintains ISO 9001:2015 certification for its Quality Management System across engineering design and CAD services.",
+    image: "/images/certifications/iso-badge.webp",
+    datePublished: "May 2025",
+    authorName: "Port AI Engineers",
   });
 
   const breadcrumbSchema = createBreadcrumbSchema([
@@ -350,15 +351,46 @@ export default function Iso9001BlogPage() {
     { name: "Blogs", url: "https://portaiengineers.com/blogs/" },
     {
       name: "ISO 9001:2015 Certification Milestone",
-      url: "https://portaiengineers.com/blogs/iso-9001-2015/",
+      url: canonicalUrl,
     },
   ]);
 
   return (
     <div className="iso-page">
-      <JsonLd schema={webPageSchema} />
+      <JsonLd schema={blogPostingSchema} />
       <JsonLd schema={breadcrumbSchema} />
       <div dangerouslySetInnerHTML={{ __html: isoHtml }} />
+      <div className="article-wrap pt-0">
+        <div className="iso-nav-card">
+          <div className="iso-nav-card__inner">
+            <div>
+              <h2 className="iso-nav-card__title">Explore More from Port AI Engineers</h2>
+              <p className="iso-nav-card__desc">
+                Read our engineering insights or discuss a quality-checked engineering or CAD package.
+              </p>
+            </div>
+            <div className="iso-nav-card__links">
+              <Link href="/blogs/" className="iso-nav-card__btn">
+                &larr; Back to Blogs
+              </Link>
+              <Link href="/services/engineering/" className="iso-nav-card__btn">
+                Engineering Services
+              </Link>
+              <Link href="/services/engineering-design-outsourcing/" className="iso-nav-card__btn">
+                Design Outsourcing
+              </Link>
+              <TrackedLink
+                href="/contact/#contact-form"
+                trackType="quote"
+                ctaLocation="blog_iso_footer"
+                className="iso-nav-card__btn iso-nav-card__btn--primary"
+              >
+                Request a Quote
+              </TrackedLink>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

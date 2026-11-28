@@ -1,4 +1,4 @@
-const enquiryFaqs = [
+export const enquiryFaqs = [
   {
     question: "How quickly will Port AI Engineers respond to my enquiry?",
     answer:
@@ -22,7 +22,7 @@ const enquiryFaqs = [
   {
     question: "Do you work with EPC contractors, consultants, and plants outside Hyderabad?",
     answer:
-      "Yes. While our engineering operations center is in Hyderabad, India, we collaborate remotely with EPC contractors, plant owners, engineering consultants, and industrial manufacturers across India and international regions.",
+      "Yes. While our engineering operations center is in Hyderabad, India, we collaborate remotely with EPC contractors, plant owners, and engineering consultants across India, the UAE, Saudi Arabia, and Qatar.",
   },
 ];
 

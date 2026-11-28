@@ -1,29 +1,31 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import TrackedLink from "../../../components/analytics/TrackedLink";
 import "./startup.css";
 import {
   JsonLd,
-  createWebPageSchema,
+  createBlogPostingSchema,
   createBreadcrumbSchema,
 } from "../../../lib/schema";
 
 export const metadata: Metadata = {
   title: "Startup India Recognition Milestone",
   description:
-    "Port AI Engineers Pvt. Ltd. is officially recognized under the Startup India initiative by the Government of India, driving innovation in industrial design and engineering.",
+    "Port AI Engineers Pvt. Ltd. is recognized under Startup India (DIPP265006) in the Design Industry sector for engineering and CAD workflows.",
   alternates: {
     canonical: "https://portaiengineers.com/blogs/startup-certified/",
   },
   openGraph: {
     title: "Startup India Recognition Milestone | Port AI Engineers",
     description:
-      "Port AI Engineers Pvt. Ltd. is officially recognized under the Startup India initiative by the Government of India, driving innovation in industrial design and engineering.",
+      "Port AI Engineers Pvt. Ltd. is recognized under Startup India (DIPP265006) in the Design Industry sector for engineering and CAD workflows.",
     url: "https://portaiengineers.com/blogs/startup-certified/",
     siteName: "Port AI Engineers",
     images: [
       {
         url: "/images/certifications/startup-india.webp",
-        width: 1200,
-        height: 630,
+        width: 1400,
+        height: 989,
         alt: "Port AI Engineers - Startup India Recognition",
       },
     ],
@@ -34,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Startup India Recognition Milestone | Port AI Engineers",
     description:
-      "Port AI Engineers Pvt. Ltd. is officially recognized under the Startup India initiative by the Government of India, driving innovation in industrial design and engineering.",
+      "Port AI Engineers Pvt. Ltd. is recognized under Startup India (DIPP265006) in the Design Industry sector for engineering and CAD workflows.",
     images: ["/images/certifications/startup-india.webp"],
   },
 };
@@ -42,6 +44,13 @@ export const metadata: Metadata = {
 const startupHtml = `
 <header class="startup-hero">
   <div class="startup-hero-inner">
+    <nav aria-label="Breadcrumb" class="blog-breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <a href="/blogs/">Blogs</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Startup India Recognition</span>
+    </nav>
     <div class="startup-tags">
       <span class="startup-tag primary">Startup India</span>
       <span class="startup-tag outline">Company News</span>
@@ -53,8 +62,8 @@ const startupHtml = `
     <p class="startup-subtitle">A new chapter of innovation and growth as we accelerate trusted engineering solutions for modern industries.</p>
 
     <div class="startup-meta">
-      <span>Government of India Initiative</span>
-      <span>Innovation • Growth • Excellence</span>
+      <span>June 2026</span>
+      <span>Government of India · DIPP265006</span>
       <span>Port AI Engineers Pvt. Ltd.</span>
     </div>
   </div>
@@ -196,29 +205,21 @@ const startupHtml = `
     <p><strong>Recognized by Startup India</strong></p>
   </div>
 
-  <div class="startup-nav-card">
-    <div class="startup-nav-card__inner">
-      <div>
-        <h2 class="startup-nav-card__title">Explore More from Port AI Engineers</h2>
-        <p class="startup-nav-card__desc">Read our engineering insights or connect with our technical team.</p>
-      </div>
-      <div class="startup-nav-card__links">
-        <a href="/blogs/" class="startup-nav-card__btn">&larr; Back to Blogs</a>
-        <a href="/services/engineering/" class="startup-nav-card__btn">Engineering Services</a>
-        <a href="/contact/" class="startup-nav-card__btn startup-nav-card__btn--primary">Contact Us</a>
-      </div>
-    </div>
-  </div>
 </div>
 `;
 
 export default function StartupCertifiedPage() {
-  const webPageSchema = createWebPageSchema({
-    id: "https://portaiengineers.com/blogs/startup-certified/#webpage",
-    url: "https://portaiengineers.com/blogs/startup-certified/",
-    name: "Startup India Recognition Milestone",
+  const canonicalUrl = "https://portaiengineers.com/blogs/startup-certified/";
+
+  const blogPostingSchema = createBlogPostingSchema({
+    id: `${canonicalUrl}#article`,
+    url: canonicalUrl,
+    headline: "Startup India Recognition Milestone",
     description:
-      "Port AI Engineers Pvt. Ltd. is officially recognized under the Startup India initiative by the Government of India, driving innovation in industrial design and engineering.",
+      "Port AI Engineers Pvt. Ltd. is recognized under Startup India (DIPP265006) in the Design Industry sector for engineering and CAD workflows.",
+    image: "/images/certifications/startup-india.webp",
+    datePublished: "June 1, 2026",
+    authorName: "Port AI Engineers",
   });
 
   const breadcrumbSchema = createBreadcrumbSchema([
@@ -226,15 +227,46 @@ export default function StartupCertifiedPage() {
     { name: "Blogs", url: "https://portaiengineers.com/blogs/" },
     {
       name: "Startup India Recognition Milestone",
-      url: "https://portaiengineers.com/blogs/startup-certified/",
+      url: canonicalUrl,
     },
   ]);
 
   return (
     <div className="startup-page">
-      <JsonLd schema={webPageSchema} />
+      <JsonLd schema={blogPostingSchema} />
       <JsonLd schema={breadcrumbSchema} />
       <div dangerouslySetInnerHTML={{ __html: startupHtml }} />
+      <div className="startup-body pt-0">
+        <div className="startup-nav-card">
+          <div className="startup-nav-card__inner">
+            <div>
+              <h2 className="startup-nav-card__title">Explore More from Port AI Engineers</h2>
+              <p className="startup-nav-card__desc">
+                Read our engineering insights or discuss a project with our Hyderabad engineering team.
+              </p>
+            </div>
+            <div className="startup-nav-card__links">
+              <Link href="/blogs/" className="startup-nav-card__btn">
+                &larr; Back to Blogs
+              </Link>
+              <Link href="/services/engineering/" className="startup-nav-card__btn">
+                Engineering Services
+              </Link>
+              <Link href="/services/engineering-design-outsourcing/" className="startup-nav-card__btn">
+                Design Outsourcing
+              </Link>
+              <TrackedLink
+                href="/contact/#contact-form"
+                trackType="quote"
+                ctaLocation="blog_startup_footer"
+                className="startup-nav-card__btn startup-nav-card__btn--primary"
+              >
+                Request a Quote
+              </TrackedLink>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

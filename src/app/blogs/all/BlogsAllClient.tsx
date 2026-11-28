@@ -2,35 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-
-function useInView<T extends HTMLElement>() {
-  const ref = useRef<T | null>(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.05 }
-    );
-
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, []);
-
-  return { ref, inView };
-}
+import TrackedLink from "../../../components/analytics/TrackedLink";
 
 function FadeIn({
   children,
@@ -39,18 +11,7 @@ function FadeIn({
   children: React.ReactNode;
   className?: string;
 }) {
-  const { ref, inView } = useInView<HTMLDivElement>();
-
-  return (
-    <div
-      ref={ref}
-      className={`transition-all duration-500 ease-out focus-within:translate-y-0 focus-within:opacity-100 ${
-        inView ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
-      } ${className ?? ""}`}
-    >
-      {children}
-    </div>
-  );
+  return <div className={className}>{children}</div>;
 }
 
 const services = [
@@ -351,11 +312,19 @@ export default function BlogsAllClient() {
                   project from concept to completion.
                 </p>
                 <div className="flex flex-wrap items-center gap-4">
-                  <Link
-                    href="/contact/"
+                  <TrackedLink
+                    href="/contact/#contact-form"
+                    trackType="quote"
+                    ctaLocation="blog_all_footer"
                     className="inline-flex items-center justify-center rounded-full bg-[#0B1F4D] px-6 py-3 text-xs font-semibold tracking-[0.22em] text-white transition-colors duration-300 hover:bg-[#0B1F4D]/90"
                   >
                     GET IN TOUCH
+                  </TrackedLink>
+                  <Link
+                    href="/services/engineering-design-outsourcing/"
+                    className="inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 text-xs font-semibold tracking-[0.22em] text-slate-800 transition-colors duration-300 hover:bg-slate-100"
+                  >
+                    OUTSOURCING &rarr;
                   </Link>
                   <Link
                     href="/blogs/"

@@ -6,8 +6,9 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   SCHEDULE_CALL_URL,
+  getServiceSlugFromPathname,
+  trackCalendarClick,
   trackQuoteCtaClick,
-  trackScheduleCallClick,
 } from "../../lib/analytics";
 
 type NavEntry = {
@@ -31,6 +32,10 @@ const navItems: NavItem[] = [
         href: "/services/engineering/",
       },
       { label: "CAD Services", href: "/services/cad/" },
+      {
+        label: "Design Outsourcing",
+        href: "/services/engineering-design-outsourcing/",
+      },
     ],
   },
   {
@@ -64,9 +69,13 @@ const navItems: NavItem[] = [
   },
 ];
 
-function trackHeaderEvent(eventName: "quote_cta_click" | "schedule_call_click", location: string) {
-  if (eventName === "quote_cta_click") trackQuoteCtaClick(location);
-  if (eventName === "schedule_call_click") trackScheduleCallClick(location);
+function trackHeaderEvent(
+  eventName: "quote_cta_click" | "click_calendar",
+  location: string,
+  serviceInterest?: string
+) {
+  if (eventName === "quote_cta_click") trackQuoteCtaClick(location, serviceInterest);
+  if (eventName === "click_calendar") trackCalendarClick(location, serviceInterest);
 }
 
 function isDropdownEntryActive(pathname: string, entryHref: string) {
@@ -84,6 +93,10 @@ export default function Header() {
   const tabletToggleRef = useRef<HTMLButtonElement | null>(null);
   const mobileToggleRef = useRef<HTMLButtonElement | null>(null);
   const pathname = usePathname() ?? "";
+  const activeServiceSlug = getServiceSlugFromPathname(pathname);
+  const quoteHref = activeServiceSlug
+    ? `/contact/?service=${encodeURIComponent(activeServiceSlug)}#contact-form`
+    : "/contact/#contact-form";
 
   useEffect(() => {
     setIsOpen(false);
@@ -216,7 +229,7 @@ export default function Header() {
           className="flex shrink-0 items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] xl:gap-3"
         >
           <Image
-            src="/Logo.jpeg"
+            src="/images/brand/logo-mark.webp"
             alt="Port AI Engineers Logo"
             width={38}
             height={38}
@@ -344,14 +357,14 @@ export default function Header() {
             href={SCHEDULE_CALL_URL}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackHeaderEvent("schedule_call_click", "header")}
+            onClick={() => trackHeaderEvent("click_calendar", "header", activeServiceSlug)}
             className="inline-flex items-center justify-center whitespace-nowrap rounded-lg border border-[var(--color-border)] px-2.5 py-2 text-xs font-medium text-[var(--color-text)] transition-colors duration-200 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] xl:px-3.5 xl:text-sm"
           >
             Schedule a Call
           </a>
           <Link
-            href="/contact/"
-            onClick={() => trackHeaderEvent("quote_cta_click", "header")}
+            href={quoteHref}
+            onClick={() => trackHeaderEvent("quote_cta_click", "header", activeServiceSlug)}
             className="inline-flex items-center justify-center whitespace-nowrap rounded-lg bg-[var(--color-primary)] px-2.5 py-2 text-xs font-medium text-[var(--color-on-primary)] shadow-xs transition-colors duration-200 hover:bg-[var(--color-primary-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2 xl:px-3.5 xl:text-sm"
           >
             Request a Project Quote
@@ -548,9 +561,9 @@ export default function Header() {
           })}
           <div className="mt-2 flex flex-col gap-2 border-t border-[var(--color-border)] pt-3 md:hidden">
             <Link
-              href="/contact/"
+              href={quoteHref}
               onClick={() => {
-                trackHeaderEvent("quote_cta_click", "mobile_menu");
+                trackHeaderEvent("quote_cta_click", "mobile_menu", activeServiceSlug);
                 setIsOpen(false);
               }}
               className="flex min-h-[44px] w-full items-center justify-center rounded-lg bg-[var(--color-primary)] px-4 py-2.5 text-sm font-medium text-[var(--color-on-primary)] shadow-xs transition-colors hover:bg-[var(--color-primary-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
@@ -562,7 +575,7 @@ export default function Header() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => {
-                trackHeaderEvent("schedule_call_click", "mobile_menu");
+                trackHeaderEvent("click_calendar", "mobile_menu", activeServiceSlug);
                 setIsOpen(false);
               }}
               className="flex min-h-[44px] w-full items-center justify-center rounded-lg border border-[var(--color-border)] px-4 py-2.5 text-sm font-medium text-[var(--color-text)] transition-colors hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-strong)] hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"

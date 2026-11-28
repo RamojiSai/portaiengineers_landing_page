@@ -4,6 +4,10 @@
 .iso-page {
   --navy: #0B1F3A;
   --blue: #1A4B8C;
+  --hero-start: #0B1F3A;
+  --hero-mid: #1A4B8C;
+  --hero-end: #1e6eb5;
+  --hero-text: #FFFFFF;
   --sky: #0284C7;
   --teal: #0FA3B1;
   --gold: #D9A441;
@@ -24,6 +28,28 @@
   line-height: 1.75;
 }
 
+.iso-page .blog-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 18px;
+}
+.iso-page .blog-breadcrumb a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+}
+.iso-page .blog-breadcrumb a:hover {
+  color: var(--gold);
+  text-decoration: underline;
+}
+.iso-page .blog-breadcrumb span[aria-current="page"] {
+  color: var(--gold);
+}
+
 html.dark .iso-page {
   --navy: #38BDF8;
   --blue: #38BDF8;
@@ -36,6 +62,23 @@ html.dark .iso-page {
   --border: var(--color-border);
   --tag-bg: rgba(56, 189, 248, 0.12);
   --tag-text: var(--color-primary);
+}
+
+html.dark .iso-page .tag-primary {
+  color: var(--hero-start);
+}
+
+html.dark .iso-page .hero,
+html.dark .iso-page .commitment-block {
+  color: var(--hero-text);
+}
+
+html.dark .iso-page .about-logo {
+  background: var(--hero-start);
+}
+
+html.dark .iso-page .about-logo svg {
+  fill: var(--hero-text);
 }
 
 html.dark .iso-banner {
@@ -73,8 +116,8 @@ html.dark .iso-nav-card__btn {
 }
 
 .hero {
-  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 60%, #1e6eb5 100%);
-  color: var(--white);
+  background: linear-gradient(135deg, var(--hero-start) 0%, var(--hero-mid) 60%, var(--hero-end) 100%);
+  color: var(--hero-text);
   padding: 0;
   position: relative;
   overflow: hidden;
@@ -118,7 +161,7 @@ html.dark .iso-nav-card__btn {
   font-weight: 800;
   line-height: 1.2;
   margin-bottom: 20px;
-  color: var(--white);
+  color: var(--hero-text);
 }
 .hero h1 span { color: var(--gold); }
 .hero-subtitle {
@@ -558,9 +601,14 @@ h3.sub-title {
   color: var(--sky);
 }
 .iso-nav-card__btn--primary {
-  background: var(--sky);
-  border-color: var(--sky);
+  background: var(--hero-mid);
+  border-color: var(--hero-mid);
   color: #FFFFFF;
+}
+html.dark .iso-nav-card__btn--primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
 }
 .iso-nav-card__btn--primary:hover {
   opacity: 0.9;

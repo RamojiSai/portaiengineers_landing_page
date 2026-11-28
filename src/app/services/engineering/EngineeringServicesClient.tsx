@@ -1,7 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import {
+  SCHEDULE_CALL_URL,
+  trackCalendarClick,
+  trackQuoteCtaClick,
+} from "../../../lib/analytics";
 
 const NODE_SWITCH_MS = 10000;
 
@@ -135,8 +140,6 @@ const engineeringPillars = [
 
 function EngineeringServicesPageContent() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isEngineeringVisible, setIsEngineeringVisible] = useState(false);
-  const [isWhyVisible, setIsWhyVisible] = useState(false);
 
   const activeNode = useMemo(() => nodes[activeIndex], [activeIndex]);
 
@@ -154,48 +157,6 @@ function EngineeringServicesPageContent() {
     setActiveIndex(index);
   };
 
-  useEffect(() => {
-    const section = document.getElementById("why-choose-services");
-    if (!section) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsWhyVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const section = document.getElementById("engineering-flow");
-    if (!section) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsEngineeringVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
       {/* Section 1: Interactive Engineering Wheel */}
@@ -204,12 +165,7 @@ function EngineeringServicesPageContent() {
         className="w-full bg-[var(--color-bg)] px-6 py-16 sm:px-10"
       >
         <div className="mx-auto w-full max-w-6xl">
-          <div
-            className={`mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center transition-all duration-700 ease-out ${isEngineeringVisible
-              ? "translate-y-0 opacity-100"
-              : "-translate-y-6 opacity-0"
-              }`}
-          >
+          <div className="mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center">
             <nav aria-label="Breadcrumb" className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">
               <Link href="/" className="hover:underline">Home</Link>
               <span aria-hidden="true" className="px-2 text-[var(--color-muted)]">/</span>
@@ -323,7 +279,7 @@ function EngineeringServicesPageContent() {
                   <p className="text-base text-[var(--color-muted)]">{activeNode.whatWeDo}</p>
                 </div>
 
-                <div className="mt-8">
+                <div className="mt-8 flex flex-wrap gap-3">
                   <Link
                     href={`/services/engineering/${activeNode.slug}/`}
                     className="group inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)] bg-transparent px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)] transition-colors duration-300 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]"
@@ -332,6 +288,13 @@ function EngineeringServicesPageContent() {
                     <span className="transition-transform duration-300 group-hover:translate-x-1">
                       →
                     </span>
+                  </Link>
+                  <Link
+                    href={`/contact/?service=${activeNode.slug}#contact-form`}
+                    onClick={() => trackQuoteCtaClick("engineering_hub_wheel_card", activeNode.slug)}
+                    className="inline-flex items-center gap-2 rounded-full bg-[var(--color-primary)] px-5 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-on-primary)] transition-opacity hover:opacity-90"
+                  >
+                    Request Quote
                   </Link>
                 </div>
               </article>
@@ -405,7 +368,8 @@ function EngineeringServicesPageContent() {
                     Explore CAD Services &rarr;
                   </Link>
                   <Link
-                    href="/contact/"
+                    href={`/contact/?service=${activeNode.slug}#contact-form`}
+                    onClick={() => trackQuoteCtaClick("engineering_hub_cad_banner", activeNode.slug)}
                     className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-transparent px-6 py-2.5 text-sm font-semibold text-[var(--color-text)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
                   >
                     Contact Our Engineers &rarr;
@@ -446,12 +410,7 @@ function EngineeringServicesPageContent() {
         className="w-full bg-[var(--color-bg)] px-6 py-20 sm:px-10 sm:py-24 border-t border-[var(--color-border)]"
       >
         <div className="mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-          <div
-            className={`space-y-8 transition-all duration-700 ease-out ${isWhyVisible
-              ? "translate-x-0 opacity-100"
-              : "-translate-x-6 opacity-0"
-              }`}
-          >
+          <div className="space-y-8">
             <div className="space-y-4">
               <h2 className="text-3xl font-semibold tracking-tight text-[var(--color-text)] sm:text-4xl">
                 Why Choose Our{" "}
@@ -504,15 +463,17 @@ function EngineeringServicesPageContent() {
 
             <div className="flex flex-wrap gap-3 pt-2">
               <Link
-                href="/contact/?service=piping-engineering#contact-form"
+                href={`/contact/?service=${activeNode.slug}#contact-form`}
+                onClick={() => trackQuoteCtaClick("engineering_hub_why_section", activeNode.slug)}
                 className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-on-primary)] transition-opacity hover:opacity-90"
               >
                 Request a Project Quote &rarr;
               </Link>
               <a
-                href="https://calendar.app.google/4EDU6NFyWQLtrG91A"
+                href={SCHEDULE_CALL_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackCalendarClick("engineering_hub_why_section", activeNode.slug)}
                 className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-primary)] transition-colors duration-300 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]"
               >
                 Schedule a Technical Call
@@ -520,12 +481,7 @@ function EngineeringServicesPageContent() {
             </div>
           </div>
 
-          <div
-            className={`grid gap-4 sm:grid-cols-2 transition-all duration-700 ease-out ${isWhyVisible
-              ? "translate-x-0 opacity-100"
-              : "translate-x-6 opacity-0"
-              }`}
-          >
+          <div className="grid gap-4 sm:grid-cols-2">
             {engineeringPillars.map((pillar) => (
               <div
                 key={pillar.label}
@@ -547,10 +503,6 @@ function EngineeringServicesPageContent() {
 }
 
 export default function EngineeringServicesClient() {
-  return (
-    <Suspense fallback={null}>
-      <EngineeringServicesPageContent />
-    </Suspense>
-  );
+  return <EngineeringServicesPageContent />;
 }
 

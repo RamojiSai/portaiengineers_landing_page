@@ -182,7 +182,7 @@ export default function HeroSection() {
 
           <div className="flex w-full flex-col gap-3 pt-1 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
             <Link
-              href="/contact/"
+              href="/contact/#contact-form"
               onClick={() => trackQuoteCtaClick("hero")}
               className="hero-cta-gradient inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-transparent px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
             >
@@ -197,7 +197,7 @@ export default function HeroSection() {
             </Link>
           </div>
 
-          <p className="flex items-center gap-2 text-xs font-medium text-slate-200 sm:text-sm">
+          <p className="flex flex-wrap items-center gap-2 text-xs font-medium text-slate-200 sm:text-sm">
             <svg
               className="h-4 w-4 shrink-0 text-sky-300"
               viewBox="0 0 24 24"
@@ -211,7 +211,9 @@ export default function HeroSection() {
               <circle cx="12" cy="12" r="10" />
               <polyline points="12 6 12 12 16 14" />
             </svg>
-            <span>Initial enquiry response within 24 working hours.</span>
+            <span>
+              Initial enquiry response within 24 working hours · Serving India, UAE, Saudi Arabia &amp; Qatar
+            </span>
           </p>
         </div>
       </div>

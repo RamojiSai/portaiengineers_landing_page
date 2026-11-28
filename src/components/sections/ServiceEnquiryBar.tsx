@@ -5,9 +5,9 @@ import {
   PHONE_HREF,
   SCHEDULE_CALL_URL,
   getWhatsAppHref,
+  trackCalendarClick,
   trackPhoneClick,
   trackQuoteCtaClick,
-  trackScheduleCallClick,
   trackWhatsAppClick,
 } from "../../lib/analytics";
 
@@ -49,14 +49,14 @@ export default function ServiceEnquiryBar({
             href={SCHEDULE_CALL_URL}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackScheduleCallClick(location, serviceSlug)}
+            onClick={() => trackCalendarClick(location, serviceSlug)}
             className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[var(--color-primary)] px-4 py-2 text-xs font-semibold text-[var(--color-primary)] transition-colors hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)] sm:text-sm"
           >
             Schedule a Call
           </a>
           <a
             href={PHONE_HREF}
-            onClick={() => trackPhoneClick(location)}
+            onClick={() => trackPhoneClick(location, serviceSlug)}
             className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg)] px-3.5 py-2 text-xs font-semibold text-[var(--color-text)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
           >
             Call

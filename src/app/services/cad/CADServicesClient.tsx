@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { trackQuoteCtaClick } from "../../../lib/analytics";
 
 const NODE_SWITCH_MS = 10000;
 
@@ -131,8 +132,6 @@ const cadPillars = [
 
 function CADServicesPageContent() {
   const [cadActiveIndex, setCadActiveIndex] = useState(0);
-  const [isCadVisible, setIsCadVisible] = useState(false);
-  const [isWhyVisible, setIsWhyVisible] = useState(false);
 
   const activeCadNode = useMemo(
     () => cadNodes[cadActiveIndex],
@@ -153,48 +152,6 @@ function CADServicesPageContent() {
     setCadActiveIndex(index);
   };
 
-  useEffect(() => {
-    const section = document.getElementById("why-choose-services");
-    if (!section) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsWhyVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const section = document.getElementById("cad-flow");
-    if (!section) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsCadVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.05 }
-    );
-
-    observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
       {/* Section 1: Interactive CAD Wheel */}
@@ -203,11 +160,7 @@ function CADServicesPageContent() {
         className="w-full bg-[var(--color-bg)] px-6 py-16 sm:px-10"
       >
         <div className="mx-auto w-full max-w-6xl">
-          <div
-            className={`mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center transition-all duration-700 ease-out ${
-              isCadVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-            }`}
-          >
+          <div className="mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center">
             <nav aria-label="Breadcrumb" className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">
               <Link href="/" className="hover:underline">Home</Link>
               <span aria-hidden="true" className="px-2 text-[var(--color-muted)]">/</span>
@@ -329,7 +282,7 @@ function CADServicesPageContent() {
                   </p>
                 </div>
 
-                <div className="mt-8">
+                <div className="mt-8 flex flex-wrap gap-3">
                   <Link
                     href={`/services/cad/${activeCadNode.slug}/`}
                     className="group inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)] bg-transparent px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)] transition-colors duration-300 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)]"
@@ -338,6 +291,13 @@ function CADServicesPageContent() {
                     <span className="transition-transform duration-300 group-hover:translate-x-1">
                       →
                     </span>
+                  </Link>
+                  <Link
+                    href={`/contact/?service=${activeCadNode.slug}#contact-form`}
+                    onClick={() => trackQuoteCtaClick("cad_hub_wheel_card", activeCadNode.slug)}
+                    className="inline-flex items-center gap-2 rounded-full bg-[var(--color-primary)] px-5 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-on-primary)] transition-opacity hover:opacity-90"
+                  >
+                    Request Quote
                   </Link>
                 </div>
               </article>
@@ -393,13 +353,7 @@ function CADServicesPageContent() {
         className="w-full bg-[var(--color-bg)] px-6 py-20 sm:px-10 sm:py-24 border-t border-[var(--color-border)]"
       >
         <div className="mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-          <div
-            className={`space-y-8 transition-all duration-700 ease-out ${
-              isWhyVisible
-                ? "translate-x-0 opacity-100"
-                : "-translate-x-6 opacity-0"
-            }`}
-          >
+          <div className="space-y-8">
             <div className="space-y-4">
               <h2 className="text-3xl font-semibold tracking-tight text-[var(--color-text)] sm:text-4xl">
                 Why Choose Our <span className="text-[var(--color-primary)]">CAD Services</span>
@@ -451,7 +405,8 @@ function CADServicesPageContent() {
 
             <div className="pt-2 flex flex-wrap gap-3">
               <Link
-                href="/contact/?service=pid#contact-form"
+                href={`/contact/?service=${activeCadNode.slug}#contact-form`}
+                onClick={() => trackQuoteCtaClick("cad_hub_why_section", activeCadNode.slug)}
                 className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-[var(--color-on-primary)] transition-opacity hover:opacity-90"
               >
                 Request a CAD Project Quote &rarr;
@@ -465,13 +420,7 @@ function CADServicesPageContent() {
             </div>
           </div>
 
-          <div
-            className={`grid gap-4 sm:grid-cols-2 transition-all duration-700 ease-out ${
-              isWhyVisible
-                ? "translate-x-0 opacity-100"
-                : "translate-x-6 opacity-0"
-            }`}
-          >
+          <div className="grid gap-4 sm:grid-cols-2">
             {cadPillars.map((pillar) => (
               <div
                 key={pillar.label}
@@ -493,9 +442,5 @@ function CADServicesPageContent() {
 }
 
 export default function CADServicesClient() {
-  return (
-    <Suspense fallback={null}>
-      <CADServicesPageContent />
-    </Suspense>
-  );
+  return <CADServicesPageContent />;
 }

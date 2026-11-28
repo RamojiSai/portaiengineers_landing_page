@@ -64,6 +64,27 @@ html.dark .startup-page {
   margin: 0 auto;
   padding: 72px 32px 60px;
 }
+.startup-page .blog-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 18px;
+}
+.startup-page .blog-breadcrumb a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+}
+.startup-page .blog-breadcrumb a:hover {
+  color: var(--gold);
+  text-decoration: underline;
+}
+.startup-page .blog-breadcrumb span[aria-current="page"] {
+  color: var(--gold);
+}
 .startup-tags {
   display: flex;
   flex-wrap: wrap;
@@ -369,9 +390,14 @@ html.dark .startup-page {
   color: var(--sky);
 }
 .startup-nav-card__btn--primary {
-  background: var(--sky);
-  border-color: var(--sky);
+  background: var(--blue);
+  border-color: var(--blue);
   color: #FFFFFF;
+}
+html.dark .startup-nav-card__btn--primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
 }
 .startup-nav-card__btn--primary:hover {
   opacity: 0.9;

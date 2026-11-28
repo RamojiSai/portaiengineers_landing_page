@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ServicePageTracker from "../../../../components/analytics/ServicePageTracker";
 import ServiceEnquiryBar from "../../../../components/sections/ServiceEnquiryBar";
 import {
   JsonLd,
@@ -33,15 +34,14 @@ type ServiceDetail = {
 
 const ENGINEERING_IMAGE_DIMENSIONS: Record<string, { width: number; height: number }> = {
   "/images/services/process-engineering.webp": { width: 1536, height: 1024 },
-  "/3DPIPE-DESIGN.jpg": { width: 1080, height: 608 },
+  "/images/services/piping-3d.webp": { width: 1080, height: 608 },
   "/images/services/piping-engineering.webp": { width: 1536, height: 1024 },
-  "/Instrumentation-Control-Engineering.jpg": { width: 1915, height: 1091 },
-  "/Instrumentation-Control-Engineering.webp": { width: 1915, height: 1091 },
+  "/Instrumentation-Control-Engineering.webp": { width: 1600, height: 912 },
   "/images/services/piping-stress-analysis.webp": { width: 1536, height: 1024 },
   "/images/services/greenfield-project.webp": { width: 1536, height: 1024 },
   "/images/services/brownfield.webp": { width: 1536, height: 1024 },
   "/co2-capture.webp": { width: 992, height: 558 },
-  "/GeneralArrangements.jpg": { width: 1144, height: 755 },
+  "/images/services/general-arrangement.webp": { width: 1144, height: 755 },
 };
 
 const serviceDetails: ServiceDetail[] = [
@@ -50,29 +50,27 @@ const serviceDetails: ServiceDetail[] = [
     title: "Process Engineering Services",
     metaTitle: "Process Engineering Services | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers delivers process engineering services, translating operating objectives into safe, compliant process designs, mass balances, and system envelopes.",
+      "Process engineering services covering design basis, heat & mass balances, equipment sizing & PFD/P&ID support across India, UAE, Saudi Arabia & Qatar.",
     h1: "Process Engineering Services",
     image: "/images/services/process-engineering.webp",
     imageAlt: "Industrial process engineering diagram",
     description: [
-      "Port AI Engineers provides rigorous process engineering services, establishing the thermodynamic and operational foundations required for safe, efficient, and scalable industrial plant operations.",
-      "Our process engineers define design bases, establish mass and energy balances, specify operating envelopes, and coordinate closely with piping and instrumentation teams for seamless project execution.",
-      "From establishing fluid properties, mass balance fundamentals, and operating thermal profiles to specifying process equipment capacities, we ensure every system boundary is rigorously evaluated before mechanical drafting begins.",
-      "Port AI Engineers works closely with client teams to validate assumptions, document constraints, and keep the process design ready for detailed engineering, instrumentation planning, and procurement coordination.",
-      "Each deliverable is structured for review, audit, and future revisions, enabling predictable approvals, streamlined plant operations, and faster project flow across disciplines.",
-      "The result is a reliable process basis that reduces technical uncertainties, eliminates downstream redesigns, and accelerates industrial project delivery.",
+      "Port AI Engineers provides process engineering services, establishing thermodynamic, hydraulic, and operational foundations for safe, reliable industrial plant facilities.",
+      "Our process engineers prepare design bases, heat and mass balances, utility consumption summaries, and operating envelopes aligned with downstream piping and instrumentation design.",
+      "Serving EPC contractors and plant owners across India, the UAE, Saudi Arabia, and Qatar, we coordinate process boundary definitions, equipment duty specifications, and relief philosophy inputs cleanly before detailed engineering begins.",
+      "Structured documentation keeps assumptions transparent across HAZOP reviews, procurement cycles, and multidisciplinary checks.",
     ],
     highlights: [
       "Process design basis and operating intent documentation",
-      "Operating envelope definition, fluid characteristics, and validation",
-      "Alignment with plant safety criteria and compliance requirements",
-      "Equipment capacity parameters and operational boundary definitions",
+      "Mass/energy balance coordination and hydraulic line sizing inputs",
+      "Alignment with plant safety criteria and code requirements",
+      "Equipment duty parameters and operational boundary definitions",
     ],
     deliverables: [
       "Process design basis documentation",
       "Operating envelopes and system constraints",
       "Equipment operating parameters and stream references",
-      "Coordination-ready packages for piping and instrumentation teams",
+      "Coordination-ready packages for P&ID and piping teams",
     ],
     outcomes: [
       "Reduced operational risk during detailed engineering",
@@ -80,9 +78,14 @@ const serviceDetails: ServiceDetail[] = [
       "Improved long-term process reliability and plant throughput",
     ],
     relatedServices: [
-      { title: "P&ID Design & Drafting Services", href: "/services/cad/pid/" },
+      { title: "PFD Design & Drafting Services", href: "/services/cad/pfd/" },
+      { title: "P&ID Engineering & Drafting Services", href: "/services/cad/pid/" },
       { title: "Piping Engineering Services", href: "/services/engineering/piping-engineering/" },
       { title: "Instrumentation Engineering Services", href: "/services/engineering/instrumentation/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
+    ],
+    relatedArticles: [
+      { title: "PFD vs. P&ID: Key Differences in Plant Engineering", href: "/blogs/pfd-vs-pid/" },
     ],
   },
   {
@@ -90,29 +93,27 @@ const serviceDetails: ServiceDetail[] = [
     title: "3D Piping Design Services",
     metaTitle: "3D Piping Design Services | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers provides 3D piping design services, delivering constructability-ready piping models, clash detection, and multidisciplinary plant coordination.",
+      "3D piping design & modeling in AutoCAD Plant 3D, SP3D, E3D, PDMS & CADWORX with clash checks for India, UAE, Saudi Arabia & Qatar projects.",
     h1: "3D Piping Design Services",
-    image: "/3DPIPE-DESIGN.jpg",
+    image: "/images/services/piping-3d.webp",
     imageAlt: "3D industrial piping engineering design",
     description: [
-      "Port AI Engineers provides advanced 3D piping design services, creating constructability-ready 3D piping models, plant layouts, and coordinated routing configurations for industrial facilities.",
-      "Our engineers perform thorough clash detection, evaluate nozzle orientations, and integrate pipe support requirements in full 3D space to eliminate field rework before fabrication.",
-      "Our engineering team focuses on clash detection, access validation, and field-fit accuracy, evaluating pipe rack density, nozzle orientations, and equipment maintenance clearances in full three-dimensional space.",
-      "By integrating piping layouts directly with pipe stress recommendations and fabrication constraints, we eliminate spatial interferences before spools are cut and dispatched to the site.",
-      "Models are delivered with clear design intent so downstream teams can interpret, fabricate, and install efficiently with complete dimensional confidence.",
-      "This approach minimizes field modifications, optimizes materials handling, and supports safer, cleaner site execution for complex plant environments.",
+      "Port AI Engineers provides 3D piping design services, building spec-driven, constructability-ready 3D plant models in AutoCAD Plant 3D, SmartPlant 3D (SP3D), AVEVA E3D, PDMS, and CADWORX.",
+      "Our engineers execute equipment modeling, pipe rack routing, nozzle orientation checks, valve access verification, and automated clash detection across structural, mechanical, and electrical trays before fabrication spools are released.",
+      "Supporting EPCs, skid fabricators, and industrial plants across India, the UAE, Saudi Arabia, and Qatar, we align 3D piping models closely with ASME B31.3 / client piping specs and CAESAR II / AutoPIPE pipe stress markups.",
+      "Models support clean GA plan extraction, fabrication isometric generation, and verified MTO reporting with fewer site modifications.",
     ],
     highlights: [
-      "Clash detection, interference resolution, and spatial validation",
-      "Constructability-focused layout coordination with structural framing",
-      "Equipment nozzle orientation and maintenance access clearances",
-      "Fabrication-aligned routing standards and support integration",
+      "Spec-driven 3D modeling in Plant 3D, SP3D, E3D, PDMS & CADWORX",
+      "Multidisciplinary clash detection and interference resolution",
+      "Equipment nozzle orientation, pipe rack spacing & maintenance clearance checks",
+      "Direct coordination with CAESAR II / AutoPIPE stress & fabrication teams",
     ],
     deliverables: [
-      "Comprehensive 3D piping routing models",
-      "Interference and clash detection review outputs",
-      "Constructability and accessibility review reports",
-      "Model coordinate references for isometric extraction",
+      "Comprehensive spec-driven 3D piping and equipment models",
+      "Interference and clash detection review reports",
+      "Model coordinate references for GA and isometric extraction",
+      "Preliminary MTO and pipe support coordinate packages",
     ],
     outcomes: [
       "Fewer site revisions and eliminated field clashes",
@@ -123,10 +124,13 @@ const serviceDetails: ServiceDetail[] = [
       { title: "Piping Engineering Services", href: "/services/engineering/piping-engineering/" },
       { title: "Piping Isometric Drawing Services", href: "/services/cad/isometric/" },
       { title: "Piping Stress Analysis Services", href: "/services/engineering/piping-stress-analysis/" },
-      { title: "General Arrangement Drawing Services", href: "/services/cad/general-arrangement/" },
+      { title: "GA & General Arrangement Drawings", href: "/services/cad/general-arrangement/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
     ],
     relatedArticles: [
       { title: "Anatomy of an Industrial General Arrangement (GA) Drawing", href: "/blogs/industrial-ga-drawing-anatomy/" },
+      { title: "Industrial Plot Plan Development & Site Zoning Principles", href: "/blogs/industrial-plot-plan-site-zoning/" },
+      { title: "Piping Stress Analysis for Reliable Operation", href: "/blogs/piping-stress-analysis/" },
     ],
   },
   {
@@ -134,23 +138,21 @@ const serviceDetails: ServiceDetail[] = [
     title: "Piping Engineering Services",
     metaTitle: "Piping Engineering Services | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers delivers end-to-end piping engineering services, including piping material specifications, line lists, valve data, and plant layout support.",
+      "Piping engineering services including piping material specs (PMS), line lists, wall thickness & MTOs for India, UAE, Saudi Arabia & Qatar plants.",
     h1: "Piping Engineering Services",
     image: "/images/services/piping-engineering.webp",
     imageAlt: "Industrial piping engineering design",
     description: [
-      "Port AI Engineers provides comprehensive piping engineering services, defining piping material specifications, line lists, and technical system architectures for process and industrial plants.",
-      "Our team coordinates piping design parameters with equipment datasheets, operating pressures, and international design codes to ensure structural integrity and seamless procurement.",
-      "Our team defines wall thicknesses, pressure ratings, flange classes, and valve types suited for demanding industrial fluids and elevated thermal conditions.",
-      "Every piping line is coordinated with equipment datasheets, process stream parameters, and environmental requirements to ensure integrity across all operating modes.",
-      "Documentation is structured for procurement, fabrication, and construction review, eliminating ambiguity during execution and procurement cycles.",
-      "Clients gain a clear, compliance-ready piping engineering package that supports predictable delivery, seamless material procurement, and long-term asset integrity.",
+      "Port AI Engineers provides comprehensive piping engineering services, defining piping material specifications (PMS), wall-thickness calculations, line lists, and valve schedules for process and utility plants.",
+      "Our engineers coordinate pressure-temperature ratings, flange classes, corrosion allowances, and specialty piping components against ASME B31.3, ASME B31.1, API, and project client standards.",
+      "Serving EPC contractors and industrial facilities across India, the UAE, Saudi Arabia, and Qatar, we deliver procurement-ready and fabrication-ready piping packages that bridge process intent cleanly into 3D modeling and stress analysis.",
+      "Structured revision control ensures procurement MTOs, line designations, and isometric packages remain consistent through engineering and field erection.",
     ],
     highlights: [
-      "Code-compliant piping specifications and material classes",
-      "Comprehensive line lists, design pressures, and temperature ratings",
-      "Valve schedules and specialty piping component coordination",
-      "Documentation aligned to procurement, fabrication, and construction",
+      "ASME / API-aligned piping material specifications (PMS) & class sheets",
+      "Comprehensive line lists, wall-thickness checks & rating verification",
+      "Valve datasheets and specialty piping item coordination",
+      "Procurement MTO, fabrication, and construction documentation",
     ],
     deliverables: [
       "Piping material specifications (PMS) and class sheets",
@@ -166,7 +168,12 @@ const serviceDetails: ServiceDetail[] = [
     relatedServices: [
       { title: "3D Piping Design Services", href: "/services/engineering/piping-3d/" },
       { title: "Piping Stress Analysis Services", href: "/services/engineering/piping-stress-analysis/" },
-      { title: "P&ID Design & Drafting Services", href: "/services/cad/pid/" },
+      { title: "P&ID Engineering & Drafting Services", href: "/services/cad/pid/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
+    ],
+    relatedArticles: [
+      { title: "Piping Stress Analysis for Reliable Operation", href: "/blogs/piping-stress-analysis/" },
+      { title: "PFD vs. P&ID: Key Differences in Plant Engineering", href: "/blogs/pfd-vs-pid/" },
     ],
   },
   {
@@ -174,23 +181,21 @@ const serviceDetails: ServiceDetail[] = [
     title: "Instrumentation Engineering Services",
     metaTitle: "Instrumentation Engineering Services | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers delivers instrumentation engineering services, including control logic references, field device layouts, and integration-ready documentation.",
+      "Instrumentation engineering services covering instrument index, control logic, hook-up drawings & field layouts for India, UAE, Saudi Arabia & Qatar.",
     h1: "Instrumentation Engineering Services",
     image: "/Instrumentation-Control-Engineering.webp",
     imageAlt: "Industrial instrumentation and control engineering",
     description: [
-      "Port AI Engineers delivers specialized instrumentation engineering services, preparing control philosophy documentation, instrument layouts, and field automation architectures for industrial facilities.",
-      "Our engineers coordinate sensor placement, valve actuators, control interlocks, and I/O assignments with process and piping teams to support reliable plant operations and commissioning.",
-      "Our engineers specify sensor locations, valve actuators, transmitter requirements, and field junction architectures to ensure precise process surveillance.",
-      "By coordinating closely with process engineers and electrical specialists, we establish structured input/output frameworks, safety interlock boundaries, and automated shutdown criteria.",
-      "Our deliverables support clear commissioning, reduce startup risk, and provide operators with dependable control visibility and alarm management.",
-      "We align instrumentation strategies with compliance requirements and operational goals, ensuring plants run safely while achieving steady throughput and target product quality.",
+      "Port AI Engineers delivers specialized instrumentation engineering services, preparing control logic documentation, instrument indexes, hook-up references, and field device layouts for industrial facilities.",
+      "Our engineers coordinate transmitter placement, control valve actuation, cable tray/junction box routing, and ESD/interlock boundaries closely with process and piping teams.",
+      "Supporting EPCs and industrial plants across India, the UAE, Saudi Arabia, and Qatar, our structured I/O and field-location packages minimize startup delays and streamline loop checks during commissioning.",
+      "Every deliverable aligns with client tagging standards and functional safety documentation requirements.",
     ],
     highlights: [
-      "Control philosophy alignment and automation framework integration",
-      "Instrumentation location, junction, and routing layout coordination",
-      "Field device specification and process boundary integration",
-      "Integration-ready documentation for multi-vendor control architectures",
+      "Control philosophy alignment and P&ID loop integration",
+      "Instrumentation location, junction box & cable routing coordination",
+      "Field device schedule, I/O list & installation hook-up drawings",
+      "Integration-ready documentation for commissioning and loop checks",
     ],
     deliverables: [
       "Instrumentation layout plans and location drawings",
@@ -205,8 +210,12 @@ const serviceDetails: ServiceDetail[] = [
     ],
     relatedServices: [
       { title: "Process Engineering Services", href: "/services/engineering/process/" },
-      { title: "P&ID Design & Drafting Services", href: "/services/cad/pid/" },
+      { title: "P&ID Engineering & Drafting Services", href: "/services/cad/pid/" },
       { title: "Piping Engineering Services", href: "/services/engineering/piping-engineering/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
+    ],
+    relatedArticles: [
+      { title: "PFD vs. P&ID: Key Differences in Plant Engineering", href: "/blogs/pfd-vs-pid/" },
     ],
   },
   {
@@ -214,23 +223,21 @@ const serviceDetails: ServiceDetail[] = [
     title: "Piping Stress Analysis Services",
     metaTitle: "Piping Stress Analysis Services | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers provides piping stress analysis services, evaluating thermal expansion, sustained loads, and equipment nozzle forces for industrial piping.",
+      "CAESAR II & AutoPIPE piping stress analysis evaluating thermal expansion, sustained loads & nozzle limits across India, UAE, Saudi Arabia & Qatar.",
     h1: "Piping Stress Analysis Services",
     image: "/images/services/piping-stress-analysis.webp",
     imageAlt: "Piping stress analysis engineering",
     description: [
-      "Port AI Engineers delivers comprehensive piping stress analysis services, evaluating thermal expansion, sustained pressure, and dynamic forces across critical industrial piping systems.",
-      "Our piping stress engineers evaluate equipment nozzle loads, optimize pipe support and spring hanger configurations, and ensure compliance with applicable ASME and international piping codes.",
-      "Our analysis addresses thermal expansion, internal pressure, occasional seismic or wind forces, and nozzle reaction limits on pumps, vessels, and compressors.",
-      "By calculating sustained and expansion stresses against established design criteria, we determine optimal pipe support locations, guide placements, and spring hanger selections.",
-      "Detailed documentation provides clarity for engineering review, fabrication checks, client approvals, and long-term asset compliance audits.",
-      "This rigorous validation prevents costly piping overstresses, protects connected mechanical equipment from excessive loads, and safeguards facility uptime.",
+      "Port AI Engineers delivers comprehensive piping stress analysis services in CAESAR II and AutoPIPE, evaluating thermal expansion, sustained pressure, weight, and occasional dynamic forces across critical piping lines.",
+      "Our stress engineers qualify equipment nozzle loads against NEMA SM23, API 610, API 617, and manufacturer limits while optimizing rigid supports, expansion loops, guides, and spring hangers.",
+      "Supporting engineering teams across India, the UAE, Saudi Arabia, and Qatar, analyses are checked against ASME B31.3 and ASME B31.1 acceptance criteria — protecting rotating machinery and pressure vessels from overstress.",
+      "Stress reports and support markups feed directly back into 3D piping models and isometric drawings before shop fabrication.",
     ],
     highlights: [
-      "Thermal expansion, sustained, and occasional load case validation",
-      "Equipment nozzle load evaluation against allowable manufacturer limits",
-      "Pipe support, restraint, guide, and spring hanger optimization",
-      "Design recommendations for stress mitigation and routing adjustments",
+      "CAESAR II & AutoPIPE static, thermal expansion & occasional load checks",
+      "Nozzle qualification against API 610 / API 617 / NEMA / WRC limits",
+      "Pipe support, guide, anchor, and spring hanger load optimization",
+      "Clear stress markups coordinated directly with 3D piping designers",
     ],
     deliverables: [
       "Comprehensive piping stress analysis calculation reports",
@@ -247,6 +254,7 @@ const serviceDetails: ServiceDetail[] = [
       { title: "3D Piping Design Services", href: "/services/engineering/piping-3d/" },
       { title: "Piping Engineering Services", href: "/services/engineering/piping-engineering/" },
       { title: "Piping Isometric Drawing Services", href: "/services/cad/isometric/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
     ],
     relatedArticles: [
       { title: "Piping Stress Analysis for Reliable Operation", href: "/blogs/piping-stress-analysis/" },
@@ -257,23 +265,21 @@ const serviceDetails: ServiceDetail[] = [
     title: "Greenfield Engineering Services",
     metaTitle: "Greenfield Engineering Services | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers provides greenfield engineering services, coordinating concept-to-detail plant layouts, utility distribution, and multi-discipline engineering.",
+      "Greenfield plant engineering services covering plot plans, battery limits, utility systems & 3D piping for India, UAE, Saudi Arabia & Qatar facilities.",
     h1: "Greenfield Engineering Services",
     image: "/images/services/greenfield-project.webp",
     imageAlt: "Greenfield industrial plant engineering project",
     description: [
-      "Port AI Engineers delivers multidisciplinary greenfield engineering services, providing comprehensive concept-to-detail design coordination for new industrial plant developments.",
-      "From plot plan development and battery limit coordination to utility distribution and constructability reviews, our engineering team structures greenfield facilities for phased execution and future capacity.",
-      "From initial plot plan organization and boundary limit interfaces to coordinated utility distribution, our team structures greenfield facilities for phased construction and future expansion.",
-      "Our multi-discipline coordination brings process, piping, instrumentation, and layout specialists together under a unified project framework.",
-      "We align early design decisions with long-term plant operations, optimizing capital expenditure, operational safety, maintenance access, and modular constructability.",
-      "Structured deliverables reduce rework and enable smooth handoffs between project stages, giving industrial owners a dependable engineering foundation for new facility delivery.",
+      "Port AI Engineers delivers multidisciplinary greenfield engineering services, coordinating concept-to-detail plant design across new industrial and chemical developments.",
+      "Our process, piping, instrumentation, and layout engineers work as one integrated unit covering plot plan zoning, battery limit coordination, utility headers, 3D piping modeling, and construction-ready GA/isometric deliverables.",
+      "Supporting EPCs and plant developers across India, the UAE, Saudi Arabia, and Qatar, we design layouts with maintainability envelopes, crane access, and future debottlenecking space built in from day one.",
+      "Structured IDR and milestone review packages minimize rework across civil, structural, and mechanical interfaces.",
     ],
     highlights: [
       "Concept-to-detail multidisciplinary plant engineering coordination",
-      "Plot plan development, battery limit interfaces, and utility routing",
-      "Integrated design aligned to long-term operations and constructability",
-      "Phased delivery schedules supporting smooth construction execution",
+      "Plot plan development, battery limit interfaces & utility routing",
+      "Integrated design balancing safety clearances, access & constructability",
+      "Phased IDC / IFR / IFC delivery aligned with EPC schedules",
     ],
     deliverables: [
       "Concept-to-detail multidisciplinary engineering packages",
@@ -290,7 +296,8 @@ const serviceDetails: ServiceDetail[] = [
       { title: "Industrial Plant Layout Services", href: "/services/engineering/plant-layout/" },
       { title: "3D Piping Design Services", href: "/services/engineering/piping-3d/" },
       { title: "Piping Engineering Services", href: "/services/engineering/piping-engineering/" },
-      { title: "General Arrangement Drawing Services", href: "/services/cad/general-arrangement/" },
+      { title: "GA & General Arrangement Drawings", href: "/services/cad/general-arrangement/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
     ],
     relatedArticles: [
       { title: "Greenfield Projects: Planning for Future Capacity", href: "/blogs/greenfield-projects/" },
@@ -302,23 +309,21 @@ const serviceDetails: ServiceDetail[] = [
     title: "Brownfield Engineering Services",
     metaTitle: "Brownfield Engineering Services | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers delivers brownfield engineering services, providing retrofit layouts, as-built validation, and tie-in engineering for live industrial plants.",
+      "Brownfield retrofit engineering, tie-in packages, debottlenecking & as-built P&ID/3D updates for live plants in India, UAE, Saudi Arabia & Qatar.",
     h1: "Brownfield Engineering Services",
     image: "/images/services/brownfield.webp",
     imageAlt: "Brownfield industrial facility retrofit engineering",
     description: [
-      "Port AI Engineers provides specialized brownfield engineering services, delivering retrofit designs, debottlenecking studies, and tie-in packages for active industrial facilities.",
-      "Our engineers perform as-built validation, evaluate physical routing constraints, and plan modification sequences around plant shutdown windows to minimize operational disruption.",
-      "Our approach incorporates existing as-built validation, tie-in verification, and space conflict identification in operating operating plants.",
-      "We sequence retrofit designs around scheduled turnaround windows, ensuring modifications integrate cleanly into functioning utility and process systems.",
-      "Our engineers work with client site teams to document site conditions, mitigate operational hazards, and structure tie-in packages for minimal downtime.",
-      "This systematic approach enables safe modernization, reliable debottlenecking, and asset life extension while protecting facility throughput and worker safety.",
+      "Port AI Engineers provides specialized brownfield engineering services, delivering retrofit layouts, debottlenecking designs, and tie-in packages for operating industrial plants.",
+      "Our engineers verify existing as-built conditions against redlines, evaluate tight physical clearances in live racks, and eliminate clashes in operating industrial plants before shutdown windows begin.",
+      "Supporting plant expansions and turnaround revamps across India, the UAE, Saudi Arabia, and Qatar, we sequence tie-in schedules, isometric modifications, and updated P&IDs cleanly around scheduled outages.",
+      "Thorough upfront interference checks reduce turnaround risk, safeguard site crews, and help bring revamped units back on stream reliably.",
     ],
     highlights: [
       "As-built condition validation and tie-in point verification",
-      "Retrofit planning designed around operational shutdown windows",
-      "Risk mitigation planning for live plant modifications and revamps",
-      "Operationally safe execution support for plant expansions",
+      "Retrofit planning designed around turnaround & shutdown windows",
+      "Pipe-rack clash resolution and rerouting in live industrial units",
+      "Updated P&ID, GA, 3D model, and fabrication isometric sets",
     ],
     deliverables: [
       "As-built validation packages and tie-in schedule references",
@@ -335,6 +340,11 @@ const serviceDetails: ServiceDetail[] = [
       { title: "Piping Engineering Services", href: "/services/engineering/piping-engineering/" },
       { title: "3D Piping Design Services", href: "/services/engineering/piping-3d/" },
       { title: "CAD Conversion Services", href: "/services/cad/conversion/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
+    ],
+    relatedArticles: [
+      { title: "How to Convert PDF P&IDs into Editable CAD Drawings", href: "/blogs/pdf-pid-conversion/" },
+      { title: "Anatomy of an Industrial General Arrangement (GA) Drawing", href: "/blogs/industrial-ga-drawing-anatomy/" },
     ],
   },
   {
@@ -342,23 +352,21 @@ const serviceDetails: ServiceDetail[] = [
     title: "Power Plant Engineering Services",
     metaTitle: "Power Plant Engineering Services | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers delivers power plant engineering services, supporting balance of plant systems, thermal piping coordination, and utility engineering deliverables.",
+      "Power plant BOP engineering, high-energy steam piping layout, stress analysis & CAD drafting for India, UAE, Saudi Arabia & Qatar facilities.",
     h1: "Power Plant Engineering Services",
     image: "/co2-capture.webp",
     imageAlt: "Power plant systems engineering layout",
     description: [
-      "Port AI Engineers provides dedicated power plant engineering services, delivering multidisciplinary design deliverables for thermal systems, balance of plant (BOP), and utility circuits.",
-      "We evaluate high-temperature piping systems, equipment arrangements, and continuous utility networks to support operational reliability and stringent compliance standards.",
-      "Our team provides engineering support across steam networks, fuel systems, boiler balance of plant (BOP), cooling water circuits, and water treatment packages.",
-      "We evaluate high-temperature piping stresses, equipment layouts, and instrumentation loops to ensure resilient performance under continuous operation.",
-      "Clear documentation supports stakeholder approvals, procurement, construction coordination, and routine plant maintenance procedures.",
-      "Clients gain dependable engineering support for mission-critical power generation infrastructure that meets stringent industrial performance and environmental standards.",
+      "Port AI Engineers provides dedicated power plant engineering services, delivering multidisciplinary design documentation for captive power units, balance of plant (BOP) networks, and industrial utility systems.",
+      "Our scope spans main and auxiliary steam headers, boiler feedwater and condensate loops, cooling water systems, fuel supply lines, and water-treatment packages.",
+      "Serving power, cogeneration, and industrial utility projects across India, the UAE, Saudi Arabia, and Qatar, we coordinate thermal piping stress compliance alongside ASME B31.1, equipment arrangements, and instrumentation interlocks.",
+      "Structured documentation streamlines stakeholder review, equipment tie-ins, procurement, and lifecycle plant maintenance.",
     ],
     highlights: [
-      "Multidiscipline power plant coordination across mechanical and piping systems",
-      "Balance of plant (BOP) systems coordination and utility loop planning",
-      "Reliability, thermal endurance, and operational safety alignment",
-      "Engineering documentation for regulatory review and lifecycle maintenance",
+      "Balance of plant (BOP) piping, steam & cooling water coordination",
+      "High-temperature thermal expansion & ASME B31.1 compliance focus",
+      "3D modeling, GA equipment layouts, and instrumentation loop packages",
+      "Review-ready engineering documentation for utility & generation assets",
     ],
     deliverables: [
       "Discipline-aligned power system design outputs and specifications",
@@ -375,37 +383,39 @@ const serviceDetails: ServiceDetail[] = [
       { title: "Piping Engineering Services", href: "/services/engineering/piping-engineering/" },
       { title: "Piping Stress Analysis Services", href: "/services/engineering/piping-stress-analysis/" },
       { title: "Instrumentation Engineering Services", href: "/services/engineering/instrumentation/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
+    ],
+    relatedArticles: [
+      { title: "Piping Stress Analysis for Reliable Operation", href: "/blogs/piping-stress-analysis/" },
     ],
   },
   {
     slug: "plant-layout",
     title: "Industrial Plant Layout Design Services",
-    metaTitle: "Industrial Plant Layout Design Services | Port AI Engineers",
+    metaTitle: "Industrial Plant Layout Services | Port AI Engineers",
     metaDescription:
-      "Port AI Engineers provides industrial plant layout design services, delivering optimized equipment layouts, plot plans, and multi-discipline spatial coordination.",
+      "Industrial plant layout & plot plan engineering services optimizing equipment spacing, pipe racks & safety access across India, UAE, Saudi Arabia & Qatar.",
     h1: "Industrial Plant Layout Design Services",
-    image: "/GeneralArrangements.jpg",
+    image: "/images/services/general-arrangement.webp",
     imageAlt: "Industrial plant layout and equipment arrangement design",
     description: [
-      "Port AI Engineers provides industrial plant layout design services, translating process flow requirements and complex engineering criteria into organized, efficient physical plant arrangements. We work with industrial operators, EPCs, and engineering teams to establish coherent spatial frameworks for process units, utility blocks, and auxiliary facilities.",
-      "Our engineering team coordinates comprehensive plot plan development and site organization, evaluating overall land topography, battery limit boundaries, and prevailing wind conditions. We establish equipment spacing criteria, define primary utility routing corridors, and structure plant zoning to accommodate both immediate construction phases and long-term expansion requirements.",
-      "We support industrial project developers, EPCs, and plant engineering consultants across India and the Gulf region, developing comprehensive layout and plot planning solutions for facilities in the UAE, Saudi Arabia, and Qatar.",
-      "We focus on equipment arrangement and accessibility, determining equipment centerlines, foundation footprints, and required maintenance clearance envelopes. By planning crane reach radiuses, laydown zones, nozzle orientations, and operator transit corridors early in the layout phase, we ensure equipment can be safely operated, inspected, and serviced throughout the plant lifecycle.",
-      "Our layout process bridges process documentation with physical engineering reality, integrating PFD flowstreams and P&ID line specifications with civil structural framing and 3D piping routing. Working in close collaboration with piping stress analysts and structural designers, we ensure pipe racks, pump skids, and vessel connections align with mechanical load paths and thermal expansion envelopes.",
-      "Safety, egress, and practical circulation remain central to our spatial coordination approach. We incorporate clear personnel walkways, vehicular roadways, emergency evacuation corridors, and designated fire-safety buffers across every operating unit, ensuring full alignment with industrial safety standards and local statutory requirements.",
-      "By delivering thoroughly validated plant layout documentation, we provide a stable, coordinated reference point for downstream engineering disciplines. These deliverables feed directly into General Arrangement drawings, detailed 3D piping design, procurement packages, and multidisciplinary project coordination, supporting smooth site construction and operational clarity.",
+      "Port AI Engineers provides industrial plant layout design services, translating process flow requirements and engineering criteria into organized, constructible facility arrangements for process units, utility blocks, and tank farms.",
+      "Our engineering team coordinates comprehensive plot plan development and site zoning — evaluating land topography, prevailing wind direction, battery limit boundaries, primary pipe rack corridors, and phased future expansion.",
+      "We support industrial project developers, EPC contractors, and plant consultants across India and the Gulf region, delivering plot planning and equipment layout packages for facilities in the UAE, Saudi Arabia, and Qatar.",
+      "We coordinate equipment centerlines, foundation footprints, crane reach zones, and maintenance withdrawal envelopes directly with piping stress analysts and structural designers so 3D routing aligns cleanly with mechanical loads and thermal expansion.",
+      "Safe personnel circulation, vehicular access roads, emergency egress corridors, and hazard separation distances remain embedded across every plot plan before detailed GA drawings and 3D piping design begin.",
     ],
     highlights: [
-      "Plot plan development and site organization",
-      "Equipment layout and spatial coordination",
-      "Maintenance access and operational clearance planning",
-      "Multidiscipline coordination across piping, equipment, and structures",
+      "Plot plan development, site zoning, and battery-limit coordination",
+      "Equipment spacing and multi-discipline spatial planning",
+      "Crane reach, maintenance clearance, and egress corridor integration",
+      "Coordinated handoff into 3D piping models and GA drawings",
     ],
     deliverables: [
-      "Industrial plant layout plans",
-      "Plot plan and equipment arrangement documentation",
-      "Equipment positioning and spatial coordination drawings",
-      "Utility routing and battery-limit coordination documentation",
+      "Industrial plant layout and master plot plans",
+      "Equipment positioning and unit zoning documentation",
+      "Utility corridor and battery-limit coordination drawings",
+      "Spatial study packages ready for GA and 3D piping execution",
     ],
     outcomes: [
       "Clearer spatial coordination between plant disciplines",
@@ -414,13 +424,15 @@ const serviceDetails: ServiceDetail[] = [
       "Improved coordination of equipment, piping, and utility spaces",
     ],
     relatedServices: [
-      { title: "General Arrangement Drawing Services", href: "/services/cad/general-arrangement/" },
+      { title: "GA & General Arrangement Drawings", href: "/services/cad/general-arrangement/" },
       { title: "3D Piping Design Services", href: "/services/engineering/piping-3d/" },
       { title: "Piping Engineering Services", href: "/services/engineering/piping-engineering/" },
       { title: "Greenfield Engineering Services", href: "/services/engineering/greenfield-projects/" },
+      { title: "Engineering Design Outsourcing", href: "/services/engineering-design-outsourcing/" },
     ],
     relatedArticles: [
       { title: "Industrial Plot Plan Development & Site Zoning Principles", href: "/blogs/industrial-plot-plan-site-zoning/" },
+      { title: "Anatomy of an Industrial General Arrangement (GA) Drawing", href: "/blogs/industrial-ga-drawing-anatomy/" },
     ],
   },
 ];
@@ -498,7 +510,7 @@ export default async function EngineeringServiceDetailPage({
     name: detail.h1,
     description: detail.metaDescription,
     url: canonicalUrl,
-    serviceType: "Industrial Engineering Services",
+    serviceType: detail.title,
     image: detail.image,
   });
 
@@ -521,6 +533,11 @@ export default async function EngineeringServiceDetailPage({
 
   return (
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
+      <ServicePageTracker
+        serviceSlug={detail.slug}
+        serviceCategory="engineering"
+        serviceName={detail.h1}
+      />
       <JsonLd schema={serviceSchema} />
       <JsonLd schema={webPageSchema} />
       <JsonLd schema={breadcrumbSchema} />
@@ -582,14 +599,54 @@ export default async function EngineeringServiceDetailPage({
             location="service_detail_top"
           />
 
-          <div className="overflow-hidden rounded-3xl border border-[var(--color-border)]">
+          <div className="overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)]">
             <Image
               src={detail.image}
               alt={detail.imageAlt}
               width={imageDimensions.width}
               height={imageDimensions.height}
+              priority
+              fetchPriority="high"
+              loading="eager"
+              sizes="(max-width: 1024px) 100vw, 1024px"
               className="h-auto max-h-[70vh] w-full object-contain sm:max-h-[75vh]"
             />
+          </div>
+
+          <div className="grid gap-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 text-xs sm:grid-cols-3 sm:text-sm">
+            <div>
+              <span className="block font-semibold uppercase tracking-[0.14em] text-[var(--color-primary)]">
+                Regional Delivery
+              </span>
+              <Link
+                href="/services/engineering-design-outsourcing/"
+                className="mt-1 inline-block text-[var(--color-text)] hover:text-[var(--color-primary)] hover:underline"
+              >
+                India · UAE · Saudi Arabia · Qatar
+              </Link>
+            </div>
+            <div>
+              <span className="block font-semibold uppercase tracking-[0.14em] text-[var(--color-primary)]">
+                Quality Framework
+              </span>
+              <Link
+                href="/blogs/iso-9001-2015/"
+                className="mt-1 inline-block text-[var(--color-text)] hover:text-[var(--color-primary)] hover:underline"
+              >
+                ISO 9001:2015 QMS Checked
+              </Link>
+            </div>
+            <div>
+              <span className="block font-semibold uppercase tracking-[0.14em] text-[var(--color-primary)]">
+                Confidentiality
+              </span>
+              <Link
+                href="/privacy/"
+                className="mt-1 inline-block text-[var(--color-text)] hover:text-[var(--color-primary)] hover:underline"
+              >
+                NDA &amp; Sample Review Ready
+              </Link>
+            </div>
           </div>
 
           <div className="space-y-4 text-base text-[var(--color-muted)] sm:text-lg">

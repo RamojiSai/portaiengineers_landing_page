@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import TrackedLink from "../../../components/analytics/TrackedLink";
 import { blogPosts } from "../../../lib/blogs";
 import {
   JsonLd,
@@ -65,36 +66,53 @@ export async function generateMetadata({
   };
 }
 
-const serviceMapping: Record<string, { label: string; href: string }> = {
+const BLOG_IMAGE_DIMENSIONS: Record<string, { width: number; height: number }> = {
+  "/images/blogs/piping-stress-analysis.webp": { width: 800, height: 611 },
+  "/images/services/greenfield-project.webp": { width: 1536, height: 1024 },
+  "/images/services/fire-evacuation.webp": { width: 1536, height: 1024 },
+  "/images/services/pfd.webp": { width: 1024, height: 724 },
+  "/images/services/cad-conversion.webp": { width: 1024, height: 516 },
+  "/images/services/general-arrangement.webp": { width: 1144, height: 755 },
+};
+
+const serviceMapping: Record<string, { slug: string; label: string; href: string }> = {
   "piping-stress-analysis": {
+    slug: "piping-stress-analysis",
     label: "Piping Stress Analysis Services",
     href: "/services/engineering/piping-stress-analysis/",
   },
   "greenfield-projects": {
+    slug: "greenfield-projects",
     label: "Greenfield Projects Engineering",
     href: "/services/engineering/greenfield-projects/",
   },
   "fire-evacuation-planning": {
+    slug: "fire-evacuation",
     label: "Fire Evacuation Drawings & Layouts",
     href: "/services/cad/fire-evacuation/",
   },
   "pfd-vs-pid": {
+    slug: "pid",
     label: "P&ID and PFD CAD Services",
     href: "/services/cad/pid/",
   },
   "pdf-pid-conversion": {
+    slug: "conversion",
     label: "CAD Conversion Services",
     href: "/services/cad/conversion/",
   },
   "fire-evacuation-drawing-standards": {
+    slug: "fire-evacuation",
     label: "Fire Evacuation Drawing Services",
     href: "/services/cad/fire-evacuation/",
   },
   "industrial-ga-drawing-anatomy": {
+    slug: "general-arrangement",
     label: "General Arrangement Drawing Services",
     href: "/services/cad/general-arrangement/",
   },
   "industrial-plot-plan-site-zoning": {
+    slug: "plant-layout",
     label: "Industrial Plant Layout Services",
     href: "/services/engineering/plant-layout/",
   },
@@ -164,10 +182,12 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
             <Image
               src={post.image}
               alt={post.title}
-              width={1200}
-              height={630}
+              width={(BLOG_IMAGE_DIMENSIONS[post.image] ?? { width: 1200 }).width}
+              height={(BLOG_IMAGE_DIMENSIONS[post.image] ?? { height: 630 }).height}
               priority
-              className="h-[420px] w-full object-cover sm:h-[520px]"
+              fetchPriority="high"
+              sizes="(max-width: 1152px) 100vw, 1152px"
+              className="h-[320px] w-full object-cover sm:h-[480px]"
             />
           </div>
         </div>
@@ -199,12 +219,19 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                   {matchedService.label} &rarr;
                 </Link>
               )}
-              <Link
-                href="/contact/"
+              <TrackedLink
+                href={
+                  matchedService
+                    ? `/contact/?service=${matchedService.slug}#contact-form`
+                    : "/contact/#contact-form"
+                }
+                trackType="quote"
+                ctaLocation="blog_article_footer"
+                serviceInterest={matchedService?.slug || "general"}
                 className="rounded-full bg-[var(--color-primary)] px-5 py-2.5 text-sm font-semibold text-[var(--color-on-primary)] transition duration-300 hover:opacity-90"
               >
-                Contact Us
-              </Link>
+                Request a Quote
+              </TrackedLink>
               <Link
                 href="/blogs/"
                 className="rounded-full border border-[var(--color-border)] px-5 py-2.5 text-sm font-semibold text-[var(--color-primary)] transition duration-300 hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)]"

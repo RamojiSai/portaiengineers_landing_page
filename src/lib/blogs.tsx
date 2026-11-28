@@ -38,10 +38,10 @@ export const blogCards: BlogCard[] = [
     slug: "engineers-blog",
     title: "CAD Services Designed with Precision",
     category: "CAD Services",
-    image: "/cad-services-BOtMPt39.jpg",
+    image: "/images/blogs/cad-engineering-team.webp",
     excerpt:
       "Explore end-to-end CAD workflows, model coordination, and drawing delivery built for speed, accuracy, and fabrication-ready execution.",
-    date: "July 2025",
+    date: "July 1, 2025",
     author: "Port AI CAD Team",
     readTime: "7 min read",
     href: "/blogs/engineers-blog/",
@@ -51,10 +51,10 @@ export const blogCards: BlogCard[] = [
     slug: "iso-9001-2015",
     title: "ISO 9001:2015 Certification Milestone",
     category: "Quality Management",
-    image: "/ISOimage.webp",
+    image: "/images/certifications/iso-badge.webp",
     excerpt:
       "Our ISO 9001:2015 certification validates the systems that power consistent engineering quality and customer-first delivery.",
-    date: "May 2025",
+    date: "May 1, 2025",
     author: "Port AI Engineers",
     readTime: "5 min read",
     href: "/blogs/iso-9001-2015/",
@@ -67,7 +67,7 @@ export const blogCards: BlogCard[] = [
     image: "/images/certifications/startup-india.webp",
     excerpt:
       "Port AI Engineers is officially recognized under Startup India, supporting innovation, growth, and engineering excellence.",
-    date: "June 2026",
+    date: "June 1, 2026",
     author: "Port AI Engineers",
     readTime: "6 min read",
     href: "/blogs/startup-certified/",
@@ -76,53 +76,62 @@ export const blogCards: BlogCard[] = [
   {
     slug: "piping-stress-analysis",
     title: "Piping Stress Analysis for Reliable Operation",
+    metaTitle: "Piping Stress Analysis Engineering Guide",
+    metaDescription:
+      "How CAESAR II & AutoPIPE stress analysis evaluates thermal expansion, sustained loads & ASME B31.3 nozzle limits for safe industrial piping.",
     category: "Piping Stress Analysis",
-    image: "/Pipe-Stress-analysis.png",
+    image: "/images/blogs/piping-stress-analysis.webp",
     excerpt:
-      "Understand how stress analysis helps prevent fatigue, reduce risk, and keep piping systems safe under load and thermal movement.",
-    date: "June 2026",
+      "Understand how thermal expansion checks, nozzle load limits, and pipe support placement keep industrial piping systems safe and ASME compliant.",
+    date: "June 15, 2026",
     author: "Port AI Engineering",
-    readTime: "6 min read",
+    readTime: "7 min read",
     href: "/blogs/piping-stress-analysis/",
     tags: ["Piping", "Stress", "Reliability"],
   },
   {
     slug: "greenfield-projects",
     title: "Greenfield Projects: Planning for Future Capacity",
+    metaTitle: "Greenfield Plant Design & Capacity Guide",
+    metaDescription:
+      "Key greenfield plant engineering workflows: plot zoning, utility headers, maintainability clearances & future debottlenecking across EPC projects.",
     category: "Greenfield Projects",
     image: "/images/services/greenfield-project.webp",
     excerpt:
-      "Designing new facilities from scratch requires clarity, coordinated engineering, and a strong focus on long-term operability.",
-    date: "April 2026",
+      "Designing new industrial facilities from scratch requires coordinated plot planning, utility integration, and room for safe future expansion.",
+    date: "April 10, 2026",
     author: "Port AI Planning",
-    readTime: "6 min read",
+    readTime: "7 min read",
     href: "/blogs/greenfield-projects/",
     tags: ["Greenfield", "Project", "Planning"],
   },
   {
     slug: "fire-evacuation-planning",
     title: "Fire Evacuation Planning for Industrial Facilities",
+    metaTitle: "Fire Evacuation Planning Guide",
+    metaDescription:
+      "Practical steps for mapping industrial escape routes, muster assembly zones, firefighting signage & audit-ready life-safety documentation.",
     category: "Fire Evacuation",
     image: "/images/services/fire-evacuation.webp",
     excerpt:
-      "A robust fire evacuation plan protects people, assets, and production when every second matters.",
-    date: "March 2026",
+      "Structured egress route planning, hazard zoning, and muster point mapping protect workers and streamline industrial HSE compliance audits.",
+    date: "March 15, 2026",
     author: "Port AI Safety",
-    readTime: "5 min read",
+    readTime: "6 min read",
     href: "/blogs/fire-evacuation-planning/",
     tags: ["Safety", "Fire", "Compliance"],
   },
   {
     slug: "pfd-vs-pid",
     title: "PFD vs. P&ID: Key Differences and the Engineering Design Handoff",
-    metaTitle: "PFD vs. P&ID: Key Differences in Plant Engineering",
+    metaTitle: "PFD vs. P&ID: Plant Engineering Guide",
     metaDescription:
-      "Learn how PFDs and P&IDs differ, what information each contains, and how process information moves into detailed P&ID development for plant engineering.",
+      "How PFDs and P&IDs differ in symbol detail, process mass balance vs. piping specs, and managing the engineering design handoff safely.",
     category: "Process & CAD Engineering",
-    image: "/PFD.jpeg",
+    image: "/images/services/pfd.webp",
     excerpt:
       "Learn how PFDs and P&IDs differ, what information each contains, and how process information moves into detailed P&ID development for plant engineering.",
-    date: "September 2026",
+    date: "September 5, 2026",
     author: "Port AI Engineers",
     readTime: "10 min read",
     href: "/blogs/pfd-vs-pid/",
@@ -131,14 +140,14 @@ export const blogCards: BlogCard[] = [
   {
     slug: "pdf-pid-conversion",
     title: "How to Convert PDF P&IDs into Editable CAD Drawings",
-    metaTitle: "PDF to P&ID Conversion Services | Convert Scanned Drawings to CAD",
+    metaTitle: "Convert PDF P&IDs to Editable CAD",
     metaDescription:
-      "Learn the process of converting PDF, scanned, and legacy P&IDs into editable CAD drawings. Discover common challenges, deliverables, and engineering best practices.",
+      "Step-by-step workflow to reconstruct scanned PDF and paper P&IDs into clean, layered, editable DWG files with verified line tags and QA checks.",
     category: "CAD Conversion & Digitization",
     image: "/images/services/cad-conversion.webp",
     excerpt:
       "Learn the process of converting PDF, scanned, and legacy P&IDs into editable CAD drawings. Discover common challenges, deliverables, and engineering best practices.",
-    date: "September 2026",
+    date: "September 10, 2026",
     author: "Port AI Engineers",
     readTime: "11 min read",
     href: "/blogs/pdf-pid-conversion/",
@@ -148,14 +157,14 @@ export const blogCards: BlogCard[] = [
     slug: "fire-evacuation-drawing-standards",
     title:
       "Industrial Fire Evacuation Drawing Standards: Egress Mapping, Symbols & Best Practices",
-    metaTitle: "Industrial Fire Evacuation Drawing Standards",
+    metaTitle: "Fire Evacuation Drawing Standards",
     metaDescription:
-      "Learn how industrial fire evacuation drawings are developed, including egress routes, exits, assembly points, symbols, floor plans, and key documentation considerations.",
+      "How industrial fire evacuation CAD drawings map primary and secondary escape routes, muster points, ISO 7010 / NFPA 170 symbols & floor orientations.",
     category: "Safety & CAD Documentation",
     image: "/images/services/fire-evacuation.webp",
     excerpt:
       "Learn how industrial fire evacuation drawings are developed, including egress routes, exits, assembly points, symbols, floor plans, and key documentation considerations.",
-    date: "September 2026",
+    date: "September 15, 2026",
     author: "Port AI Engineers",
     readTime: "11 min read",
     href: "/blogs/fire-evacuation-drawing-standards/",
@@ -165,14 +174,14 @@ export const blogCards: BlogCard[] = [
     slug: "industrial-ga-drawing-anatomy",
     title:
       "Anatomy of an Industrial General Arrangement (GA) Drawing: Plans, Elevations & Sections",
-    metaTitle: "Industrial GA Drawings: Plans, Elevations & Sections",
+    metaTitle: "Industrial GA Drawings: Plans & Views",
     metaDescription:
-      "Learn how industrial General Arrangement drawings are structured, including plans, elevations, sections, equipment placement, dimensions, access areas, and engineering coordination.",
+      "How industrial General Arrangement (GA) drawings coordinate plans, elevations, sections, equipment nozzles, structural grids & access clearances.",
     category: "CAD Drafting & Plant Design",
-    image: "/GeneralArrangements.jpg",
+    image: "/images/services/general-arrangement.webp",
     excerpt:
       "Learn how industrial General Arrangement drawings are structured, including plans, elevations, sections, equipment placement, dimensions, access areas, and engineering coordination.",
-    date: "September 2026",
+    date: "September 20, 2026",
     author: "Port AI Engineers",
     readTime: "11 min read",
     href: "/blogs/industrial-ga-drawing-anatomy/",
@@ -181,14 +190,14 @@ export const blogCards: BlogCard[] = [
   {
     slug: "industrial-plot-plan-site-zoning",
     title: "Industrial Plot Plan Development & Site Zoning Principles",
-    metaTitle: "Industrial Plot Plan & Site Zoning Principles",
+    metaTitle: "Industrial Plot Plan & Zoning Guide",
     metaDescription:
-      "Learn how industrial plot plans are developed, including site zoning, equipment areas, access routes, utility corridors, battery limits, and plant layout coordination.",
+      "How industrial plot plans structure site zoning, prevailing wind orientation, pipe corridors, emergency access routes & battery limits safely.",
     category: "Plant Design & Site Layout",
-    image: "/GeneralArrangements.jpg",
+    image: "/images/services/general-arrangement.webp",
     excerpt:
       "Learn how industrial plot plans are developed, including site zoning, equipment areas, access routes, utility corridors, battery limits, and plant layout coordination.",
-    date: "September 2026",
+    date: "September 25, 2026",
     author: "Port AI Engineers",
     readTime: "12 min read",
     href: "/blogs/industrial-plot-plan-site-zoning/",
@@ -200,44 +209,49 @@ export const blogPosts: BlogDetail[] = [
   {
     slug: "piping-stress-analysis",
     title: "Piping Stress Analysis for Reliable Operation",
+    metaTitle: "Piping Stress Analysis Engineering Guide",
+    metaDescription:
+      "How CAESAR II & AutoPIPE stress analysis evaluates thermal expansion, sustained loads & ASME B31.3 nozzle limits for safe industrial piping.",
     category: "Piping Stress Analysis",
-    image: "/Pipe-Stress-analysis.png",
+    image: "/images/blogs/piping-stress-analysis.webp",
     excerpt:
-      "Understand how stress analysis helps prevent fatigue, reduce risk, and keep piping systems safe under load and thermal movement.",
-    date: "June 2026",
+      "Understand how thermal expansion checks, nozzle load limits, and pipe support placement keep industrial piping systems safe and ASME compliant.",
+    date: "June 15, 2026",
     author: "Port AI Engineering",
-    readTime: "6 min read",
+    readTime: "7 min read",
     href: "/blogs/piping-stress-analysis/",
     tags: ["Piping", "Stress", "Reliability"],
     content: (
       <>
         <p className="text-base leading-relaxed text-[var(--color-muted)]">
-          Piping stress analysis is the foundation of safe and durable plant operation. By simulating thermal growth, support reaction, and pressure loading, engineering teams can identify potential failure points before fabrication begins.
+          Piping stress analysis is the foundation of safe and durable industrial plant operation. Across high-temperature process units, steam headers, compressor suction/discharge lines, and refinery racks, piping experiences simultaneous internal pressure, deadweight, thermal expansion, wind, and seismic loads. By simulating these load cases in static and dynamic solvers before spools are fabricated, engineering teams prevent overstress, flange leakage, and premature fatigue failures.
         </p>
-        <h2 className="mt-10 text-2xl font-semibold text-[var(--color-text)]">Why Stress Analysis Matters</h2>
+        <h2 className="mt-10 text-2xl font-semibold text-[var(--color-text)]">Why Piping Stress Analysis Matters</h2>
         <p className="mt-4 text-base leading-relaxed text-[var(--color-muted)]">
-          A well-executed stress analysis keeps piping systems compliant with industry codes and prevents costly downtime due to fatigue or unsupported loads.
+          Every rigid metal pipeline expands or contracts whenever fluid temperatures shift between shutdown, design, upset, and operating conditions. Without controlled flexibility — such as natural piping offsets, expansion loops, guided supports, or spring hangers — thermal growth transfers destructive forces and moments straight into pump casings, heat exchanger nozzles, and turbine flanges.
         </p>
         <ul className="mt-6 space-y-3 pl-5 text-[var(--color-muted)]">
-          <li className="list-disc">Validate line flexibility under temperature changes</li>
-          <li className="list-disc">Optimize support spacing and equipment nozzle loads</li>
-          <li className="list-disc">Reduce the risk of vibration and fatigue cracking</li>
+          <li className="list-disc">Verify sustained stress (pressure + gravity) against allowable code limits across spans</li>
+          <li className="list-disc">Check displacement stress ranges across minimum ambient and maximum design temperatures</li>
+          <li className="list-disc">Qualify rotating equipment nozzle forces against API 610, API 617, NEMA SM23, and manufacturer criteria</li>
+          <li className="list-disc">Evaluate occasional wind, seismic, slug flow, and relief valve thrust load cases</li>
         </ul>
-        <h2 className="mt-10 text-2xl font-semibold text-[var(--color-text)]">A Practical Approach</h2>
+        <h2 className="mt-10 text-2xl font-semibold text-[var(--color-text)]">Engineering Workflow in CAESAR II &amp; AutoPIPE</h2>
         <p className="mt-4 text-base leading-relaxed text-[var(--color-muted)]">
-          Our engineers use industry-standard analysis tools to model every line segment, calculate reaction forces, and verify compliance with ASME B31.3, B31.1, and other applicable codes, coordinating directly with our <Link href="/services/engineering/piping-engineering/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">piping engineering</Link> and <Link href="/services/engineering/piping-stress-analysis/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">piping stress analysis</Link> workflows.
+          At Port AI Engineers, stress engineers collaborate directly with <Link href="/services/engineering/piping-3d/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">3D piping design</Link> and <Link href="/services/engineering/piping-engineering/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">piping engineering</Link> teams rather than treating stress analysis as an isolated afterthought. Critical lines identified from the <Link href="/services/cad/pid/" className="text-[var(--color-primary)] underline hover:opacity-80">P&amp;ID</Link> and line list are modeled in CAESAR II or AutoPIPE to evaluate code compliance under ASME B31.3, ASME B31.1, and regional project specifications across India, the UAE, Saudi Arabia, and Qatar.
         </p>
         <div className="mt-8 rounded-3xl bg-[color-mix(in_srgb,var(--color-surface)_70%,transparent)] p-6 text-sm leading-relaxed text-[var(--color-text)] shadow-[0_10px_30px_rgba(0,0,0,0.12)]">
-          <p className="font-semibold">Key outcomes delivered:</p>
+          <p className="font-semibold">Key stress engineering deliverables:</p>
           <ul className="mt-4 space-y-2 pl-5 text-[var(--color-muted)]">
-            <li className="list-disc">Balanced nozzle loads for process and utility equipment</li>
-            <li className="list-disc">Optimized support systems for operational reliability</li>
-            <li className="list-disc">Clear documentation for fabrication and inspection</li>
+            <li className="list-disc">Stress isometric markups showing exact support types (rest, guide, line stop, anchor, spring)</li>
+            <li className="list-disc">Equipment nozzle load qualification summaries for vessels, pumps, and compressors</li>
+            <li className="list-disc">Civil &amp; structural pipe rack support reaction tables for foundation design</li>
+            <li className="list-disc">Spring hanger travel and cold/hot load schedules verified against thermal movement</li>
           </ul>
         </div>
-        <h2 className="mt-10 text-2xl font-semibold text-[var(--color-text)]">Ready for Construction</h2>
+        <h2 className="mt-10 text-2xl font-semibold text-[var(--color-text)]">Feedback into 3D Modeling &amp; Fabrication</h2>
         <p className="mt-4 text-base leading-relaxed text-[var(--color-muted)]">
-          The final delivery includes detailed stress reports, support load summaries, and recommendations that allow contractors to install piping systems with confidence.
+          Once support locations and routing adjustments are finalized, stress markups flow straight back into the master 3D plant model and <Link href="/services/cad/isometric/" className="text-[var(--color-primary)] underline hover:opacity-80">fabrication isometric drawings</Link>. Explore our dedicated <Link href="/services/engineering/piping-stress-analysis/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">Piping Stress Analysis Services</Link> or contact our team with your critical line list for scoped project support.
         </p>
       </>
     ),
@@ -245,84 +259,95 @@ export const blogPosts: BlogDetail[] = [
   {
     slug: "greenfield-projects",
     title: "Greenfield Projects: Planning for Future Capacity",
+    metaTitle: "Greenfield Plant Design & Capacity Guide",
+    metaDescription:
+      "Key greenfield plant engineering workflows: plot zoning, utility headers, maintainability clearances & future debottlenecking across EPC projects.",
     category: "Greenfield Projects",
     image: "/images/services/greenfield-project.webp",
     excerpt:
-      "Designing new facilities from scratch requires clarity, coordinated engineering, and a strong focus on long-term operability.",
-    date: "April 2026",
+      "Designing new industrial facilities from scratch requires coordinated plot planning, utility integration, and room for safe future expansion.",
+    date: "April 10, 2026",
     author: "Port AI Planning",
-    readTime: "6 min read",
+    readTime: "7 min read",
     href: "/blogs/greenfield-projects/",
     tags: ["Greenfield", "Project", "Planning"],
     content: (
       <>
         <p className="text-base leading-relaxed text-[var(--color-muted)]">
-          Greenfield projects demand a clear vision from the earliest planning stage. Our engineering teams build scalable facility architectures that support future production, safety, and regulatory compliance.
+          Greenfield industrial developments offer a rare opportunity to design an efficient facility from an open site — free from legacy tie-in constraints, congested racks, or outdated process units. Yet that blank canvas also carries high capital responsibility: spatial choices locked in during early concept and FEED stages dictate construction cost, operator safety, maintenance crane access, and future debottlenecking capability for decades.
         </p>
-        <h2 className="mt-10 text-2xl font-semibold text-[var(--color-text)]">Early-Stage Planning</h2>
+        <h2 className="mt-10 text-2xl font-semibold text-[var(--color-text)]">Aligning Process, Utilities &amp; Site Zoning Early</h2>
         <p className="mt-4 text-base leading-relaxed text-[var(--color-muted)]">
-          Early planning aligns process flow, equipment layout, and infrastructure requirements so the final design is robust, efficient, and easy to operate.
+          Successful greenfield execution coordinates <Link href="/services/engineering/process/" className="text-[var(--color-primary)] underline hover:opacity-80">process engineering</Link>, <Link href="/services/engineering/plant-layout/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">industrial plant layout</Link>, and piping specifications in parallel rather than sequentially. Before concrete pours begin, teams establish wind-rose orientation for fired equipment and flare stacks, hazardous area classification zones, primary pipe rack elevations, and battery-limit utility headers.
         </p>
         <ul className="mt-6 space-y-3 pl-5 text-[var(--color-muted)]">
-          <li className="list-disc">Process definition and capacity planning</li>
-          <li className="list-disc">Site evaluation and utility integration</li>
-          <li className="list-disc">Future expansion and modular design considerations</li>
+          <li className="list-disc">Define modular process unit footprints and dedicated expansion bays for Phase 2 capacity</li>
+          <li className="list-disc">Size main pipe racks with spare tier and width allowance for future process and utility lines</li>
+          <li className="list-disc">Separate heavy maintenance drop zones and crane travel corridors from live piping headers</li>
+          <li className="list-disc">Synchronize <Link href="/services/cad/pfd/" className="text-[var(--color-primary)] underline hover:opacity-80">PFDs</Link>, <Link href="/services/cad/pid/" className="text-[var(--color-primary)] underline hover:opacity-80">P&amp;IDs</Link>, and <Link href="/services/cad/general-arrangement/" className="text-[var(--color-primary)] underline hover:opacity-80">GA drawings</Link> under unified tagging rules</li>
         </ul>
-        <h2 className="mt-10 text-2xl font-semibold text-[var(--color-text)]">Design for Growth</h2>
+        <h2 className="mt-10 text-2xl font-semibold text-[var(--color-text)]">Multi-Discipline Handoffs Across EPC Milestones</h2>
         <p className="mt-4 text-base leading-relaxed text-[var(--color-muted)]">
-          We optimize layouts for constructability while preserving flexibility for future upgrades, helping owners extend asset life and improve return on investment.
+          Supporting EPC contractors and plant owners across India, the UAE, Saudi Arabia, and Qatar, Port AI Engineers structures greenfield design packages into coordinated IDC, IFR, and IFC milestones. For deeper spatial planning guidance, read our guide on <Link href="/blogs/industrial-plot-plan-site-zoning/" className="text-[var(--color-primary)] underline hover:opacity-80">Industrial Plot Plan Development &amp; Site Zoning Principles</Link>.
         </p>
         <div className="mt-8 rounded-3xl bg-[color-mix(in_srgb,var(--color-surface)_70%,transparent)] p-6 text-sm leading-relaxed text-[var(--color-text)] shadow-[0_10px_30px_rgba(0,0,0,0.12)]">
-          <p className="font-semibold">Greenfield project priorities:</p>
+          <p className="font-semibold">Greenfield engineering priorities:</p>
           <ul className="mt-4 space-y-2 pl-5 text-[var(--color-muted)]">
-            <li className="list-disc">Clear process and utility integration</li>
-            <li className="list-disc">Buildable plant layouts with safety buffers</li>
-            <li className="list-disc">Future-ready expansion corridors</li>
+            <li className="list-disc">Coordinated PFD, P&amp;ID, 3D model, and stress packages from one engineering workflow</li>
+            <li className="list-disc">Buildable plant layouts with statutory safety distances and emergency egress routes</li>
+            <li className="list-disc">Future-ready utility racks and tie-in flanges to support low-disruption capacity expansions</li>
           </ul>
         </div>
+        <p className="mt-6 text-base leading-relaxed text-[var(--color-muted)]">
+          Explore our <Link href="/services/engineering/greenfield-projects/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">Greenfield Engineering Services</Link> and <Link href="/services/engineering-design-outsourcing/" className="text-[var(--color-primary)] underline hover:opacity-80">Engineering Design Outsourcing</Link> capabilities to scale your next facility rollout.
+        </p>
       </>
     ),
   },
   {
     slug: "fire-evacuation-planning",
     title: "Fire Evacuation Planning for Industrial Facilities",
+    metaTitle: "Fire Evacuation Planning Guide",
+    metaDescription:
+      "Practical steps for mapping industrial escape routes, muster assembly zones, firefighting signage & audit-ready life-safety documentation.",
     category: "Fire Evacuation",
     image: "/images/services/fire-evacuation.webp",
     excerpt:
-      "A robust fire evacuation plan protects people, assets, and production when every second matters.",
-    date: "March 2026",
+      "Structured egress route planning, hazard zoning, and muster point mapping protect workers and streamline industrial HSE compliance audits.",
+    date: "March 15, 2026",
     author: "Port AI Safety",
-    readTime: "5 min read",
+    readTime: "6 min read",
     href: "/blogs/fire-evacuation-planning/",
     tags: ["Safety", "Fire", "Compliance"],
     content: (
       <>
         <p className="text-base leading-relaxed text-[var(--color-muted)]">
-          Fire evacuation planning is essential in complex industrial sites. Our team develops clear exit routes, assembly procedures, and emergency response coordination to keep people safe and minimize disruption.
+          Industrial plants present distinct life-safety challenges compared to standard commercial offices: multi-level process structures, enclosed utility rooms, flammable solvent storage, rotating machinery noise, and hazardous gas envelopes demand crystal-clear evacuation planning. When an alarm triggers, contractors, operators, and shift personnel must reach safe exits and muster assembly zones rapidly without ambiguity.
         </p>
-        <h2 className="mt-10 text-2xl font-semibold text-[var(--color-text)]">Site Evaluation for Safety</h2>
+        <h2 className="mt-10 text-2xl font-semibold text-[var(--color-text)]">Site Evaluation, Travel Distances &amp; Redundant Exits</h2>
         <p className="mt-4 text-base leading-relaxed text-[var(--color-muted)]">
-          We review facility zones, occupancy patterns, and mechanical hazards to design evacuation pathways that are both safe and intuitive.
+          Effective emergency evacuation planning starts by auditing active occupancy zones, staircases, catwalk bottlenecks, and hazardous material storage against current facility as-built drawings. Every enclosed bay or elevated operating deck requires at least two separated egress choices where hazard classification warrants redundancy.
         </p>
         <ul className="mt-6 space-y-3 pl-5 text-[var(--color-muted)]">
-          <li className="list-disc">Identify primary and secondary egress routes</li>
-          <li className="list-disc">Ensure compliance with NFPA and local fire codes</li>
-          <li className="list-disc">Coordinate alarms, signage, and exit lighting</li>
+          <li className="list-disc">Define primary and alternate escape corridors routed away from high-hazard process units</li>
+          <li className="list-disc">Verify muster assembly point locations upwind and outside thermal/dispersion hazard zones</li>
+          <li className="list-disc">Coordinate placement of manual call points, portable extinguishers, hydrants, eyewash stations, and SCBA cabinets</li>
+          <li className="list-disc">Align egress layouts with NFPA, ISO 7010, and local civil-defense expectations in India, the UAE, Saudi Arabia, and Qatar</li>
         </ul>
-        <h2 className="mt-10 text-2xl font-semibold text-[var(--color-text)]">Emergency Response Preparedness</h2>
+        <h2 className="mt-10 text-2xl font-semibold text-[var(--color-text)]">Turning Evacuation Plans into Shop-Floor Signage</h2>
         <p className="mt-4 text-base leading-relaxed text-[var(--color-muted)]">
-          A complete plan includes training, muster-point assignment, and communication protocols so every team member knows exactly what to do if the alarm sounds.
+          A response binder alone does not guide workers during smoke or power loss — floor plans must be posted at entry points, control rooms, and stairwell landings with clear &ldquo;You Are Here&rdquo; orientation markers. Our <Link href="/services/cad/fire-evacuation/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">Fire Evacuation Drawing Services</Link> and <Link href="/services/cad/general-arrangement/" className="text-[var(--color-primary)] underline hover:opacity-80">General Arrangement</Link> drafting teams convert cluttered plant blueprints into high-contrast, audit-ready life-safety boards.
         </p>
         <div className="mt-8 rounded-3xl bg-[color-mix(in_srgb,var(--color-surface)_70%,transparent)] p-6 text-sm leading-relaxed text-[var(--color-text)] shadow-[0_10px_30px_rgba(0,0,0,0.12)]">
-          <p className="font-semibold">What the plan delivers:</p>
+          <p className="font-semibold">What audit-ready evacuation documentation delivers:</p>
           <ul className="mt-4 space-y-2 pl-5 text-[var(--color-muted)]">
-            <li className="list-disc">Mapped evacuation routes for every building area</li>
-            <li className="list-disc">Safety procedures for hazardous and high-occupancy zones</li>
-            <li className="list-disc">Actionable guidance for drill and incident review</li>
+            <li className="list-disc">High-legibility primary and secondary route diagrams for every building level</li>
+            <li className="list-disc">Standardized ISO/NFPA firefighting and first-aid equipment legends</li>
+            <li className="list-disc">Clean editable CAD masters that update quickly after brownfield facility modifications</li>
           </ul>
         </div>
         <p className="mt-6 text-base leading-relaxed text-[var(--color-muted)]">
-          To translate site-wide emergency procedures into compliant architectural diagrams, refer to our comprehensive guide on <Link href="/blogs/fire-evacuation-drawing-standards/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">Industrial Fire Evacuation Drawing Standards</Link> for egress mapping and ISO/NFPA symbology.
+          To explore drafting specifications, scale rules, and symbol conventions in detail, read our companion technical guide on <Link href="/blogs/fire-evacuation-drawing-standards/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">Industrial Fire Evacuation Drawing Standards</Link> or <Link href="/contact/?service=fire-evacuation#contact-form" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">request a project quote</Link>.
         </p>
       </>
     ),
@@ -330,14 +355,14 @@ export const blogPosts: BlogDetail[] = [
   {
     slug: "pfd-vs-pid",
     title: "PFD vs. P&ID: Key Differences and the Engineering Design Handoff",
-    metaTitle: "PFD vs. P&ID: Key Differences in Plant Engineering",
+    metaTitle: "PFD vs. P&ID: Plant Engineering Guide",
     metaDescription:
-      "Learn how PFDs and P&IDs differ, what information each contains, and how process information moves into detailed P&ID development for plant engineering.",
+      "How PFDs and P&IDs differ in symbol detail, process mass balance vs. piping specs, and managing the engineering design handoff safely.",
     category: "Process & CAD Engineering",
-    image: "/PFD.jpeg",
+    image: "/images/services/pfd.webp",
     excerpt:
       "Learn how PFDs and P&IDs differ, what information each contains, and how process information moves into detailed P&ID development for plant engineering.",
-    date: "September 2026",
+    date: "September 5, 2026",
     author: "Port AI Engineers",
     readTime: "10 min read",
     href: "/blogs/pfd-vs-pid/",
@@ -715,14 +740,14 @@ export const blogPosts: BlogDetail[] = [
   {
     slug: "pdf-pid-conversion",
     title: "How to Convert PDF P&IDs into Editable CAD Drawings",
-    metaTitle: "PDF to P&ID Conversion Services | Convert Scanned Drawings to CAD",
+    metaTitle: "Convert PDF P&IDs to Editable CAD",
     metaDescription:
-      "Learn the process of converting PDF, scanned, and legacy P&IDs into editable CAD drawings. Discover common challenges, deliverables, and engineering best practices.",
+      "Step-by-step workflow to reconstruct scanned PDF and paper P&IDs into clean, layered, editable DWG files with verified line tags and QA checks.",
     category: "CAD Conversion & Digitization",
     image: "/images/services/cad-conversion.webp",
     excerpt:
       "Learn the process of converting PDF, scanned, and legacy P&IDs into editable CAD drawings. Discover common challenges, deliverables, and engineering best practices.",
-    date: "September 2026",
+    date: "September 10, 2026",
     author: "Port AI Engineers",
     readTime: "11 min read",
     href: "/blogs/pdf-pid-conversion/",
@@ -1079,14 +1104,14 @@ export const blogPosts: BlogDetail[] = [
     slug: "fire-evacuation-drawing-standards",
     title:
       "Industrial Fire Evacuation Drawing Standards: Egress Mapping, Symbols & Best Practices",
-    metaTitle: "Industrial Fire Evacuation Drawing Standards",
+    metaTitle: "Fire Evacuation Drawing Standards",
     metaDescription:
-      "Learn how industrial fire evacuation drawings are developed, including egress routes, exits, assembly points, symbols, floor plans, and key documentation considerations.",
+      "How industrial fire evacuation CAD drawings map primary and secondary escape routes, muster points, ISO 7010 / NFPA 170 symbols & floor orientations.",
     category: "Safety & CAD Documentation",
     image: "/images/services/fire-evacuation.webp",
     excerpt:
       "Learn how industrial fire evacuation drawings are developed, including egress routes, exits, assembly points, symbols, floor plans, and key documentation considerations.",
-    date: "September 2026",
+    date: "September 15, 2026",
     author: "Port AI Engineers",
     readTime: "11 min read",
     href: "/blogs/fire-evacuation-drawing-standards/",
@@ -1437,7 +1462,7 @@ export const blogPosts: BlogDetail[] = [
           By applying clear visual hierarchies, primary and secondary egress paths, perspective-matched orientations, and disciplined revision control, industrial facilities can establish life-safety documentation that truly protects personnel. Because regulatory requirements, building codes, and safety standards vary across jurisdictions and facility occupancies, engineering teams must always coordinate their evacuation drawings with applicable local authorities and adopted codes.
         </p>
         <p className="mt-4 text-base leading-relaxed text-[var(--color-muted)]">
-          To update your plant&apos;s emergency evacuation documentation or convert legacy floor plans into professional, revision-controlled CAD drawings, explore our <Link href="/services/cad/fire-evacuation/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">Fire Evacuation Drawing Services</Link> or <Link href="/contact/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">contact the engineering drafting team at Port AI Engineers</Link> today.
+          To update your plant&apos;s emergency evacuation documentation or convert legacy floor plans into professional, revision-controlled CAD drawings, explore our <Link href="/services/cad/fire-evacuation/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">Fire Evacuation Drawing Services</Link> or <Link href="/contact/?service=fire-evacuation#contact-form" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">contact the engineering drafting team at Port AI Engineers</Link> today.
         </p>
       </>
     ),
@@ -1446,14 +1471,14 @@ export const blogPosts: BlogDetail[] = [
     slug: "industrial-ga-drawing-anatomy",
     title:
       "Anatomy of an Industrial General Arrangement (GA) Drawing: Plans, Elevations & Sections",
-    metaTitle: "Industrial GA Drawings: Plans, Elevations & Sections",
+    metaTitle: "Industrial GA Drawings: Plans & Views",
     metaDescription:
-      "Learn how industrial General Arrangement drawings are structured, including plans, elevations, sections, equipment placement, dimensions, access areas, and engineering coordination.",
+      "How industrial General Arrangement (GA) drawings coordinate plans, elevations, sections, equipment nozzles, structural grids & access clearances.",
     category: "CAD Drafting & Plant Design",
-    image: "/GeneralArrangements.jpg",
+    image: "/images/services/general-arrangement.webp",
     excerpt:
       "Learn how industrial General Arrangement drawings are structured, including plans, elevations, sections, equipment placement, dimensions, access areas, and engineering coordination.",
-    date: "September 2026",
+    date: "September 20, 2026",
     author: "Port AI Engineers",
     readTime: "11 min read",
     href: "/blogs/industrial-ga-drawing-anatomy/",
@@ -1781,7 +1806,7 @@ export const blogPosts: BlogDetail[] = [
           Whether developed directly through 2D drafting methods or extracted from coordinated 3D plant design software, successful GA drawings depend on rigorous dimensioning, consistent datum referencing, and systematic quality reviews. Clear, accurate equipment arrangement drawings minimize construction clashes, streamline multi-discipline handoffs, and protect ongoing facility operability.
         </p>
         <p className="mt-4 text-base leading-relaxed text-[var(--color-muted)]">
-          To develop new plant GA drawings, update existing equipment arrangements, or convert legacy layouts into structured CAD deliverables, explore our <Link href="/services/cad/general-arrangement/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">General Arrangement Drawing Services</Link> or <Link href="/contact/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">contact the engineering design team at Port AI Engineers</Link> today.
+          To develop new plant GA drawings, update existing equipment arrangements, or convert legacy layouts into structured CAD deliverables, explore our <Link href="/services/cad/general-arrangement/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">General Arrangement Drawing Services</Link> or <Link href="/contact/?service=general-arrangement#contact-form" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">contact the engineering design team at Port AI Engineers</Link> today.
         </p>
       </>
     ),
@@ -1789,14 +1814,14 @@ export const blogPosts: BlogDetail[] = [
   {
     slug: "industrial-plot-plan-site-zoning",
     title: "Industrial Plot Plan Development & Site Zoning Principles",
-    metaTitle: "Industrial Plot Plan & Site Zoning Principles",
+    metaTitle: "Industrial Plot Plan & Zoning Guide",
     metaDescription:
-      "Learn how industrial plot plans are developed, including site zoning, equipment areas, access routes, utility corridors, battery limits, and plant layout coordination.",
+      "How industrial plot plans structure site zoning, prevailing wind orientation, pipe corridors, emergency access routes & battery limits safely.",
     category: "Plant Design & Site Layout",
-    image: "/GeneralArrangements.jpg",
+    image: "/images/services/general-arrangement.webp",
     excerpt:
       "Learn how industrial plot plans are developed, including site zoning, equipment areas, access routes, utility corridors, battery limits, and plant layout coordination.",
-    date: "September 2026",
+    date: "September 25, 2026",
     author: "Port AI Engineers",
     readTime: "12 min read",
     href: "/blogs/industrial-plot-plan-site-zoning/",
@@ -2137,7 +2162,7 @@ export const blogPosts: BlogDetail[] = [
           Successful plot plan development balances immediate construction economy with multi-decade operational reliability. Avoiding common pitfalls—such as neglected turnaround clearances, uncoordinated underground corridors, or ambiguous interface boundaries—protects projects from costly construction field rework and operational bottlenecks.
         </p>
         <p className="mt-4 text-base leading-relaxed text-[var(--color-muted)]">
-          Whether designing a new greenfield facility, expanding existing unit battery limits, or modernizing site documentation, explore our <Link href="/services/engineering/plant-layout/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">Industrial Plant Layout Design Services</Link> or <Link href="/contact/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">contact the plant engineering specialists at Port AI Engineers</Link> today.
+          Whether designing a new greenfield facility, expanding existing unit battery limits, or modernizing site documentation, explore our <Link href="/services/engineering/plant-layout/" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">Industrial Plant Layout Design Services</Link> or <Link href="/contact/?service=plant-layout#contact-form" className="font-semibold text-[var(--color-primary)] underline hover:opacity-80">contact the plant engineering specialists at Port AI Engineers</Link> today.
         </p>
       </>
     ),
