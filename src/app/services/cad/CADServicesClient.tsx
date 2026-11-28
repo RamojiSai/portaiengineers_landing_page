@@ -126,7 +126,7 @@ const featureBlocks = [
 const cadPillars = [
   { value: "ISO 9001:2015", label: "QMS Review Checklists" },
   { value: "24 Working Hrs", label: "Initial Enquiry Response" },
-  { value: "NDA Ready", label: "Anonymized Samples on Request" },
+  { value: "Scope-Aligned", label: "Drafted to Client Standards" },
   { value: "CAD Standards", label: "AutoCAD, Plant 3D, SP3D, E3D" },
 ];
 

@@ -65,7 +65,7 @@ export default function AboutSection() {
             <div className="flex flex-wrap gap-2.5">
               {[
                 "ISO 9001:2015 QMS",
-                "NDA & Confidentiality Ready",
+                "Fabrication-Ready Deliverables",
                 "Multi-Platform CAD & Stress",
               ].map((item) => (
                 <span

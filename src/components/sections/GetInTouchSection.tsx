@@ -103,7 +103,7 @@ export default function GetInTouchSection({ showForm = true }: GetInTouchSection
                   Request a Project Quote or Schedule a Technical Call
                 </h3>
                 <p className="text-sm text-[var(--color-muted)]">
-                  Share your project scope for an initial enquiry response within 24 working hours, or book a Google Calendar consultation. Anonymized sample packs available upon NDA review.
+                  Share your project scope for an initial enquiry response within 24 working hours, or request an engineering consultation on Google Calendar.
                 </p>
               </div>
               <div className="flex shrink-0 flex-wrap items-center gap-3">

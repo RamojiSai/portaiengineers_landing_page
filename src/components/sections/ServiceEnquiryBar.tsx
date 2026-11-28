@@ -32,7 +32,7 @@ export default function ServiceEnquiryBar({
             Scoped Engineering &amp; CAD Support
           </p>
           <p className="text-sm font-medium text-[var(--color-text)] sm:text-base">
-            Initial enquiry response within 24 working hours · NDA-ready sample documentation on request
+            Discuss your project scope · Initial enquiry response within 24 working hours
           </p>
         </div>
 

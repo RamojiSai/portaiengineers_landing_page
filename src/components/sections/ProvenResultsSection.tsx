@@ -21,12 +21,12 @@ const executionStandards = [
     serviceInterest: undefined,
   },
   {
-    badge: "IP & Confidentiality",
-    title: "NDA-Backed Sample Review",
+    badge: "Technical Scoping",
+    title: "Direct Scope & Software Alignment",
     description:
-      "Client specifications and drawings remain strictly protected, with NDA execution and anonymized documentation previews available on request.",
+      "Deliverables follow your tagging conventions, project specifications, and preferred CAD or pipe stress analysis software platforms.",
     href: "/contact/?service=other#contact-form",
-    ctaLabel: "Request NDA Sample Pack",
+    ctaLabel: "Discuss Your Engineering Requirements",
     serviceInterest: "other",
   },
   {
@@ -49,10 +49,10 @@ export default function ProvenResultsSection() {
             Engineering Governance
           </span>
           <h2 className="text-2xl font-semibold tracking-tight text-[var(--color-text)] sm:text-3xl lg:text-4xl">
-            How We Safeguard Drawing Quality &amp; Project Confidentiality
+            How We Maintain Drawing Quality &amp; Engineering Alignment
           </h2>
           <p className="mx-auto max-w-2xl text-sm text-[var(--color-muted)] sm:text-base">
-            Practical engineering review controls, IP protection, and transparent enquiry commitments built for EPC and plant teams.
+            Practical engineering review controls, client standards alignment, and responsive scoping built for EPC and plant teams.
           </p>
         </div>
 

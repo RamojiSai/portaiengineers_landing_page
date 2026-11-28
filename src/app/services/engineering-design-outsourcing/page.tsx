@@ -113,9 +113,9 @@ const outsourcingFaqs = [
       "Our Hyderabad engineering team operates in IST (UTC+5:30), providing 6.5+ hours of daily overlap with UAE (UTC+4) and Saudi Arabia/Qatar (UTC+3). We align on your project specifications, layer standards, and review milestones from kickoff.",
   },
   {
-    question: "How are client drawings and intellectual property protected?",
+    question: "How are outsourced engineering deliverables integrated with client workflows?",
     answer:
-      "Projects are governed by client NDAs before sharing technical packages or anonymized documentation samples. We deliver native CAD and stress files directly into your controlled review workflow.",
+      "We align on your project specifications, layer and tagging conventions, and IDC/IFR/IFC review milestones from kickoff, delivering native CAD and pipe stress files directly into your engineering review process.",
   },
   {
     question: "Can we engage Port AI Engineers for a specific package rather than a full plant scope?",
@@ -192,7 +192,7 @@ export default function EngineeringDesignOutsourcingPage() {
             </nav>
 
             <span className="inline-block rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-primary)]">
-              India · UAE · Saudi Arabia · Qatar
+              India &amp; Global Engineering Support
             </span>
 
             <h1 className="text-3xl font-semibold tracking-tight text-[var(--color-text)] sm:text-5xl">
@@ -200,7 +200,7 @@ export default function EngineeringDesignOutsourcingPage() {
             </h1>
 
             <p className="max-w-3xl text-base leading-relaxed text-[var(--color-muted)] sm:text-lg">
-              Port AI Engineers Private Limited provides dedicated remote engineering and CAD documentation support from Hyderabad, India — helping EPC contractors, engineering consultants, skid fabricators, and industrial plant owners scale capacity across India and GCC markets without adding fixed overhead.
+              Port AI Engineers Private Limited provides dedicated engineering and CAD documentation support from Hyderabad, India — helping EPC contractors, engineering consultants, skid fabricators, and industrial plant owners scale capacity across India, the Gulf region, and international markets without adding fixed overhead.
             </p>
           </div>
 
@@ -294,7 +294,7 @@ export default function EngineeringDesignOutsourcingPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[var(--color-primary)]" />
-                  <span>NDA-protected sample walkthroughs prior to package kickoff.</span>
+                  <span>Direct technical scoping, CAD standard alignment, and kickoff coordination.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[var(--color-primary)]" />
